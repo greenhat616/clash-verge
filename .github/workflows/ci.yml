@@ -59,10 +59,11 @@ jobs:
         run: pnpm install
 
       - name: Prepare fronend
-        run: pnpm build # Build frontend
-
+        run: pnpm web:build # Build frontend
+      - name: Prepare sidecar and resources
+        run: pnpm check
       - name: Lint
-        run: pnpm lint # Lint frontend
+        run: pnpm lint # Lint
 
 
   # test_unit:

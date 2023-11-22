@@ -9,7 +9,7 @@ const require = createRequire(import.meta.url);
 async function resolvePublish() {
   const flag = process.argv[2] ?? 'patch';
   const packageJson = require('../package.json');
-  const tauriJson = require('../backend/tauri.conf.json');
+  const tauriJson = require('../backend/tauri/tauri.conf.json');
 
   let [a, b, c] = packageJson.version.split('.').map(Number);
 

@@ -16,9 +16,12 @@ const SIDECAR_HOST = execSync('rustc -vV')
 
 /* ======= clash ======= */
 const CLASH_STORAGE_PREFIX = 'https://release.dreamacro.workers.dev/';
+// const CLASH_URL_PREFIX =
+//   'https://github.com/Dreamacro/clash/releases/download/premium/';
 const CLASH_URL_PREFIX =
-  'https://github.com/Dreamacro/clash/releases/download/premium/';
-const CLASH_LATEST_DATE = 'latest';
+  'https://github.com/Kuingsmile/clash-core/releases/download/premium/';
+// const CLASH_LATEST_DATE = 'latest';
+const CLASH_LATEST_DATE = '2023.08.17';
 
 const CLASH_MAP = {
   'win32-x64': 'clash-windows-amd64',
@@ -111,7 +114,7 @@ function clashMeta() {
 async function resolveSidecar(binInfo) {
   const { name, targetFile, zipFile, exeFile, downloadURL } = binInfo;
 
-  const sidecarDir = path.join(cwd, 'backend', 'sidecar');
+  const sidecarDir = path.join(cwd, 'backend', 'tauri', 'sidecar');
   const sidecarPath = path.join(sidecarDir, targetFile);
 
   await fs.mkdirp(sidecarDir);
@@ -194,7 +197,7 @@ async function resolveWintun() {
   const tempZip = path.join(tempDir, 'wintun.zip');
 
   const wintunPath = path.join(tempDir, 'wintun/bin/amd64/wintun.dll');
-  const targetPath = path.join(cwd, 'backend/resources', 'wintun.dll');
+  const targetPath = path.join(cwd, 'backend/tauri/resources', 'wintun.dll');
 
   if (!FORCE && (await fs.pathExists(targetPath))) return;
 
@@ -224,7 +227,7 @@ async function resolveWintun() {
 async function resolveResource(binInfo) {
   const { file, downloadURL } = binInfo;
 
-  const resDir = path.join(cwd, 'backend/resources');
+  const resDir = path.join(cwd, 'backend/tauri/resources');
   const targetPath = path.join(resDir, file);
 
   if (!FORCE && (await fs.pathExists(targetPath))) return;
