@@ -24,6 +24,7 @@ import { mutate } from 'swr';
 const VALID_CORE = [
   { name: 'Clash', core: 'clash' },
   { name: 'Clash Meta', core: 'clash-meta' },
+  { name: 'Clash Rust', core: 'clash-rs' },
 ];
 
 const OS = getSystem();

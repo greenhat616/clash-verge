@@ -1,5 +1,9 @@
-use crate::{config::Config, core::*, utils::init, utils::server};
-use crate::{log_err, trace_err};
+use crate::{
+    config::Config,
+    core::*,
+    log_err, trace_err,
+    utils::{init, server},
+};
 use anyhow::Result;
 use tauri::{App, AppHandle, Manager};
 

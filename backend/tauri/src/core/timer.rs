@@ -1,11 +1,9 @@
-use crate::config::Config;
-use crate::feat;
+use crate::{config::Config, feat};
 use anyhow::{Context, Result};
 use delay_timer::prelude::{DelayTimer, DelayTimerBuilder, TaskBuilder};
 use once_cell::sync::OnceCell;
 use parking_lot::Mutex;
-use std::collections::HashMap;
-use std::sync::Arc;
+use std::{collections::HashMap, sync::Arc};
 
 type TaskID = u64;
 

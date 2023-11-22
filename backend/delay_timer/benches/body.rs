@@ -3,9 +3,11 @@
 
 extern crate test;
 
-use delay_timer::entity::SharedHeader;
-use delay_timer::prelude::*;
-use delay_timer::timer::timer_core::{Timer, TimerEvent};
+use delay_timer::{
+    entity::SharedHeader,
+    prelude::*,
+    timer::timer_core::{Timer, TimerEvent},
+};
 
 use futures::executor::block_on;
 use smol::channel::unbounded;

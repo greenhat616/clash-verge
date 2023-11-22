@@ -3,8 +3,10 @@
 //! gives lib the support to exit the task at any time.
 use crate::prelude::*;
 
-use std::collections::{HashMap, LinkedList};
-use std::fmt::{self, Debug, Formatter, Pointer};
+use std::{
+    collections::{HashMap, LinkedList},
+    fmt::{self, Debug, Formatter, Pointer},
+};
 
 use anyhow::Result;
 use smol::Task as SmolTask;

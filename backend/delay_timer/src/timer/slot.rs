@@ -1,8 +1,7 @@
 //! Slot
 //! It is the scale of the internal clock.
 use super::task::Task;
-use std::collections::HashMap;
-use std::mem::swap;
+use std::{collections::HashMap, mem::swap};
 
 //Slot is based on HashMap, It easy to add it and find it.
 pub(crate) struct Slot {

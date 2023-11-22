@@ -12,15 +12,17 @@ pub mod shell_command {
 
     use smol::process::{Child as SmolChild, Command as SmolCommand};
 
-    use std::collections::LinkedList;
-    use std::convert::AsRef;
-    use std::ffi::OsStr;
-    use std::fs::{File, OpenOptions};
-    use std::iter::Iterator;
-    use std::mem;
-    use std::ops::{Deref, DerefMut};
-    use std::path::Path;
-    use std::process::{Child as StdChild, Command, Output, Stdio};
+    use std::{
+        collections::LinkedList,
+        convert::AsRef,
+        ffi::OsStr,
+        fs::{File, OpenOptions},
+        iter::Iterator,
+        mem,
+        ops::{Deref, DerefMut},
+        path::Path,
+        process::{Child as StdChild, Command, Output, Stdio},
+    };
 
     /// The linkedlist of ChildGuard.
     pub type ChildGuardList<T> = LinkedList<ChildGuard<T>>;
@@ -89,8 +91,7 @@ pub mod shell_command {
     impl_command_unify!(Command => StdChild,SmolCommand => SmolChild);
 
     use std::convert::TryInto;
-    use tokio::process::Child as TokioChild;
-    use tokio::process::Command as TokioCommand;
+    use tokio::process::{Child as TokioChild, Command as TokioCommand};
     impl_command_unify!(TokioCommand => TokioChild);
 
     #[async_trait]
@@ -372,7 +373,11 @@ pub mod shell_command {
 
         // TODO: waiting for rust team fix this issue since: https://github.com/rust-lang/rust/pull/100806
         // let mut sub_command_inner = command.trim().split_inclusive::<'a>(angle_bracket).rev();
-        let mut sub_command_inner = command.trim().splitter(angle_bracket).to_inclusive().to_reversed();
+        let mut sub_command_inner = command
+            .trim()
+            .splitter(angle_bracket)
+            .to_inclusive()
+            .to_reversed();
         sub_command_inner
             .next()
             .map(|filename| create_stdio_file(angle_bracket, filename))

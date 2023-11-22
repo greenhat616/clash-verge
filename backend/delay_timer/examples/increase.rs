@@ -1,11 +1,15 @@
 #![allow(deprecated)]
 
 use delay_timer::prelude::*;
-use std::ops::Deref;
-use std::ptr::NonNull;
-use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
-use std::sync::Arc;
-use std::thread::{current, park, Thread};
+use std::{
+    ops::Deref,
+    ptr::NonNull,
+    sync::{
+        atomic::{AtomicUsize, Ordering::SeqCst},
+        Arc,
+    },
+    thread::{current, park, Thread},
+};
 
 #[derive(Debug, Clone, Copy)]
 struct SafePointer(NonNull<Arc<AtomicUsize>>);

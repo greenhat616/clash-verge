@@ -7,15 +7,23 @@
 //! 1. Branch of different mandated events.
 //! 2. A communication center for internal and external workers.
 
-pub(crate) use super::super::entity::{SharedHeader, SharedTaskWheel};
-use super::runtime_trace::sweeper::{RecycleUnit, RecyclingBins};
-use super::runtime_trace::task_handle::TaskTrace;
-pub(crate) use super::timer_core::{TimerEvent, DEFAULT_TIMER_SLOT_COUNT};
-use super::{Slot, Task, TaskMark};
+pub(crate) use super::{
+    super::entity::{SharedHeader, SharedTaskWheel},
+    timer_core::{TimerEvent, DEFAULT_TIMER_SLOT_COUNT},
+};
+use super::{
+    runtime_trace::{
+        sweeper::{RecycleUnit, RecyclingBins},
+        task_handle::TaskTrace,
+    },
+    Slot, Task, TaskMark,
+};
 use crate::prelude::*;
 
-use std::sync::atomic::Ordering::{Acquire, Release};
-use std::sync::Arc;
+use std::sync::{
+    atomic::Ordering::{Acquire, Release},
+    Arc,
+};
 
 use anyhow::Result;
 use smol::channel::unbounded;

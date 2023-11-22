@@ -1,7 +1,6 @@
 #![allow(deprecated)]
 use delay_timer::prelude::*;
-use std::thread::sleep;
-use std::time::Duration;
+use std::{thread::sleep, time::Duration};
 
 #[derive(Default)]
 struct RequstBody {

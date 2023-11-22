@@ -15,14 +15,17 @@ use super::timer::{
     timer_core::{Timer, TimerEvent, DEFAULT_TIMER_SLOT_COUNT},
     Slot,
 };
-use crate::prelude::*;
-use crate::timer::runtime_trace::task_instance::task_instance_chain_pair;
+use crate::{prelude::*, timer::runtime_trace::task_instance::task_instance_chain_pair};
 
-use std::fmt;
-use std::sync::atomic::{AtomicBool, AtomicU64};
-use std::sync::Arc;
-use std::thread::Builder;
-use std::time::SystemTime;
+use std::{
+    fmt,
+    sync::{
+        atomic::{AtomicBool, AtomicU64},
+        Arc,
+    },
+    thread::Builder,
+    time::SystemTime,
+};
 
 use futures::executor::block_on;
 use snowflake::SnowflakeIdGenerator;

@@ -3,11 +3,7 @@
 use super::runtime_trace::task_handle::DelayTaskHandler;
 use crate::prelude::*;
 
-use std::cell::RefCell;
-use std::fmt;
-use std::fmt::Pointer;
-use std::str::FromStr;
-use std::sync::atomic::Ordering;
+use std::{cell::RefCell, fmt, fmt::Pointer, str::FromStr, sync::atomic::Ordering};
 
 use cron_clock::{Schedule, ScheduleIteratorOwned, Utc};
 use lru::LruCache;
@@ -1334,8 +1330,7 @@ mod tests {
     #[test]
     fn test_analyze_cron_expression() -> AnyResult<()> {
         use super::{DelayTimerScheduleIteratorOwned, ScheduleIteratorTimeZone};
-        use std::thread::sleep;
-        use std::time::Duration;
+        use std::{thread::sleep, time::Duration};
 
         let mut schedule_iterator_first = DelayTimerScheduleIteratorOwned::analyze_cron_expression(
             ScheduleIteratorTimeZone::Utc,

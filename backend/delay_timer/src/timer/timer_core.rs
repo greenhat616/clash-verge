@@ -2,13 +2,13 @@
 //! It is the core of the entire cycle scheduling task.
 use crate::prelude::*;
 
-use crate::entity::timestamp;
-use crate::entity::RuntimeKind;
+use crate::entity::{timestamp, RuntimeKind};
 
-use std::mem::replace;
-use std::sync::atomic::Ordering::{Acquire, Release};
-use std::time::Duration;
-use std::time::Instant;
+use std::{
+    mem::replace,
+    sync::atomic::Ordering::{Acquire, Release},
+    time::{Duration, Instant},
+};
 
 use smol::Timer as smolTimer;
 

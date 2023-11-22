@@ -1,13 +1,11 @@
 #![allow(deprecated)]
 
 use anyhow::Result;
-use delay_timer::prelude::*;
-use delay_timer::utils::convenience::functions::tokio_unblock_process_task_fn;
+use delay_timer::{prelude::*, utils::convenience::functions::tokio_unblock_process_task_fn};
 use smol::Timer;
 use tokio::runtime::Runtime;
 
-use std::sync::Arc;
-use std::time::Duration;
+use std::{sync::Arc, time::Duration};
 // cargo run --package delay_timer --example dynamic_cancel --features=full
 
 fn main() -> Result<()> {

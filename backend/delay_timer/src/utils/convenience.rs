@@ -16,8 +16,7 @@ impl DelayTaskHandler for MyUnit {
 pub mod functions {
 
     use super::super::parse_and_run;
-    use crate::prelude::*;
-    use crate::timer::runtime_trace::task_handle::DelayTaskHandler;
+    use crate::{prelude::*, timer::runtime_trace::task_handle::DelayTaskHandler};
 
     /// UnBlock execution of a command line task in delay-timer.
     ///
@@ -221,8 +220,7 @@ mod tests {
     #[test]
     fn test_customization_cron_candy() {
         use super::cron_expression_grammatical_candy::CandyCronStr;
-        use std::convert::Into;
-        use std::ops::Deref;
+        use std::{convert::Into, ops::Deref};
 
         struct CustomizationCandyCron(i32);
 

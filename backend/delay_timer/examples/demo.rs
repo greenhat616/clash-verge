@@ -3,8 +3,10 @@ use delay_timer::prelude::*;
 #[allow(deprecated)]
 use delay_timer::utils::convenience::functions::unblock_process_task_fn;
 use smol::Timer;
-use std::thread::{current, park, Thread};
-use std::time::Duration;
+use std::{
+    thread::{current, park, Thread},
+    time::Duration,
+};
 
 // cargo run --package delay_timer --example demo --features=full
 

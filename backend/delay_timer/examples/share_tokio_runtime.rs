@@ -1,4 +1,7 @@
-use color_eyre::{eyre::Report, eyre::WrapErr, Section};
+use color_eyre::{
+    eyre::{Report, WrapErr},
+    Section,
+};
 use delay_timer::prelude::*;
 use tokio::runtime::Runtime;
 use tracing::{info, instrument};
@@ -47,8 +50,7 @@ fn build_task_async_print(id: u64, cron_str: &'static str) -> Result<Task, TaskE
 
 fn install_tracing() {
     use tracing_error::ErrorLayer;
-    use tracing_subscriber::prelude::*;
-    use tracing_subscriber::{fmt, EnvFilter};
+    use tracing_subscriber::{fmt, prelude::*, EnvFilter};
 
     let fmt_layer = fmt::layer().with_target(false);
     let filter_layer = EnvFilter::try_from_default_env()

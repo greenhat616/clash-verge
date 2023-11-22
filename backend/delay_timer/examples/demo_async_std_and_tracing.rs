@@ -1,8 +1,7 @@
 #![allow(deprecated)]
 
 use anyhow::Result;
-use delay_timer::prelude::*;
-use delay_timer::utils::convenience::functions::unblock_process_task_fn;
+use delay_timer::{prelude::*, utils::convenience::functions::unblock_process_task_fn};
 use smol::Timer;
 use std::time::Duration;
 use tracing::{info, Level};

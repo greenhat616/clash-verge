@@ -3,9 +3,11 @@
 use anyhow::Result;
 use delay_timer::prelude::*;
 use smol::Timer;
-use std::any::{type_name, Any};
-use std::thread::park_timeout;
-use std::time::Duration;
+use std::{
+    any::{type_name, Any},
+    thread::park_timeout,
+    time::Duration,
+};
 
 // cargo run --package delay_timer --example generic --features=full
 

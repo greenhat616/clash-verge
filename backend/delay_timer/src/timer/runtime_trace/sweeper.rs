@@ -7,9 +7,11 @@
 
 use crate::prelude::*;
 
-use std::cmp::{Eq, Ord, Ordering, PartialEq, PartialOrd, Reverse};
-use std::collections::BinaryHeap;
-use std::sync::Arc;
+use std::{
+    cmp::{Eq, Ord, Ordering, PartialEq, PartialOrd, Reverse},
+    collections::BinaryHeap,
+    sync::Arc,
+};
 
 #[derive(Default, Eq, Debug, Copy, Clone)]
 /// recycle unit.

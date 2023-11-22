@@ -1,13 +1,18 @@
 #![allow(deprecated)]
 use delay_timer::prelude::*;
 
-use std::str::FromStr;
-use std::sync::atomic::AtomicUsize;
-use std::sync::atomic::Ordering::{Acquire, Release};
-use std::sync::atomic::{AtomicI32, AtomicU64};
-use std::sync::Arc;
-use std::thread::{self, park_timeout};
-use std::time::Duration;
+use std::{
+    str::FromStr,
+    sync::{
+        atomic::{
+            AtomicI32, AtomicU64, AtomicUsize,
+            Ordering::{Acquire, Release},
+        },
+        Arc,
+    },
+    thread::{self, park_timeout},
+    time::Duration,
+};
 
 use smol::Timer;
 

@@ -1,6 +1,5 @@
 use super::{clash_api, logger::Logger};
-use crate::log_err;
-use crate::{config::*, utils::dirs};
+use crate::{config::*, log_err, utils::dirs};
 use anyhow::{bail, Context, Result};
 use once_cell::sync::OnceCell;
 use parking_lot::Mutex;
@@ -147,6 +146,7 @@ impl CoreManager {
         // fix #212
         let args = match clash_core.as_str() {
             "clash-meta" => vec!["-m", "-d", app_dir, "-f", config_path],
+            "clash-rs" => vec!["-d", app_dir, "-c", config_path],
             _ => vec!["-d", app_dir, "-f", config_path],
         };
 
@@ -259,7 +259,7 @@ impl CoreManager {
     pub async fn change_core(&self, clash_core: Option<String>) -> Result<()> {
         let clash_core = clash_core.ok_or(anyhow::anyhow!("clash core is null"))?;
 
-        if &clash_core != "clash" && &clash_core != "clash-meta" {
+        if &clash_core != "clash" && &clash_core != "clash-meta" && &clash_core != "clash-rs" {
             bail!("invalid clash core name \"{clash_core}\"");
         }
 
