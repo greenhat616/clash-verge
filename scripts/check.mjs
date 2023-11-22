@@ -174,12 +174,13 @@ async function resolveSidecar(binInfo) {
  * if the core version is not updated in time, use S3 storage as a backup.
  */
 async function resolveClash() {
-  try {
-    return await resolveSidecar(clash());
-  } catch {
-    console.log(`[WARN]: clash core needs to be updated`);
-    return await resolveSidecar(clashS3());
-  }
+  return await resolveSidecar(clash());
+  // try {
+  //   return await resolveSidecar(clash());
+  // } catch {
+  //   console.log(`[WARN]: clash core needs to be updated`);
+  //   return await resolveSidecar(clashS3());
+  // }
 }
 
 /**
@@ -303,7 +304,7 @@ const resolveGeoIP = () =>
   });
 
 const tasks = [
-  { name: 'clash', func: () => resolveSidecar(clashS3()), retry: 5 },
+  { name: 'clash', func: () => resolveClash(), retry: 5 },
   { name: 'clash-meta', func: () => resolveSidecar(clashMeta()), retry: 5 },
   { name: 'wintun', func: resolveWintun, retry: 5, winOnly: true },
   { name: 'service', func: resolveService, retry: 5, winOnly: true },
