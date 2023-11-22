@@ -44,5 +44,6 @@
       "groupName": "Testing packages",
       "matchPackagePatterns": ["vitest", "cypress", "wdio"]
     }
-  ]
+  ],
+  "includeForks": true
 }

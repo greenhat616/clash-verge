@@ -3,6 +3,8 @@
 
 /// Collection of functions related to shell commands and processes.
 pub mod shell_command {
+    use str_splitter::combinators::SplitExt;
+
     use crate::prelude::*;
     use anyhow::Error as AnyhowError;
 
@@ -359,7 +361,7 @@ pub mod shell_command {
     }
 
     #[cfg(SPLIT_INCLUSIVE_COMPATIBLE)]
-    fn _has_redirect_file<'a>(command: &'a str) -> Option<Result<File, AnyhowError>> {
+    fn _has_redirect_file(command: &str) -> Option<Result<File, AnyhowError>> {
         let angle_bracket: &'static str = if command.contains(">>") {
             ">>"
         } else if command.contains('>') {
@@ -368,8 +370,9 @@ pub mod shell_command {
             return None;
         };
 
-        let mut sub_command_inner = command.trim().split_inclusive::<'a>(angle_bracket).rev();
-
+        // TODO: waiting for rust team fix this issue since: https://github.com/rust-lang/rust/pull/100806
+        // let mut sub_command_inner = command.trim().split_inclusive::<'a>(angle_bracket).rev();
+        let mut sub_command_inner = command.trim().splitter(angle_bracket).to_inclusive().to_reversed();
         sub_command_inner
             .next()
             .map(|filename| create_stdio_file(angle_bracket, filename))
