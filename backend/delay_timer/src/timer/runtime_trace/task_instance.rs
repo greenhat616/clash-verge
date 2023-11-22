@@ -163,7 +163,8 @@ impl TaskInstance {
     ) -> Result<InstanceState, TaskInstanceError> {
         self.cancel()?;
 
-        EventListener::wait_timeout(self.instance.header.event.listen().as_mut(), timeout).map(|_x| self.get_state())
+        EventListener::wait_timeout(self.instance.header.event.listen().as_mut(), timeout)
+            .map(|_x| self.get_state())
             .ok_or(TaskInstanceError::DisCancelTimeOut)
     }
 

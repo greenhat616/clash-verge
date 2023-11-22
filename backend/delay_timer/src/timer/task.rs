@@ -254,8 +254,7 @@ impl<'a> TryFrom<(FrequencyUnify<'a>, ScheduleIteratorTimeZone)> for FrequencyIn
 }
 
 /// Set the time zone for the time of the expression iteration.
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Default)]
 pub enum ScheduleIteratorTimeZone {
     /// Utc specifies the UTC time zone. It is most efficient.
     Utc,
@@ -280,8 +279,6 @@ impl ScheduleIteratorTimeZone {
         }
     }
 }
-
-
 
 /// The Cron-expression scheduling iterator enum.
 /// There are three variants.
