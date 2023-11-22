@@ -1,10 +1,10 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { List, Switch } from "@mui/material";
-import { useVerge } from "@/hooks/use-verge";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
-import { SettingItem } from "./setting-comp";
-import { GuardState } from "./guard-state";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useVerge } from '@/hooks/use-verge';
+import { List, Switch } from '@mui/material';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { GuardState } from './guard-state';
+import { SettingItem } from './setting-comp';
 
 export const LayoutViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -28,15 +28,15 @@ export const LayoutViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Layout Setting")}
+      title={t('Layout Setting')}
       contentSx={{ width: 450 }}
       disableOk
-      cancelBtn={t("Cancel")}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
     >
       <List>
-        <SettingItem label={t("Theme Blur")}>
+        <SettingItem label={t('Theme Blur')}>
           <GuardState
             value={verge?.theme_blur ?? false}
             valueProps="checked"
@@ -49,7 +49,7 @@ export const LayoutViewer = forwardRef<DialogRef>((props, ref) => {
           </GuardState>
         </SettingItem>
 
-        <SettingItem label={t("Traffic Graph")}>
+        <SettingItem label={t('Traffic Graph')}>
           <GuardState
             value={verge?.traffic_graph ?? true}
             valueProps="checked"
@@ -62,7 +62,7 @@ export const LayoutViewer = forwardRef<DialogRef>((props, ref) => {
           </GuardState>
         </SettingItem>
 
-        <SettingItem label={t("Memory Usage")}>
+        <SettingItem label={t('Memory Usage')}>
           <GuardState
             value={verge?.enable_memory_usage ?? true}
             valueProps="checked"
@@ -78,3 +78,5 @@ export const LayoutViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+LayoutViewer.displayName = 'LayoutViewer';

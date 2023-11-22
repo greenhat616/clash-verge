@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { Typography } from "@mui/material";
-import { BaseErrorBoundary } from "./base-error-boundary";
+import React, { ReactNode } from 'react';
+import { Typography } from '@mui/material';
+import { BaseErrorBoundary } from './base-error-boundary';
 
 interface Props {
   title?: React.ReactNode; // the page title
@@ -15,7 +15,7 @@ export const BasePage: React.FC<Props> = (props) => {
   return (
     <BaseErrorBoundary>
       <div className="base-page" data-windrag>
-        <header data-windrag style={{ userSelect: "none" }}>
+        <header data-windrag style={{ userSelect: 'none' }}>
           <Typography variant="h4" component="h1" data-windrag>
             {title}
           </Typography>

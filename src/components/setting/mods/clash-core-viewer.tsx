@@ -1,10 +1,13 @@
-import { mutate } from "swr";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
-import { useTranslation } from "react-i18next";
-import { useVerge } from "@/hooks/use-verge";
-import { useLockFn } from "ahooks";
-import { Lock } from "@mui/icons-material";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useVerge } from '@/hooks/use-verge';
+import { closeAllConnections } from '@/services/api';
+import {
+  changeClashCore,
+  grantPermission,
+  restartSidecar,
+} from '@/services/cmds';
+import getSystem from '@/utils/get-system';
+import { Lock } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -12,15 +15,15 @@ import {
   List,
   ListItemButton,
   ListItemText,
-} from "@mui/material";
-import { changeClashCore, restartSidecar } from "@/services/cmds";
-import { closeAllConnections } from "@/services/api";
-import { grantPermission } from "@/services/cmds";
-import getSystem from "@/utils/get-system";
+} from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { mutate } from 'swr';
 
 const VALID_CORE = [
-  { name: "Clash", core: "clash" },
-  { name: "Clash Meta", core: "clash-meta" },
+  { name: 'Clash', core: 'clash' },
+  { name: 'Clash Meta', core: 'clash-meta' },
 ];
 
 const OS = getSystem();
@@ -37,7 +40,7 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
     close: () => setOpen(false),
   }));
 
-  const { clash_core = "clash" } = verge ?? {};
+  const { clash_core = 'clash' } = verge ?? {};
 
   const onCoreChange = useLockFn(async (core: string) => {
     if (core === clash_core) return;
@@ -47,8 +50,8 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
       await changeClashCore(core);
       mutateVerge();
       setTimeout(() => {
-        mutate("getClashConfig");
-        mutate("getVersion");
+        mutate('getClashConfig');
+        mutate('getVersion');
       }, 100);
       Notice.success(`Successfully switch to ${core}`, 1000);
     } catch (err: any) {
@@ -81,10 +84,10 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
       open={open}
       title={
         <Box display="flex" justifyContent="space-between">
-          {t("Clash Core")}
+          {t('Clash Core')}
 
           <Button variant="contained" size="small" onClick={onRestart}>
-            {t("Restart")}
+            {t('Restart')}
           </Button>
         </Box>
       }
@@ -92,12 +95,12 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
         pb: 0,
         width: 320,
         height: 200,
-        overflowY: "auto",
-        userSelect: "text",
-        marginTop: "-8px",
+        overflowY: 'auto',
+        userSelect: 'text',
+        marginTop: '-8px',
       }}
       disableOk
-      cancelBtn={t("Back")}
+      cancelBtn={t('Back')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
     >
@@ -110,7 +113,7 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
           >
             <ListItemText primary={each.name} secondary={`/${each.core}`} />
 
-            {(OS === "macos" || OS === "linux") && (
+            {(OS === 'macos' || OS === 'linux') && (
               <IconButton
                 color="inherit"
                 size="small"
@@ -130,3 +133,5 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+ClashCoreViewer.displayName = 'ClashCoreViewer';

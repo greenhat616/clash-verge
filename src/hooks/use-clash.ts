@@ -1,22 +1,22 @@
-import useSWR, { mutate } from "swr";
-import { useLockFn } from "ahooks";
+import useSWR, { mutate } from 'swr';
+import { useLockFn } from 'ahooks';
 import {
   getAxios,
   getClashConfig,
   getVersion,
   updateConfigs,
-} from "@/services/api";
-import { getClashInfo, patchClashConfig } from "@/services/cmds";
+} from '@/services/api';
+import { getClashInfo, patchClashConfig } from '@/services/cmds';
 
 export const useClash = () => {
   const { data: clash, mutate: mutateClash } = useSWR(
-    "getClashConfig",
-    getClashConfig
+    'getClashConfig',
+    getClashConfig,
   );
 
   const { data: versionData, mutate: mutateVersion } = useSWR(
-    "getVersion",
-    getVersion
+    'getVersion',
+    getVersion,
   );
 
   const patchClash = useLockFn(async (patch: Partial<IConfigData>) => {
@@ -28,8 +28,8 @@ export const useClash = () => {
   const version = versionData?.premium
     ? `${versionData.version} Premium`
     : versionData?.meta
-    ? `${versionData.version} Meta`
-    : versionData?.version || "-";
+      ? `${versionData.version} Meta`
+      : versionData?.version || '-';
 
   return {
     clash,
@@ -42,35 +42,35 @@ export const useClash = () => {
 
 export const useClashInfo = () => {
   const { data: clashInfo, mutate: mutateInfo } = useSWR(
-    "getClashInfo",
-    getClashInfo
+    'getClashInfo',
+    getClashInfo,
   );
 
   const patchInfo = async (
     patch: Partial<
-      Pick<IConfigData, "mixed-port" | "external-controller" | "secret">
-    >
+      Pick<IConfigData, 'mixed-port' | 'external-controller' | 'secret'>
+    >,
   ) => {
     const hasInfo =
-      patch["mixed-port"] != null ||
-      patch["external-controller"] != null ||
+      patch['mixed-port'] != null ||
+      patch['external-controller'] != null ||
       patch.secret != null;
 
     if (!hasInfo) return;
 
-    if (patch["mixed-port"]) {
-      const port = patch["mixed-port"];
+    if (patch['mixed-port']) {
+      const port = patch['mixed-port'];
       if (port < 1000) {
-        throw new Error("The port should not < 1000");
+        throw new Error('The port should not < 1000');
       }
       if (port > 65536) {
-        throw new Error("The port should not > 65536");
+        throw new Error('The port should not > 65536');
       }
     }
 
     await patchClashConfig(patch);
     mutateInfo();
-    mutate("getClashConfig");
+    mutate('getClashConfig');
     // 刷新接口
     getAxios(true);
   };

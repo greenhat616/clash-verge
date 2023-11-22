@@ -1,17 +1,16 @@
-import useSWR from "swr";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Checkbox, Divider, Stack, Tooltip, Typography } from "@mui/material";
-import { InfoRounded } from "@mui/icons-material";
-import { getRuntimeExists } from "@/services/cmds";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useProfiles } from '@/hooks/use-profiles';
+import { getRuntimeExists } from '@/services/cmds';
 import {
-  HANDLE_FIELDS,
   DEFAULT_FIELDS,
+  HANDLE_FIELDS,
   OTHERS_FIELDS,
-} from "@/utils/clash-fields";
-import { BaseDialog, DialogRef } from "@/components/base";
-import { useProfiles } from "@/hooks/use-profiles";
-import { Notice } from "@/components/base";
+} from '@/utils/clash-fields';
+import { InfoRounded } from '@mui/icons-material';
+import { Checkbox, Divider, Stack, Tooltip, Typography } from '@mui/material';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import useSWR from 'swr';
 
 const otherFields = [...OTHERS_FIELDS];
 const handleFields = [...HANDLE_FIELDS, ...DEFAULT_FIELDS];
@@ -21,8 +20,8 @@ export const ClashFieldViewer = forwardRef<DialogRef>((props, ref) => {
 
   const { profiles = {}, patchProfiles } = useProfiles();
   const { data: existsKeys = [], mutate: mutateExists } = useSWR(
-    "getRuntimeExists",
-    getRuntimeExists
+    'getRuntimeExists',
+    getRuntimeExists,
   );
 
   const [open, setOpen] = useState(false);
@@ -41,7 +40,7 @@ export const ClashFieldViewer = forwardRef<DialogRef>((props, ref) => {
     if (!item) return;
 
     setSelected((old) =>
-      old.includes(item) ? old.filter((e) => e !== item) : [...old, item]
+      old.includes(item) ? old.filter((e) => e !== item) : [...old, item],
     );
   };
 
@@ -65,16 +64,16 @@ export const ClashFieldViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Clash Field")}
+      title={t('Clash Field')}
       contentSx={{
         pb: 0,
         width: 320,
         height: 300,
-        overflowY: "auto",
-        userSelect: "text",
+        overflowY: 'auto',
+        userSelect: 'text',
       }}
-      okBtn={t("Save")}
-      cancelBtn={t("Back")}
+      okBtn={t('Save')}
+      cancelBtn={t('Back')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={handleSave}
@@ -114,10 +113,12 @@ export const ClashFieldViewer = forwardRef<DialogRef>((props, ref) => {
   );
 });
 
+ClashFieldViewer.displayName = 'ClashFieldViewer';
+
 function WarnIcon() {
   return (
     <Tooltip title="The field exists in the config but not enabled.">
-      <InfoRounded color="warning" sx={{ cursor: "pointer", opacity: 0.5 }} />
+      <InfoRounded color="warning" sx={{ cursor: 'pointer', opacity: 0.5 }} />
     </Tooltip>
   );
 }

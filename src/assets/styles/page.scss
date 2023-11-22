@@ -1,29 +1,29 @@
 .base-page {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
 
   > header {
-    flex: 0 0 58px;
-    width: 90%;
-    // max-width: 850px;
-    margin: 0 auto;
-    padding-right: 4px;
     box-sizing: border-box;
     display: flex;
+    flex: 0 0 58px;
     align-items: center;
     justify-content: space-between;
+    width: 90%;
+    padding-right: 4px;
+    // max-width: 850px;
+    margin: 0 auto;
   }
 
   > section {
     position: relative;
+    box-sizing: border-box;
     flex: 1 1 100%;
     width: 100%;
     height: 100%;
-    overflow: auto;
     padding: 8px 0;
-    box-sizing: border-box;
+    overflow: auto;
     scrollbar-gutter: stable;
 
     .base-content {

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useLockFn } from "ahooks";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLockFn } from 'ahooks';
 import {
   Box,
   Button,
@@ -8,22 +8,22 @@ import {
   Paper,
   Select,
   TextField,
-} from "@mui/material";
-import { useRecoilState } from "recoil";
-import { Virtuoso } from "react-virtuoso";
-import { useTranslation } from "react-i18next";
-import { TableChartRounded, TableRowsRounded } from "@mui/icons-material";
-import { closeAllConnections } from "@/services/api";
-import { atomConnectionSetting } from "@/services/states";
-import { useClashInfo } from "@/hooks/use-clash";
-import { BaseEmpty, BasePage } from "@/components/base";
-import { useWebsocket } from "@/hooks/use-websocket";
-import { ConnectionItem } from "@/components/connection/connection-item";
-import { ConnectionTable } from "@/components/connection/connection-table";
+} from '@mui/material';
+import { useRecoilState } from 'recoil';
+import { Virtuoso } from 'react-virtuoso';
+import { useTranslation } from 'react-i18next';
+import { TableChartRounded, TableRowsRounded } from '@mui/icons-material';
+import { closeAllConnections } from '@/services/api';
+import { atomConnectionSetting } from '@/services/states';
+import { useClashInfo } from '@/hooks/use-clash';
+import { BaseEmpty, BasePage } from '@/components/base';
+import { useWebsocket } from '@/hooks/use-websocket';
+import { ConnectionItem } from '@/components/connection/connection-item';
+import { ConnectionTable } from '@/components/connection/connection-table';
 import {
   ConnectionDetail,
   ConnectionDetailRef,
-} from "@/components/connection/connection-detail";
+} from '@/components/connection/connection-detail';
 
 const initConn = { uploadTotal: 0, downloadTotal: 0, connections: [] };
 
@@ -33,25 +33,28 @@ const ConnectionsPage = () => {
   const { t, i18n } = useTranslation();
   const { clashInfo } = useClashInfo();
 
-  const [filterText, setFilterText] = useState("");
-  const [curOrderOpt, setOrderOpt] = useState("Default");
+  const [filterText, setFilterText] = useState('');
+  const [curOrderOpt, setOrderOpt] = useState('Default');
   const [connData, setConnData] = useState<IConnections>(initConn);
 
   const [setting, setSetting] = useRecoilState(atomConnectionSetting);
 
-  const isTableLayout = setting.layout === "table";
+  const isTableLayout = setting.layout === 'table';
 
   const orderOpts: Record<string, OrderFunc> = {
     Default: (list) => list,
-    "Upload Speed": (list) => list.sort((a, b) => b.curUpload! - a.curUpload!),
-    "Download Speed": (list) =>
+    'Upload Speed': (list) => list.sort((a, b) => b.curUpload! - a.curUpload!),
+    'Download Speed': (list) =>
       list.sort((a, b) => b.curDownload! - a.curDownload!),
   };
 
   const filterConn = useMemo(() => {
     const orderFunc = orderOpts[curOrderOpt];
-    const connections = connData.connections.filter((conn) =>
-      (conn.metadata.host || conn.metadata.destinationIP)?.includes(filterText)
+    const connections = connData.connections.filter(
+      (conn) =>
+        (conn.metadata.host || conn.metadata.destinationIP)?.includes(
+          filterText,
+        ),
     );
 
     if (orderFunc) return orderFunc(connections);
@@ -94,13 +97,13 @@ const ConnectionsPage = () => {
         return { ...data, connections };
       });
     },
-    { errorCount: 3, retryInterval: 1000 }
+    { errorCount: 3, retryInterval: 1000 },
   );
 
   useEffect(() => {
     if (!clashInfo) return;
 
-    const { server = "", secret = "" } = clashInfo;
+    const { server = '', secret = '' } = clashInfo;
     connect(`ws://${server}/connections?token=${encodeURIComponent(secret)}`);
 
     return () => {
@@ -114,18 +117,18 @@ const ConnectionsPage = () => {
 
   return (
     <BasePage
-      title={t("Connections")}
-      contentStyle={{ height: "100%" }}
+      title={t('Connections')}
+      contentStyle={{ height: '100%' }}
       header={
-        <Box sx={{ mt: 1, display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
           <IconButton
             color="inherit"
             size="small"
             onClick={() =>
               setSetting((o) =>
-                o.layout === "list"
-                  ? { ...o, layout: "table" }
-                  : { ...o, layout: "list" }
+                o.layout === 'list'
+                  ? { ...o, layout: 'table' }
+                  : { ...o, layout: 'list' },
               )
             }
           >
@@ -137,21 +140,21 @@ const ConnectionsPage = () => {
           </IconButton>
 
           <Button size="small" variant="contained" onClick={onCloseAll}>
-            {t("Close All")}
+            {t('Close All')}
           </Button>
         </Box>
       }
     >
-      <Paper sx={{ boxShadow: 2, height: "100%" }}>
+      <Paper sx={{ boxShadow: 2, height: '100%' }}>
         <Box
           sx={{
             pt: 1,
             mb: 0.5,
-            mx: "12px",
-            height: "36px",
-            display: "flex",
-            alignItems: "center",
-            userSelect: "text",
+            mx: '12px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
+            userSelect: 'text',
           }}
         >
           {!isTableLayout && (
@@ -162,7 +165,7 @@ const ConnectionsPage = () => {
               onChange={(e) => setOrderOpt(e.target.value)}
               sx={{
                 mr: 1,
-                width: i18n.language === "en" ? 190 : 120,
+                width: i18n.language === 'en' ? 190 : 120,
                 '[role="button"]': { py: 0.65 },
               }}
             >
@@ -181,14 +184,14 @@ const ConnectionsPage = () => {
             autoComplete="off"
             spellCheck="false"
             variant="outlined"
-            placeholder={t("Filter conditions")}
+            placeholder={t('Filter conditions')}
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
             sx={{ input: { py: 0.65, px: 1.25 } }}
           />
         </Box>
 
-        <Box height="calc(100% - 50px)" sx={{ userSelect: "text" }}>
+        <Box height="calc(100% - 50px)" sx={{ userSelect: 'text' }}>
           {filterConn.length === 0 ? (
             <BaseEmpty text="No Connections" />
           ) : isTableLayout ? (

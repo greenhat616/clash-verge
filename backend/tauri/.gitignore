@@ -2,5 +2,8 @@
 # will have compiled files and executables
 /target/
 WixTools
-resources
-sidecar
+resources/*
+!resources/.gitkeep
+sidecar/*
+!sidecar/.gitkeep
+

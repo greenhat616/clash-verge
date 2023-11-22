@@ -1,6 +1,6 @@
-import { alpha, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import { useMatch, useResolvedPath, useNavigate } from "react-router-dom";
-import type { LinkProps } from "react-router-dom";
+import { alpha, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { useMatch, useResolvedPath, useNavigate } from 'react-router-dom';
+import type { LinkProps } from 'react-router-dom';
 
 export const LayoutItem = (props: LinkProps) => {
   const { to, children } = props;
@@ -10,26 +10,26 @@ export const LayoutItem = (props: LinkProps) => {
   const navigate = useNavigate();
 
   return (
-    <ListItem sx={{ py: 0.5, maxWidth: 250, mx: "auto" }}>
+    <ListItem sx={{ py: 0.5, maxWidth: 250, mx: 'auto' }}>
       <ListItemButton
         selected={!!match}
         sx={[
           {
             borderRadius: 2,
-            textAlign: "center",
-            "& .MuiListItemText-primary": { color: "text.secondary" },
+            textAlign: 'center',
+            '& .MuiListItemText-primary': { color: 'text.secondary' },
           },
           ({ palette: { mode, primary } }) => {
             const bgcolor =
-              mode === "light"
+              mode === 'light'
                 ? alpha(primary.main, 0.15)
                 : alpha(primary.main, 0.35);
-            const color = mode === "light" ? primary.main : primary.light;
+            const color = mode === 'light' ? primary.main : primary.light;
 
             return {
-              "&.Mui-selected": { bgcolor },
-              "&.Mui-selected:hover": { bgcolor },
-              "&.Mui-selected .MuiListItemText-primary": { color },
+              '&.Mui-selected': { bgcolor },
+              '&.Mui-selected:hover': { bgcolor },
+              '&.Mui-selected .MuiListItemText-primary': { color },
             };
           },
         ]}

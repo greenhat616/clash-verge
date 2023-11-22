@@ -1,16 +1,16 @@
-import fetch from "node-fetch";
-import { getOctokit, context } from "@actions/github";
-import { resolveUpdateLog } from "./updatelog.mjs";
+import fetch from 'node-fetch';
+import { getOctokit, context } from '@actions/github';
+import { resolveUpdateLog } from './updatelog.mjs';
 
-const UPDATE_TAG_NAME = "updater";
-const UPDATE_JSON_FILE = "update.json";
-const UPDATE_JSON_PROXY = "update-proxy.json";
+const UPDATE_TAG_NAME = 'updater';
+const UPDATE_JSON_FILE = 'update.json';
+const UPDATE_JSON_PROXY = 'update-proxy.json';
 
 /// generate update.json
 /// upload to update tag's release asset
 async function resolveUpdater() {
   if (process.env.GITHUB_TOKEN === undefined) {
-    throw new Error("GITHUB_TOKEN is required");
+    throw new Error('GITHUB_TOKEN is required');
   }
 
   const options = { owner: context.repo.owner, repo: context.repo.repo };
@@ -23,7 +23,7 @@ async function resolveUpdater() {
   });
 
   // get the latest publish tag
-  const tag = tags.find((t) => t.name.startsWith("v"));
+  const tag = tags.find((t) => t.name.startsWith('v'));
 
   console.log(tag);
   console.log();
@@ -38,15 +38,15 @@ async function resolveUpdater() {
     notes: await resolveUpdateLog(tag.name), // use updatelog.md
     pub_date: new Date().toISOString(),
     platforms: {
-      win64: { signature: "", url: "" }, // compatible with older formats
-      linux: { signature: "", url: "" }, // compatible with older formats
-      darwin: { signature: "", url: "" }, // compatible with older formats
-      "darwin-aarch64": { signature: "", url: "" },
-      "darwin-intel": { signature: "", url: "" },
-      "darwin-x86_64": { signature: "", url: "" },
-      "linux-x86_64": { signature: "", url: "" },
-      "windows-x86_64": { signature: "", url: "" },
-      "windows-i686": { signature: "", url: "" }, // no supported
+      win64: { signature: '', url: '' }, // compatible with older formats
+      linux: { signature: '', url: '' }, // compatible with older formats
+      darwin: { signature: '', url: '' }, // compatible with older formats
+      'darwin-aarch64': { signature: '', url: '' },
+      'darwin-intel': { signature: '', url: '' },
+      'darwin-x86_64': { signature: '', url: '' },
+      'linux-x86_64': { signature: '', url: '' },
+      'windows-x86_64': { signature: '', url: '' },
+      'windows-i686': { signature: '', url: '' }, // no supported
     },
   };
 
@@ -54,51 +54,51 @@ async function resolveUpdater() {
     const { name, browser_download_url } = asset;
 
     // win64 url
-    if (name.endsWith(".msi.zip") && name.includes("en-US")) {
+    if (name.endsWith('.msi.zip') && name.includes('en-US')) {
       updateData.platforms.win64.url = browser_download_url;
-      updateData.platforms["windows-x86_64"].url = browser_download_url;
+      updateData.platforms['windows-x86_64'].url = browser_download_url;
     }
     // win64 signature
-    if (name.endsWith(".msi.zip.sig") && name.includes("en-US")) {
+    if (name.endsWith('.msi.zip.sig') && name.includes('en-US')) {
       const sig = await getSignature(browser_download_url);
       updateData.platforms.win64.signature = sig;
-      updateData.platforms["windows-x86_64"].signature = sig;
+      updateData.platforms['windows-x86_64'].signature = sig;
     }
 
     // darwin url (intel)
-    if (name.endsWith(".app.tar.gz") && !name.includes("aarch")) {
+    if (name.endsWith('.app.tar.gz') && !name.includes('aarch')) {
       updateData.platforms.darwin.url = browser_download_url;
-      updateData.platforms["darwin-intel"].url = browser_download_url;
-      updateData.platforms["darwin-x86_64"].url = browser_download_url;
+      updateData.platforms['darwin-intel'].url = browser_download_url;
+      updateData.platforms['darwin-x86_64'].url = browser_download_url;
     }
     // darwin signature (intel)
-    if (name.endsWith(".app.tar.gz.sig") && !name.includes("aarch")) {
+    if (name.endsWith('.app.tar.gz.sig') && !name.includes('aarch')) {
       const sig = await getSignature(browser_download_url);
       updateData.platforms.darwin.signature = sig;
-      updateData.platforms["darwin-intel"].signature = sig;
-      updateData.platforms["darwin-x86_64"].signature = sig;
+      updateData.platforms['darwin-intel'].signature = sig;
+      updateData.platforms['darwin-x86_64'].signature = sig;
     }
 
     // darwin url (aarch)
-    if (name.endsWith("aarch64.app.tar.gz")) {
-      updateData.platforms["darwin-aarch64"].url = browser_download_url;
+    if (name.endsWith('aarch64.app.tar.gz')) {
+      updateData.platforms['darwin-aarch64'].url = browser_download_url;
     }
     // darwin signature (aarch)
-    if (name.endsWith("aarch64.app.tar.gz.sig")) {
+    if (name.endsWith('aarch64.app.tar.gz.sig')) {
       const sig = await getSignature(browser_download_url);
-      updateData.platforms["darwin-aarch64"].signature = sig;
+      updateData.platforms['darwin-aarch64'].signature = sig;
     }
 
     // linux url
-    if (name.endsWith(".AppImage.tar.gz")) {
+    if (name.endsWith('.AppImage.tar.gz')) {
       updateData.platforms.linux.url = browser_download_url;
-      updateData.platforms["linux-x86_64"].url = browser_download_url;
+      updateData.platforms['linux-x86_64'].url = browser_download_url;
     }
     // linux signature
-    if (name.endsWith(".AppImage.tar.gz.sig")) {
+    if (name.endsWith('.AppImage.tar.gz.sig')) {
       const sig = await getSignature(browser_download_url);
       updateData.platforms.linux.signature = sig;
-      updateData.platforms["linux-x86_64"].signature = sig;
+      updateData.platforms['linux-x86_64'].signature = sig;
     }
   });
 
@@ -120,7 +120,7 @@ async function resolveUpdater() {
 
   Object.entries(updateDataNew.platforms).forEach(([key, value]) => {
     if (value.url) {
-      updateDataNew.platforms[key].url = "https://ghproxy.com/" + value.url;
+      updateDataNew.platforms[key].url = 'https://ghproxy.com/' + value.url;
     } else {
       console.log(`[Error]: updateDataNew.platforms.${key} is null`);
     }
@@ -167,8 +167,8 @@ async function resolveUpdater() {
 // get the signature file content
 async function getSignature(url) {
   const response = await fetch(url, {
-    method: "GET",
-    headers: { "Content-Type": "application/octet-stream" },
+    method: 'GET',
+    headers: { 'Content-Type': 'application/octet-stream' },
   });
 
   return response.text();

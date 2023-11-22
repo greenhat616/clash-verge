@@ -1,6 +1,6 @@
-import { cmdGetProxyDelay } from "./cmds";
+import { cmdGetProxyDelay } from './cmds';
 
-const hashKey = (name: string, group: string) => `${group ?? ""}::${name}`;
+const hashKey = (name: string, group: string) => `${group ?? ''}::${name}`;
 
 class DelayManager {
   private cache = new Map<string, [number, number]>();
@@ -109,18 +109,18 @@ class DelayManager {
   }
 
   formatDelay(delay: number) {
-    if (delay < 0) return "-";
-    if (delay > 1e5) return "Error";
-    if (delay >= 10000) return "Timeout"; // 10s
+    if (delay < 0) return '-';
+    if (delay > 1e5) return 'Error';
+    if (delay >= 10000) return 'Timeout'; // 10s
     return `${delay}`;
   }
 
   formatDelayColor(delay: number) {
-    if (delay <= 0) return "text.secondary";
-    if (delay >= 10000) return "error.main";
-    if (delay > 500) return "warning.main";
-    if (delay > 100) return "text.secondary";
-    return "success.main";
+    if (delay <= 0) return 'text.secondary';
+    if (delay >= 10000) return 'error.main';
+    if (delay > 500) return 'warning.main';
+    if (delay > 100) return 'text.secondary';
+    return 'success.main';
   }
 }
 

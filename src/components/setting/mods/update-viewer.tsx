@@ -1,17 +1,17 @@
-import useSWR from "swr";
-import snarkdown from "snarkdown";
-import { forwardRef, useImperativeHandle, useState, useMemo } from "react";
-import { useLockFn } from "ahooks";
-import { Box, styled } from "@mui/material";
-import { useRecoilState } from "recoil";
-import { useTranslation } from "react-i18next";
-import { relaunch } from "@tauri-apps/api/process";
-import { checkUpdate, installUpdate } from "@tauri-apps/api/updater";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
-import { atomUpdateState } from "@/services/states";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { atomUpdateState } from '@/services/states';
+import { Box, styled } from '@mui/material';
+import { relaunch } from '@tauri-apps/api/process';
+import { checkUpdate, installUpdate } from '@tauri-apps/api/updater';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useRecoilState } from 'recoil';
+import snarkdown from 'snarkdown';
+import useSWR from 'swr';
 
 const UpdateLog = styled(Box)(() => ({
-  "h1,h2,h3,ul,ol,p": { margin: "0.5em 0", color: "inherit" },
+  'h1,h2,h3,ul,ol,p': { margin: '0.5em 0', color: 'inherit' },
 }));
 
 export const UpdateViewer = forwardRef<DialogRef>((props, ref) => {
@@ -20,7 +20,7 @@ export const UpdateViewer = forwardRef<DialogRef>((props, ref) => {
   const [open, setOpen] = useState(false);
   const [updateState, setUpdateState] = useRecoilState(atomUpdateState);
 
-  const { data: updateInfo } = useSWR("checkUpdate", checkUpdate, {
+  const { data: updateInfo } = useSWR('checkUpdate', checkUpdate, {
     errorRetryCount: 2,
     revalidateIfStale: false,
     focusThrottleInterval: 36e5, // 1 hour
@@ -34,7 +34,7 @@ export const UpdateViewer = forwardRef<DialogRef>((props, ref) => {
   // markdown parser
   const parseContent = useMemo(() => {
     if (!updateInfo?.manifest?.body) {
-      return "New Version is available";
+      return 'New Version is available';
     }
     return snarkdown(updateInfo?.manifest?.body);
   }, [updateInfo]);
@@ -57,9 +57,9 @@ export const UpdateViewer = forwardRef<DialogRef>((props, ref) => {
     <BaseDialog
       open={open}
       title={`New Version v${updateInfo?.manifest?.version}`}
-      contentSx={{ minWidth: 360, maxWidth: 400, maxHeight: "50vh" }}
-      okBtn={t("Update")}
-      cancelBtn={t("Cancel")}
+      contentSx={{ minWidth: 360, maxWidth: 400, maxHeight: '50vh' }}
+      okBtn={t('Update')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onUpdate}
@@ -68,3 +68,5 @@ export const UpdateViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+UpdateViewer.displayName = 'UpdateViewer';

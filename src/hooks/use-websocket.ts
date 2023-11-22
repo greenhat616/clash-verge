@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
 export type WsMsgFn = (event: MessageEvent<any>) => void;
 
@@ -33,8 +33,8 @@ export const useWebsocket = (onMessage: WsMsgFn, options?: WsOptions) => {
       const ws = new WebSocket(url);
       wsRef.current = ws;
 
-      ws.addEventListener("message", onMessage);
-      ws.addEventListener("error", () => {
+      ws.addEventListener('message', onMessage);
+      ws.addEventListener('error', () => {
         errorCount -= 1;
 
         if (errorCount >= 0) {

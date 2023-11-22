@@ -1,6 +1,5 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useVerge } from '@/hooks/use-verge';
 import {
   List,
   ListItem,
@@ -9,9 +8,10 @@ import {
   Select,
   Switch,
   TextField,
-} from "@mui/material";
-import { useVerge } from "@/hooks/use-verge";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
+} from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -19,12 +19,12 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
 
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
-    appLogLevel: "info",
+    appLogLevel: 'info',
     autoCloseConnection: false,
     enableClashFields: true,
     enableBuiltinEnhanced: true,
     proxyLayoutColumn: 6,
-    defaultLatencyTest: "",
+    defaultLatencyTest: '',
     autoLogClean: 0,
   });
 
@@ -32,12 +32,12 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
     open: () => {
       setOpen(true);
       setValues({
-        appLogLevel: verge?.app_log_level ?? "info",
+        appLogLevel: verge?.app_log_level ?? 'info',
         autoCloseConnection: verge?.auto_close_connection ?? false,
         enableClashFields: verge?.enable_clash_fields ?? true,
         enableBuiltinEnhanced: verge?.enable_builtin_enhanced ?? true,
         proxyLayoutColumn: verge?.proxy_layout_column || 6,
-        defaultLatencyTest: verge?.default_latency_test || "",
+        defaultLatencyTest: verge?.default_latency_test || '',
         autoLogClean: verge?.auto_log_clean || 0,
       });
     },
@@ -64,20 +64,20 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Miscellaneous")}
+      title={t('Miscellaneous')}
       contentSx={{ width: 450 }}
-      okBtn={t("Save")}
-      cancelBtn={t("Cancel")}
+      okBtn={t('Save')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("App Log Level")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('App Log Level')} />
           <Select
             size="small"
-            sx={{ width: 100, "> div": { py: "7.5px" } }}
+            sx={{ width: 100, '> div': { py: '7.5px' } }}
             value={values.appLogLevel}
             onChange={(e) => {
               setValues((v) => ({
@@ -86,7 +86,7 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
               }));
             }}
           >
-            {["trace", "debug", "info", "warn", "error", "silent"].map((i) => (
+            {['trace', 'debug', 'info', 'warn', 'error', 'silent'].map((i) => (
               <MenuItem value={i} key={i}>
                 {i[0].toUpperCase() + i.slice(1).toLowerCase()}
               </MenuItem>
@@ -94,8 +94,8 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Auto Close Connections")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Auto Close Connections')} />
           <Switch
             edge="end"
             checked={values.autoCloseConnection}
@@ -105,8 +105,8 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Enable Clash Fields Filter")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Enable Clash Fields Filter')} />
           <Switch
             edge="end"
             checked={values.enableClashFields}
@@ -116,8 +116,8 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Enable Builtin Enhanced")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Enable Builtin Enhanced')} />
           <Switch
             edge="end"
             checked={values.enableBuiltinEnhanced}
@@ -127,11 +127,11 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Proxy Layout Column")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Proxy Layout Column')} />
           <Select
             size="small"
-            sx={{ width: 135, "> div": { py: "7.5px" } }}
+            sx={{ width: 135, '> div': { py: '7.5px' } }}
             value={values.proxyLayoutColumn}
             onChange={(e) => {
               setValues((v) => ({
@@ -151,11 +151,11 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Auto Log Clean")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Auto Log Clean')} />
           <Select
             size="small"
-            sx={{ width: 135, "> div": { py: "7.5px" } }}
+            sx={{ width: 135, '> div': { py: '7.5px' } }}
             value={values.autoLogClean}
             onChange={(e) => {
               setValues((v) => ({
@@ -165,10 +165,10 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
             }}
           >
             {[
-              { key: "Never Clean", value: 0 },
-              { key: "Retain 7 Days", value: 1 },
-              { key: "Retain 30 Days", value: 2 },
-              { key: "Retain 90 Days", value: 3 },
+              { key: 'Never Clean', value: 0 },
+              { key: 'Retain 7 Days', value: 1 },
+              { key: 'Retain 30 Days', value: 2 },
+              { key: 'Retain 90 Days', value: 3 },
             ].map((i) => (
               <MenuItem key={i.value} value={i.value}>
                 {t(i.key)}
@@ -177,8 +177,8 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
           </Select>
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Default Latency Test")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Default Latency Test')} />
           <TextField
             size="small"
             autoComplete="off"
@@ -197,3 +197,5 @@ export const MiscViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+MiscViewer.displayName = 'MiscViewer';

@@ -1,26 +1,26 @@
-import dayjs from "dayjs";
-import i18next from "i18next";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { SWRConfig, mutate } from "swr";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { Route, Routes } from "react-router-dom";
-import { alpha, List, Paper, ThemeProvider } from "@mui/material";
-import { listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
-import { routers } from "./_routers";
-import { getAxios } from "@/services/api";
-import { useVerge } from "@/hooks/use-verge";
-import { ReactComponent as LogoSvg } from "@/assets/image/logo.svg";
-import { BaseErrorBoundary, Notice } from "@/components/base";
-import { LayoutItem } from "@/components/layout/layout-item";
-import { LayoutControl } from "@/components/layout/layout-control";
-import { LayoutTraffic } from "@/components/layout/layout-traffic";
-import { UpdateButton } from "@/components/layout/update-button";
-import { useCustomTheme } from "@/components/layout/use-custom-theme";
-import getSystem from "@/utils/get-system";
-import "dayjs/locale/ru";
-import "dayjs/locale/zh-cn";
+import LogoSvg from '@/assets/image/logo.svg?react';
+import { BaseErrorBoundary, Notice } from '@/components/base';
+import { LayoutControl } from '@/components/layout/layout-control';
+import { LayoutItem } from '@/components/layout/layout-item';
+import { LayoutTraffic } from '@/components/layout/layout-traffic';
+import { UpdateButton } from '@/components/layout/update-button';
+import { useCustomTheme } from '@/components/layout/use-custom-theme';
+import { useVerge } from '@/hooks/use-verge';
+import { getAxios } from '@/services/api';
+import getSystem from '@/utils/get-system';
+import { List, Paper, ThemeProvider, alpha } from '@mui/material';
+import { listen } from '@tauri-apps/api/event';
+import { appWindow } from '@tauri-apps/api/window';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import 'dayjs/locale/zh-cn';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import i18next from 'i18next';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Route, Routes } from 'react-router-dom';
+import { SWRConfig, mutate } from 'swr';
+import { routers } from './_routers';
 
 dayjs.extend(relativeTime);
 
@@ -35,33 +35,33 @@ const Layout = () => {
   const { theme_blur, language } = verge || {};
 
   useEffect(() => {
-    window.addEventListener("keydown", (e) => {
+    window.addEventListener('keydown', (e) => {
       // macOS有cmd+w
-      if (e.key === "Escape" && OS !== "macos") {
+      if (e.key === 'Escape' && OS !== 'macos') {
         appWindow.close();
       }
     });
 
-    listen("verge://refresh-clash-config", async () => {
+    listen('verge://refresh-clash-config', async () => {
       // the clash info may be updated
       await getAxios(true);
-      mutate("getProxies");
-      mutate("getVersion");
-      mutate("getClashConfig");
-      mutate("getProviders");
+      mutate('getProxies');
+      mutate('getVersion');
+      mutate('getClashConfig');
+      mutate('getProviders');
     });
 
     // update the verge config
-    listen("verge://refresh-verge-config", () => mutate("getVergeConfig"));
+    listen('verge://refresh-verge-config', () => mutate('getVergeConfig'));
 
     // 设置提示监听
-    listen("verge://notice-message", ({ payload }) => {
+    listen('verge://notice-message', ({ payload }) => {
       const [status, msg] = payload as [string, string];
       switch (status) {
-        case "set_config::ok":
-          Notice.success("Refresh clash config");
+        case 'set_config::ok':
+          Notice.success('Refresh clash config');
           break;
-        case "set_config::error":
+        case 'set_config::error':
           Notice.error(msg);
           break;
         default:
@@ -72,7 +72,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (language) {
-      dayjs.locale(language === "zh" ? "zh-cn" : language);
+      dayjs.locale(language === 'zh' ? 'zh-cn' : language);
       i18next.changeLanguage(language);
     }
   }, [language]);
@@ -89,10 +89,10 @@ const Layout = () => {
           }}
           onContextMenu={(e) => {
             // only prevent it on Windows
-            const validList = ["input", "textarea"];
+            const validList = ['input', 'textarea'];
             const target = e.currentTarget;
             if (
-              OS === "windows" &&
+              OS === 'windows' &&
               !(
                 validList.includes(target.tagName.toLowerCase()) ||
                 target.isContentEditable
@@ -111,7 +111,7 @@ const Layout = () => {
             <div className="the-logo" data-windrag>
               <LogoSvg />
 
-              {!(OS === "windows" && WIN_PORTABLE) && (
+              {!(OS === 'windows' && WIN_PORTABLE) && (
                 <UpdateButton className="the-newbtn" />
               )}
             </div>
@@ -130,7 +130,7 @@ const Layout = () => {
           </div>
 
           <div className="layout__right" data-windrag>
-            {OS === "windows" && (
+            {OS === 'windows' && (
               <div className="the-bar">
                 <LayoutControl />
               </div>

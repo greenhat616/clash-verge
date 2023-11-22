@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Box, IconButton, TextField, SxProps } from "@mui/material";
+import { useVerge } from '@/hooks/use-verge';
+import delayManager from '@/services/delay';
 import {
   AccessTimeRounded,
+  FilterAltOffRounded,
+  FilterAltRounded,
   MyLocationRounded,
   NetworkCheckRounded,
-  FilterAltRounded,
-  FilterAltOffRounded,
-  VisibilityRounded,
-  VisibilityOffRounded,
-  WifiTetheringRounded,
-  WifiTetheringOffRounded,
   SortByAlphaRounded,
   SortRounded,
-} from "@mui/icons-material";
-import { useVerge } from "@/hooks/use-verge";
-import type { HeadState } from "./use-head-state";
-import type { ProxySortType } from "./use-filter-sort";
-import delayManager from "@/services/delay";
+  VisibilityOffRounded,
+  VisibilityRounded,
+  WifiTetheringOffRounded,
+  WifiTetheringRounded,
+} from '@mui/icons-material';
+import { Box, IconButton, SxProps, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { ProxySortType } from './use-filter-sort';
+import type { HeadState } from './use-head-state';
 
 interface Props {
   sx?: SxProps;
@@ -45,15 +45,15 @@ export const ProxyHead = (props: Props) => {
   const { verge } = useVerge();
 
   useEffect(() => {
-    delayManager.setUrl(groupName, testUrl || verge?.default_latency_test!);
+    delayManager.setUrl(groupName, testUrl || verge!.default_latency_test!);
   }, [groupName, testUrl, verge?.default_latency_test]);
 
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5, ...sx }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ...sx }}>
       <IconButton
         size="small"
         color="inherit"
-        title={t("Location")}
+        title={t('Location')}
         onClick={props.onLocation}
       >
         <MyLocationRounded />
@@ -62,11 +62,11 @@ export const ProxyHead = (props: Props) => {
       <IconButton
         size="small"
         color="inherit"
-        title={t("Delay check")}
+        title={t('Delay check')}
         onClick={() => {
           // Remind the user that it is custom test url
-          if (testUrl?.trim() && textState !== "filter") {
-            onHeadState({ textState: "url" });
+          if (testUrl?.trim() && textState !== 'filter') {
+            onHeadState({ textState: 'url' });
           }
           props.onCheckDelay();
         }}
@@ -78,7 +78,7 @@ export const ProxyHead = (props: Props) => {
         size="small"
         color="inherit"
         title={
-          [t("Sort by default"), t("Sort by delay"), t("Sort by name")][
+          [t('Sort by default'), t('Sort by delay'), t('Sort by name')][
             sortType
           ]
         }
@@ -94,12 +94,12 @@ export const ProxyHead = (props: Props) => {
       <IconButton
         size="small"
         color="inherit"
-        title={t("Delay check URL")}
+        title={t('Delay check URL')}
         onClick={() =>
-          onHeadState({ textState: textState === "url" ? null : "url" })
+          onHeadState({ textState: textState === 'url' ? null : 'url' })
         }
       >
-        {textState === "url" ? (
+        {textState === 'url' ? (
           <WifiTetheringRounded />
         ) : (
           <WifiTetheringOffRounded />
@@ -109,7 +109,7 @@ export const ProxyHead = (props: Props) => {
       <IconButton
         size="small"
         color="inherit"
-        title={t("Proxy detail")}
+        title={t('Proxy detail')}
         onClick={() => onHeadState({ showType: !showType })}
       >
         {showType ? <VisibilityRounded /> : <VisibilityOffRounded />}
@@ -118,32 +118,32 @@ export const ProxyHead = (props: Props) => {
       <IconButton
         size="small"
         color="inherit"
-        title={t("Filter")}
+        title={t('Filter')}
         onClick={() =>
-          onHeadState({ textState: textState === "filter" ? null : "filter" })
+          onHeadState({ textState: textState === 'filter' ? null : 'filter' })
         }
       >
-        {textState === "filter" ? (
+        {textState === 'filter' ? (
           <FilterAltRounded />
         ) : (
           <FilterAltOffRounded />
         )}
       </IconButton>
 
-      {textState === "filter" && (
+      {textState === 'filter' && (
         <TextField
           autoFocus={autoFocus}
           hiddenLabel
           value={filterText}
           size="small"
           variant="outlined"
-          placeholder={t("Filter conditions")}
+          placeholder={t('Filter conditions')}
           onChange={(e) => onHeadState({ filterText: e.target.value })}
-          sx={{ ml: 0.5, flex: "1 1 auto", input: { py: 0.65, px: 1 } }}
+          sx={{ ml: 0.5, flex: '1 1 auto', input: { py: 0.65, px: 1 } }}
         />
       )}
 
-      {textState === "url" && (
+      {textState === 'url' && (
         <TextField
           autoFocus={autoFocus}
           hiddenLabel
@@ -152,9 +152,9 @@ export const ProxyHead = (props: Props) => {
           value={testUrl}
           size="small"
           variant="outlined"
-          placeholder={t("Delay check URL")}
+          placeholder={t('Delay check URL')}
           onChange={(e) => onHeadState({ testUrl: e.target.value })}
-          sx={{ ml: 0.5, flex: "1 1 auto", input: { py: 0.65, px: 1 } }}
+          sx={{ ml: 0.5, flex: '1 1 auto', input: { py: 0.65, px: 1 } }}
         />
       )}
     </Box>

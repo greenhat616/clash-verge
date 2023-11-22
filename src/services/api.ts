@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from "axios";
-import { getClashInfo } from "./cmds";
+import axios, { AxiosInstance } from 'axios';
+import { getClashInfo } from './cmds';
 
 let axiosIns: AxiosInstance = null!;
 
@@ -8,8 +8,8 @@ let axiosIns: AxiosInstance = null!;
 export const getAxios = async (force: boolean = false) => {
   if (axiosIns && !force) return axiosIns;
 
-  let server = "";
-  let secret = "";
+  let server = '';
+  let secret = '';
 
   try {
     const info = await getClashInfo();
@@ -18,7 +18,7 @@ export const getAxios = async (force: boolean = false) => {
       server = info.server;
 
       // compatible width `external-controller`
-      if (server.startsWith(":")) server = `127.0.0.1${server}`;
+      if (server.startsWith(':')) server = `127.0.0.1${server}`;
       else if (/^\d+$/.test(server)) server = `127.0.0.1:${server}`;
     }
     if (info?.secret) secret = info?.secret;
@@ -36,7 +36,7 @@ export const getAxios = async (force: boolean = false) => {
 /// Get Version
 export const getVersion = async () => {
   const instance = await getAxios();
-  return instance.get("/version") as Promise<{
+  return instance.get('/version') as Promise<{
     premium: boolean;
     meta?: boolean;
     version: string;
@@ -46,19 +46,19 @@ export const getVersion = async () => {
 /// Get current base configs
 export const getClashConfig = async () => {
   const instance = await getAxios();
-  return instance.get("/configs") as Promise<IConfigData>;
+  return instance.get('/configs') as Promise<IConfigData>;
 };
 
 /// Update current configs
 export const updateConfigs = async (config: Partial<IConfigData>) => {
   const instance = await getAxios();
-  return instance.patch("/configs", config);
+  return instance.patch('/configs', config);
 };
 
 /// Get current rules
 export const getRules = async () => {
   const instance = await getAxios();
-  const response = await instance.get<any, any>("/rules");
+  const response = await instance.get<any, any>('/rules');
   return response?.rules as IRuleItem[];
 };
 
@@ -66,12 +66,12 @@ export const getRules = async () => {
 export const getProxyDelay = async (name: string, url?: string) => {
   const params = {
     timeout: 10000,
-    url: url || "http://www.gstatic.com/generate_204",
+    url: url || 'http://www.gstatic.com/generate_204',
   };
   const instance = await getAxios();
   const result = await instance.get(
     `/proxies/${encodeURIComponent(name)}/delay`,
-    { params }
+    { params },
   );
   return result as any as { delay: number };
 };
@@ -85,7 +85,7 @@ export const updateProxy = async (group: string, proxy: string) => {
 // get proxy
 export const getProxiesInner = async () => {
   const instance = await getAxios();
-  const response = await instance.get<any, any>("/proxies");
+  const response = await instance.get<any, any>('/proxies');
   return (response?.proxies || {}) as Record<string, IProxyItem>;
 };
 
@@ -99,15 +99,15 @@ export const getProxies = async () => {
   // provider name map
   const providerMap = Object.fromEntries(
     Object.entries(providerRecord).flatMap(([provider, item]) =>
-      item.proxies.map((p) => [p.name, { ...p, provider }])
-    )
+      item.proxies.map((p) => [p.name, { ...p, provider }]),
+    ),
   );
 
   // compatible with proxy-providers
   const generateItem = (name: string) => {
     if (proxyRecord[name]) return proxyRecord[name];
     if (providerMap[name]) return providerMap[name];
-    return { name, type: "unknown", udp: false, history: [] };
+    return { name, type: 'unknown', udp: false, history: [] };
   };
 
   const { GLOBAL: global, DIRECT: direct, REJECT: reject } = proxyRecord;
@@ -124,7 +124,7 @@ export const getProxies = async () => {
       }));
   } else {
     groups = Object.values(proxyRecord)
-      .filter((each) => each.name !== "GLOBAL" && each.all)
+      .filter((each) => each.name !== 'GLOBAL' && each.all)
       .map((each) => ({
         ...each,
         all: each.all!.map((item) => generateItem(item)),
@@ -134,8 +134,8 @@ export const getProxies = async () => {
 
   const proxies = [direct, reject].concat(
     Object.values(proxyRecord).filter(
-      (p) => !p.all?.length && p.name !== "DIRECT" && p.name !== "REJECT"
-    )
+      (p) => !p.all?.length && p.name !== 'DIRECT' && p.name !== 'REJECT',
+    ),
   );
 
   const _global: IProxyGroupItem = {
@@ -149,15 +149,15 @@ export const getProxies = async () => {
 // get proxy providers
 export const getProviders = async () => {
   const instance = await getAxios();
-  const response = await instance.get<any, any>("/providers/proxies");
+  const response = await instance.get<any, any>('/providers/proxies');
 
   const providers = (response.providers || {}) as Record<string, IProviderItem>;
 
   return Object.fromEntries(
     Object.entries(providers).filter(([key, item]) => {
       const type = item.vehicleType.toLowerCase();
-      return type === "http" || type === "file";
-    })
+      return type === 'http' || type === 'file';
+    }),
   );
 };
 
@@ -165,7 +165,7 @@ export const getProviders = async () => {
 export const providerHealthCheck = async (name: string) => {
   const instance = await getAxios();
   return instance.get(
-    `/providers/proxies/${encodeURIComponent(name)}/healthcheck`
+    `/providers/proxies/${encodeURIComponent(name)}/healthcheck`,
   );
 };
 
@@ -176,7 +176,7 @@ export const providerUpdate = async (name: string) => {
 
 export const getConnections = async () => {
   const instance = await getAxios();
-  const result = await instance.get("/connections");
+  const result = await instance.get('/connections');
   return result as any as IConnections;
 };
 

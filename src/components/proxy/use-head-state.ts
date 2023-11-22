@@ -1,31 +1,31 @@
-import { useCallback, useEffect, useState } from "react";
-import { ProxySortType } from "./use-filter-sort";
-import { useProfiles } from "@/hooks/use-profiles";
+import { useCallback, useEffect, useState } from 'react';
+import { ProxySortType } from './use-filter-sort';
+import { useProfiles } from '@/hooks/use-profiles';
 
 export interface HeadState {
   open?: boolean;
   showType: boolean;
   sortType: ProxySortType;
   filterText: string;
-  textState: "url" | "filter" | null;
+  textState: 'url' | 'filter' | null;
   testUrl: string;
 }
 
 type HeadStateStorage = Record<string, Record<string, HeadState>>;
 
-const HEAD_STATE_KEY = "proxy-head-state";
+const HEAD_STATE_KEY = 'proxy-head-state';
 export const DEFAULT_STATE: HeadState = {
   open: false,
   showType: false,
   sortType: 0,
-  filterText: "",
+  filterText: '',
   textState: null,
-  testUrl: "",
+  testUrl: '',
 };
 
 export function useHeadStateNew() {
   const { profiles } = useProfiles();
-  const current = profiles?.current || "";
+  const current = profiles?.current || '';
 
   const [state, setState] = useState<Record<string, HeadState>>({});
 
@@ -37,12 +37,12 @@ export function useHeadStateNew() {
 
     try {
       const data = JSON.parse(
-        localStorage.getItem(HEAD_STATE_KEY)!
+        localStorage.getItem(HEAD_STATE_KEY)!,
       ) as HeadStateStorage;
 
       const value = data[current] || {};
 
-      if (value && typeof value === "object") {
+      if (value && typeof value === 'object') {
         setState(value);
       } else {
         setState({});
@@ -63,7 +63,7 @@ export function useHeadStateNew() {
 
             let data = (item ? JSON.parse(item) : {}) as HeadStateStorage;
 
-            if (!data || typeof data !== "object") data = {};
+            if (!data || typeof data !== 'object') data = {};
 
             data[current] = ret;
 
@@ -74,7 +74,7 @@ export function useHeadStateNew() {
         return ret;
       });
     },
-    [current]
+    [current],
   );
 
   return [state, setHeadState] as const;

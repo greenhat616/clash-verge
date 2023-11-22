@@ -1,16 +1,16 @@
-import useSWR, { mutate } from "swr";
-import { useMemo, useRef, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useSetRecoilState } from "recoil";
-import { Box, Button, Grid, IconButton, Stack, TextField } from "@mui/material";
+import useSWR, { mutate } from 'swr';
+import { useMemo, useRef, useState } from 'react';
+import { useLockFn } from 'ahooks';
+import { useSetRecoilState } from 'recoil';
+import { Box, Button, Grid, IconButton, Stack, TextField } from '@mui/material';
 import {
   ClearRounded,
   ContentCopyRounded,
   LocalFireDepartmentRounded,
   RefreshRounded,
   TextSnippetOutlined,
-} from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
+} from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import {
   getProfiles,
   importProfile,
@@ -18,26 +18,26 @@ import {
   getRuntimeLogs,
   deleteProfile,
   updateProfile,
-} from "@/services/cmds";
-import { atomLoadingCache } from "@/services/states";
-import { closeAllConnections } from "@/services/api";
-import { BasePage, DialogRef, Notice } from "@/components/base";
+} from '@/services/cmds';
+import { atomLoadingCache } from '@/services/states';
+import { closeAllConnections } from '@/services/api';
+import { BasePage, DialogRef, Notice } from '@/components/base';
 import {
   ProfileViewer,
   ProfileViewerRef,
-} from "@/components/profile/profile-viewer";
-import { ProfileItem } from "@/components/profile/profile-item";
-import { ProfileMore } from "@/components/profile/profile-more";
-import { useProfiles } from "@/hooks/use-profiles";
-import { ConfigViewer } from "@/components/setting/mods/config-viewer";
-import { throttle } from "lodash-es";
+} from '@/components/profile/profile-viewer';
+import { ProfileItem } from '@/components/profile/profile-item';
+import { ProfileMore } from '@/components/profile/profile-more';
+import { useProfiles } from '@/hooks/use-profiles';
+import { ConfigViewer } from '@/components/setting/mods/config-viewer';
+import { throttle } from 'lodash-es';
 
 const ProfilePage = () => {
   const { t } = useTranslation();
 
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState('');
   const [disabled, setDisabled] = useState(false);
-  const [activating, setActivating] = useState("");
+  const [activating, setActivating] = useState('');
 
   const {
     profiles = {},
@@ -47,8 +47,8 @@ const ProfilePage = () => {
   } = useProfiles();
 
   const { data: chainLogs = {}, mutate: mutateLogs } = useSWR(
-    "getRuntimeLogs",
-    getRuntimeLogs
+    'getRuntimeLogs',
+    getRuntimeLogs,
   );
 
   const chain = profiles.chain || [];
@@ -60,8 +60,8 @@ const ProfilePage = () => {
     const items = profiles.items || [];
     const chain = profiles.chain || [];
 
-    const type1 = ["local", "remote"];
-    const type2 = ["merge", "script"];
+    const type1 = ['local', 'remote'];
+    const type2 = ['merge', 'script'];
 
     const regularItems = items.filter((i) => i && type1.includes(i.type!));
     const restItems = items.filter((i) => i && type2.includes(i.type!));
@@ -76,17 +76,17 @@ const ProfilePage = () => {
 
   const onImport = async () => {
     if (!url) return;
-    setUrl("");
+    setUrl('');
     setDisabled(true);
 
     try {
       await importProfile(url);
-      Notice.success("Successfully import profile.");
+      Notice.success('Successfully import profile.');
 
       getProfiles().then((newProfiles) => {
-        mutate("getProfiles", newProfiles);
+        mutate('getProfiles', newProfiles);
 
-        const remoteItem = newProfiles.items?.find((e) => e.type === "remote");
+        const remoteItem = newProfiles.items?.find((e) => e.type === 'remote');
         if (!newProfiles.current && remoteItem) {
           const current = remoteItem.uid;
           patchProfiles({ current });
@@ -110,12 +110,12 @@ const ProfilePage = () => {
       mutateLogs();
       closeAllConnections();
       setTimeout(() => activateSelected(), 2000);
-      Notice.success("Refresh clash config", 1000);
+      Notice.success('Refresh clash config', 1000);
     } catch (err: any) {
       Notice.error(err?.message || err.toString(), 4000);
     } finally {
       clearTimeout(reset);
-      setActivating("");
+      setActivating('');
     }
   });
 
@@ -123,7 +123,7 @@ const ProfilePage = () => {
     try {
       await enhanceProfiles();
       mutateLogs();
-      Notice.success("Refresh clash config", 1000);
+      Notice.success('Refresh clash config', 1000);
     } catch (err: any) {
       Notice.error(err.message || err.toString(), 3000);
     }
@@ -187,7 +187,7 @@ const ProfilePage = () => {
       setLoadingCache((cache) => {
         // 获取没有正在更新的配置
         const items = regularItems.filter(
-          (e) => e.type === "remote" && !cache[e.uid]
+          (e) => e.type === 'remote' && !cache[e.uid],
         );
         const change = Object.fromEntries(items.map((e) => [e.uid, true]));
 
@@ -204,13 +204,13 @@ const ProfilePage = () => {
 
   return (
     <BasePage
-      title={t("Profiles")}
+      title={t('Profiles')}
       header={
-        <Box sx={{ mt: 1, display: "flex", alignItems: "center", gap: 1 }}>
+        <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
           <IconButton
             size="small"
             color="inherit"
-            title={t("Update All Profiles")}
+            title={t('Update All Profiles')}
             onClick={onUpdateAll}
           >
             <RefreshRounded />
@@ -219,7 +219,7 @@ const ProfilePage = () => {
           <IconButton
             size="small"
             color="inherit"
-            title={t("View Runtime Config")}
+            title={t('View Runtime Config')}
             onClick={() => configRef.current?.open()}
           >
             <TextSnippetOutlined />
@@ -228,7 +228,7 @@ const ProfilePage = () => {
           <IconButton
             size="small"
             color="primary"
-            title={t("Reactivate Profiles")}
+            title={t('Reactivate Profiles')}
             onClick={onEnhance}
           >
             <LocalFireDepartmentRounded />
@@ -247,14 +247,14 @@ const ProfilePage = () => {
           spellCheck="false"
           onChange={(e) => setUrl(e.target.value)}
           sx={{ input: { py: 0.65, px: 1.25 } }}
-          placeholder={t("Profile URL")}
+          placeholder={t('Profile URL')}
           InputProps={{
             sx: { pr: 1 },
             endAdornment: !url ? (
               <IconButton
                 size="small"
                 sx={{ p: 0.5 }}
-                title={t("Paste")}
+                title={t('Paste')}
                 onClick={onCopyLink}
               >
                 <ContentCopyRounded fontSize="inherit" />
@@ -263,8 +263,8 @@ const ProfilePage = () => {
               <IconButton
                 size="small"
                 sx={{ p: 0.5 }}
-                title={t("Clear")}
-                onClick={() => setUrl("")}
+                title={t('Clear')}
+                onClick={() => setUrl('')}
               >
                 <ClearRounded fontSize="inherit" />
               </IconButton>
@@ -277,14 +277,14 @@ const ProfilePage = () => {
           size="small"
           onClick={onImport}
         >
-          {t("Import")}
+          {t('Import')}
         </Button>
         <Button
           variant="contained"
           size="small"
           onClick={() => viewerRef.current?.create()}
         >
-          {t("New")}
+          {t('New')}
         </Button>
       </Stack>
 

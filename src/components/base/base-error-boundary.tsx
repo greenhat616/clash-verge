@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
+import { ReactNode } from 'react';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
 function ErrorFallback({ error }: FallbackProps) {
   return (

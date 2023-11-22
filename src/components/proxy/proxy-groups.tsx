@@ -1,18 +1,18 @@
-import { useRef } from "react";
-import { useLockFn } from "ahooks";
-import { Virtuoso, type VirtuosoHandle } from "react-virtuoso";
+import { useRef } from 'react';
+import { useLockFn } from 'ahooks';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import {
   getConnections,
   providerHealthCheck,
   updateProxy,
   deleteConnection,
-} from "@/services/api";
-import { useProfiles } from "@/hooks/use-profiles";
-import { useVerge } from "@/hooks/use-verge";
-import { BaseEmpty } from "../base";
-import { useRenderList } from "./use-render-list";
-import { ProxyRender } from "./proxy-render";
-import delayManager from "@/services/delay";
+} from '@/services/api';
+import { useProfiles } from '@/hooks/use-profiles';
+import { useVerge } from '@/hooks/use-verge';
+import { BaseEmpty } from '../base';
+import { useRenderList } from './use-render-list';
+import { ProxyRender } from './proxy-render';
+import delayManager from '@/services/delay';
 
 interface Props {
   mode: string;
@@ -31,7 +31,7 @@ export const ProxyGroups = (props: Props) => {
   // 切换分组的节点代理
   const handleChangeProxy = useLockFn(
     async (group: IProxyGroupItem, proxy: IProxyItem) => {
-      if (group.type !== "Selector" && group.type !== "Fallback") return;
+      if (group.type !== 'Selector' && group.type !== 'Fallback') return;
 
       const { name, now } = group;
       await updateProxy(name, proxy.name);
@@ -53,7 +53,7 @@ export const ProxyGroups = (props: Props) => {
       if (!current.selected) current.selected = [];
 
       const index = current.selected.findIndex(
-        (item) => item.name === group.name
+        (item) => item.name === group.name,
       );
 
       if (index < 0) {
@@ -62,14 +62,14 @@ export const ProxyGroups = (props: Props) => {
         current.selected[index] = { name, now: proxy.name };
       }
       await patchCurrent({ selected: current.selected });
-    }
+    },
   );
 
   // 测全部延迟
   const handleCheckAll = useLockFn(async (groupName: string) => {
     const proxies = renderList
       .filter(
-        (e) => e.group?.name === groupName && (e.type === 2 || e.type === 4)
+        (e) => e.group?.name === groupName && (e.type === 2 || e.type === 4),
       )
       .flatMap((e) => e.proxyCol || e.proxy!)
       .filter(Boolean);
@@ -78,7 +78,7 @@ export const ProxyGroups = (props: Props) => {
 
     if (providers.size) {
       Promise.allSettled(
-        [...providers].map((p) => providerHealthCheck(p))
+        [...providers].map((p) => providerHealthCheck(p)),
       ).then(() => onProxies());
     }
 
@@ -97,33 +97,33 @@ export const ProxyGroups = (props: Props) => {
       (e) =>
         e.group?.name === name &&
         ((e.type === 2 && e.proxy?.name === now) ||
-          (e.type === 4 && e.proxyCol?.some((p) => p.name === now)))
+          (e.type === 4 && e.proxyCol?.some((p) => p.name === now))),
     );
 
     if (index >= 0) {
       virtuosoRef.current?.scrollToIndex?.({
         index,
-        align: "center",
-        behavior: "smooth",
+        align: 'center',
+        behavior: 'smooth',
       });
     }
   };
 
-  if (mode === "direct") {
+  if (mode === 'direct') {
     return <BaseEmpty text="Direct Mode" />;
   }
 
   return (
     <Virtuoso
       ref={virtuosoRef}
-      style={{ height: "100%" }}
+      style={{ height: '100%' }}
       totalCount={renderList.length}
       increaseViewportBy={256}
       itemContent={(index) => (
         <ProxyRender
           key={renderList[index].key}
           item={renderList[index]}
-          indent={mode === "rule" || mode === "script"}
+          indent={mode === 'rule' || mode === 'script'}
           onLocation={handleLocation}
           onCheckAll={handleCheckAll}
           onHeadState={onHeadState}

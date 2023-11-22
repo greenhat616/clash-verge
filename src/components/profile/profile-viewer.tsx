@@ -1,13 +1,5 @@
-import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
-import { useForm, Controller } from "react-hook-form";
+import { BaseDialog, Notice } from '@/components/base';
+import { createProfile, patchProfile } from '@/services/cmds';
 import {
   Box,
   FormControl,
@@ -16,13 +8,21 @@ import {
   MenuItem,
   Select,
   Switch,
-  styled,
   TextField,
-} from "@mui/material";
-import { createProfile, patchProfile } from "@/services/cmds";
-import { BaseDialog, Notice } from "@/components/base";
-import { version } from "@root/package.json";
-import { FileInput } from "./file-input";
+  styled,
+} from '@mui/material';
+import { version } from '@root/package.json';
+import { useLockFn } from 'ahooks';
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { FileInput } from './file-input';
 
 interface Props {
   onChange: () => void;
@@ -39,17 +39,17 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
   (props, ref) => {
     const { t } = useTranslation();
     const [open, setOpen] = useState(false);
-    const [openType, setOpenType] = useState<"new" | "edit">("new");
+    const [openType, setOpenType] = useState<'new' | 'edit'>('new');
 
     // file input
     const fileDataRef = useRef<string | null>(null);
 
     const { control, watch, register, ...formIns } = useForm<IProfileItem>({
       defaultValues: {
-        type: "remote",
-        name: "Remote File",
-        desc: "",
-        url: "",
+        type: 'remote',
+        name: 'Remote File',
+        desc: '',
+        url: '',
         option: {
           // user_agent: "",
           with_proxy: false,
@@ -60,7 +60,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
 
     useImperativeHandle(ref, () => ({
       create: () => {
-        setOpenType("new");
+        setOpenType('new');
         setOpen(true);
       },
       edit: (item) => {
@@ -69,30 +69,30 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
             formIns.setValue(key as any, value);
           });
         }
-        setOpenType("edit");
+        setOpenType('edit');
         setOpen(true);
       },
     }));
 
-    const selfProxy = watch("option.self_proxy");
-    const withProxy = watch("option.with_proxy");
+    const selfProxy = watch('option.self_proxy');
+    const withProxy = watch('option.with_proxy');
 
     useEffect(() => {
-      if (selfProxy) formIns.setValue("option.with_proxy", false);
+      if (selfProxy) formIns.setValue('option.with_proxy', false);
     }, [selfProxy]);
 
     useEffect(() => {
-      if (withProxy) formIns.setValue("option.self_proxy", false);
+      if (withProxy) formIns.setValue('option.self_proxy', false);
     }, [withProxy]);
 
     const handleOk = useLockFn(
       formIns.handleSubmit(async (form) => {
         try {
-          if (!form.type) throw new Error("`Type` should not be null");
-          if (form.type === "remote" && !form.url) {
-            throw new Error("The URL should not be null");
+          if (!form.type) throw new Error('`Type` should not be null');
+          if (form.type === 'remote' && !form.url) {
+            throw new Error('The URL should not be null');
           }
-          if (form.type !== "remote" && form.type !== "local") {
+          if (form.type !== 'remote' && form.type !== 'local') {
             delete form.option;
           }
           if (form.option?.update_interval) {
@@ -102,12 +102,12 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
           const item = { ...form, name };
 
           // 创建
-          if (openType === "new") {
+          if (openType === 'new') {
             await createProfile(item, fileDataRef.current);
           }
           // 编辑
           else {
-            if (!form.uid) throw new Error("UID not found");
+            if (!form.uid) throw new Error('UID not found');
             await patchProfile(form.uid, item);
           }
           setOpen(false);
@@ -117,7 +117,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
         } catch (err: any) {
           Notice.error(err.message || err.toString());
         }
-      })
+      }),
     );
 
     const handleClose = () => {
@@ -128,24 +128,24 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
 
     const text = {
       fullWidth: true,
-      size: "small",
-      margin: "normal",
-      variant: "outlined",
-      autoComplete: "off",
-      autoCorrect: "off",
+      size: 'small',
+      margin: 'normal',
+      variant: 'outlined',
+      autoComplete: 'off',
+      autoCorrect: 'off',
     } as const;
 
-    const formType = watch("type");
-    const isRemote = formType === "remote";
-    const isLocal = formType === "local";
+    const formType = watch('type');
+    const isRemote = formType === 'remote';
+    const isLocal = formType === 'local';
 
     return (
       <BaseDialog
         open={open}
-        title={openType === "new" ? t("Create Profile") : t("Edit Profile")}
-        contentSx={{ width: 375, pb: 0, maxHeight: "80%" }}
-        okBtn={t("Save")}
-        cancelBtn={t("Cancel")}
+        title={openType === 'new' ? t('Create Profile') : t('Edit Profile')}
+        contentSx={{ width: 375, pb: 0, maxHeight: '80%' }}
+        okBtn={t('Save')}
+        cancelBtn={t('Cancel')}
         onClose={handleClose}
         onCancel={handleClose}
         onOk={handleOk}
@@ -155,8 +155,8 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
           control={control}
           render={({ field }) => (
             <FormControl size="small" fullWidth sx={{ mt: 1, mb: 1 }}>
-              <InputLabel>{t("Type")}</InputLabel>
-              <Select {...field} autoFocus label={t("Type")}>
+              <InputLabel>{t('Type')}</InputLabel>
+              <Select {...field} autoFocus label={t('Type')}>
                 <MenuItem value="remote">Remote</MenuItem>
                 <MenuItem value="local">Local</MenuItem>
                 <MenuItem value="script">Script</MenuItem>
@@ -170,7 +170,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
           name="name"
           control={control}
           render={({ field }) => (
-            <TextField {...text} {...field} label={t("Name")} />
+            <TextField {...text} {...field} label={t('Name')} />
           )}
         />
 
@@ -178,7 +178,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
           name="desc"
           control={control}
           render={({ field }) => (
-            <TextField {...text} {...field} label={t("Descriptions")} />
+            <TextField {...text} {...field} label={t('Descriptions')} />
           )}
         />
 
@@ -192,7 +192,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
                   {...text}
                   {...field}
                   multiline
-                  label={t("Subscription URL")}
+                  label={t('Subscription URL')}
                 />
               )}
             />
@@ -222,11 +222,11 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
                 {...field}
                 onChange={(e) => {
                   e.target.value = e.target.value
-                    ?.replace(/\D/, "")
+                    ?.replace(/\D/, '')
                     .slice(0, 10);
                   field.onChange(e);
                 }}
-                label={t("Update Interval")}
+                label={t('Update Interval')}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">mins</InputAdornment>
@@ -237,7 +237,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
           />
         )}
 
-        {isLocal && openType === "new" && (
+        {isLocal && openType === 'new' && (
           <FileInput onChange={(val) => (fileDataRef.current = val)} />
         )}
 
@@ -248,7 +248,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
               control={control}
               render={({ field }) => (
                 <StyledBox>
-                  <InputLabel>{t("Use System Proxy")}</InputLabel>
+                  <InputLabel>{t('Use System Proxy')}</InputLabel>
                   <Switch checked={field.value} {...field} color="primary" />
                 </StyledBox>
               )}
@@ -259,7 +259,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
               control={control}
               render={({ field }) => (
                 <StyledBox>
-                  <InputLabel>{t("Use Clash Proxy")}</InputLabel>
+                  <InputLabel>{t('Use Clash Proxy')}</InputLabel>
                   <Switch checked={field.value} {...field} color="primary" />
                 </StyledBox>
               )}
@@ -268,12 +268,14 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
         )}
       </BaseDialog>
     );
-  }
+  },
 );
 
+ProfileViewer.displayName = 'ProfileViewer';
+
 const StyledBox = styled(Box)(() => ({
-  margin: "8px 0 8px 8px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
+  margin: '8px 0 8px 8px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 }));

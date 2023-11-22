@@ -5,17 +5,17 @@ import {
   ListItemButton,
   Typography,
   styled,
-} from "@mui/material";
+} from '@mui/material';
 import {
   ExpandLessRounded,
   ExpandMoreRounded,
   InboxRounded,
-} from "@mui/icons-material";
-import { HeadState } from "./use-head-state";
-import { ProxyHead } from "./proxy-head";
-import { ProxyItem } from "./proxy-item";
-import { ProxyItemMini } from "./proxy-item-mini";
-import type { IRenderItem } from "./use-render-list";
+} from '@mui/icons-material';
+import { HeadState } from './use-head-state';
+import { ProxyHead } from './proxy-head';
+import { ProxyItem } from './proxy-item';
+import { ProxyItemMini } from './proxy-item-mini';
+import type { IRenderItem } from './use-render-list';
 
 interface RenderProps {
   item: IRenderItem;
@@ -42,10 +42,10 @@ export const ProxyRender = (props: RenderProps) => {
           secondary={
             <ListItemTextChild
               sx={{
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                pt: "2px",
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                pt: '2px',
               }}
             >
               <StyledTypeBox>{group.type}</StyledTypeBox>
@@ -53,7 +53,7 @@ export const ProxyRender = (props: RenderProps) => {
             </ListItemTextChild>
           }
           secondaryTypographyProps={{
-            sx: { display: "flex", alignItems: "center" },
+            sx: { display: 'flex', alignItems: 'center' },
           }}
         />
         {headState?.open ? <ExpandLessRounded /> : <ExpandMoreRounded />}
@@ -93,14 +93,14 @@ export const ProxyRender = (props: RenderProps) => {
         sx={{
           py: 2,
           pl: indent ? 4.5 : 0,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <InboxRounded sx={{ fontSize: "2.5em", color: "inherit" }} />
-        <Typography sx={{ color: "inherit" }}>No Proxies</Typography>
+        <InboxRounded sx={{ fontSize: '2.5em', color: 'inherit' }} />
+        <Typography sx={{ color: 'inherit' }}>No Proxies</Typography>
       </Box>
     );
   }
@@ -110,7 +110,7 @@ export const ProxyRender = (props: RenderProps) => {
       <Box
         sx={{
           height: 56,
-          display: "grid",
+          display: 'grid',
           gap: 1,
           pl: indent ? 4 : 2,
           pr: 2,
@@ -135,25 +135,25 @@ export const ProxyRender = (props: RenderProps) => {
   return null;
 };
 
-const StyledSubtitle = styled("span")`
+const StyledSubtitle = styled('span')`
   font-size: 0.8rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-const ListItemTextChild = styled("span")`
+const ListItemTextChild = styled('span')`
   display: block;
 `;
 
 const StyledTypeBox = styled(ListItemTextChild)(({ theme }) => ({
-  display: "inline-block",
-  border: "1px solid #ccc",
+  display: 'inline-block',
+  border: '1px solid #ccc',
   borderColor: alpha(theme.palette.primary.main, 0.5),
   color: alpha(theme.palette.primary.main, 0.8),
   borderRadius: 4,
   fontSize: 10,
-  padding: "0 2px",
+  padding: '0 2px',
   lineHeight: 1.25,
-  marginRight: "4px",
+  marginRight: '4px',
 }));

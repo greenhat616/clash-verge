@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Divider,
   IconButton,
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import {
   CheckRounded,
   CloseRounded,
   DeleteRounded,
   EditRounded,
   OpenInNewRounded,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 
 interface Props {
   value?: string;
@@ -77,9 +77,9 @@ export const WebUIItem = (props: Props) => {
   }
 
   const html = value
-    ?.replace("%host", "<span>%host</span>")
-    .replace("%port", "<span>%port</span>")
-    .replace("%secret", "<span>%secret</span>");
+    ?.replace('%host', '<span>%host</span>')
+    .replace('%port', '<span>%port</span>')
+    .replace('%secret', '<span>%secret</span>');
 
   return (
     <>
@@ -88,13 +88,13 @@ export const WebUIItem = (props: Props) => {
           component="div"
           width="100%"
           title={value}
-          color={value ? "text.primary" : "text.secondary"}
+          color={value ? 'text.primary' : 'text.secondary'}
           sx={({ palette }) => ({
-            "> span": {
+            '> span': {
               color: palette.primary.main,
             },
           })}
-          dangerouslySetInnerHTML={{ __html: html || "NULL" }}
+          dangerouslySetInnerHTML={{ __html: html || 'NULL' }}
         />
         <IconButton
           size="small"

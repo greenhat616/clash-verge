@@ -1,8 +1,8 @@
-import dayjs from "dayjs";
-import { useMemo, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { truncateStr } from "@/utils/truncate-str";
-import parseTraffic from "@/utils/parse-traffic";
+import dayjs from 'dayjs';
+import { useMemo, useState } from 'react';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { truncateStr } from '@/utils/truncate-str';
+import parseTraffic from '@/utils/parse-traffic';
 
 interface Props {
   connections: IConnectionsItem[];
@@ -17,60 +17,60 @@ export const ConnectionTable = (props: Props) => {
   >({});
 
   const columns: GridColDef[] = [
-    { field: "host", headerName: "Host", flex: 220, minWidth: 220 },
+    { field: 'host', headerName: 'Host', flex: 220, minWidth: 220 },
     {
-      field: "download",
-      headerName: "Download",
+      field: 'download',
+      headerName: 'Download',
       width: 88,
-      align: "right",
-      headerAlign: "right",
+      align: 'right',
+      headerAlign: 'right',
     },
     {
-      field: "upload",
-      headerName: "Upload",
+      field: 'upload',
+      headerName: 'Upload',
       width: 88,
-      align: "right",
-      headerAlign: "right",
+      align: 'right',
+      headerAlign: 'right',
     },
     {
-      field: "dlSpeed",
-      headerName: "DL Speed",
+      field: 'dlSpeed',
+      headerName: 'DL Speed',
       width: 88,
-      align: "right",
-      headerAlign: "right",
+      align: 'right',
+      headerAlign: 'right',
     },
     {
-      field: "ulSpeed",
-      headerName: "UL Speed",
+      field: 'ulSpeed',
+      headerName: 'UL Speed',
       width: 88,
-      align: "right",
-      headerAlign: "right",
+      align: 'right',
+      headerAlign: 'right',
     },
-    { field: "chains", headerName: "Chains", flex: 360, minWidth: 360 },
-    { field: "rule", headerName: "Rule", flex: 300, minWidth: 250 },
-    { field: "process", headerName: "Process", flex: 480, minWidth: 480 },
+    { field: 'chains', headerName: 'Chains', flex: 360, minWidth: 360 },
+    { field: 'rule', headerName: 'Rule', flex: 300, minWidth: 250 },
+    { field: 'process', headerName: 'Process', flex: 480, minWidth: 480 },
     {
-      field: "time",
-      headerName: "Time",
+      field: 'time',
+      headerName: 'Time',
       flex: 120,
       minWidth: 100,
-      align: "right",
-      headerAlign: "right",
+      align: 'right',
+      headerAlign: 'right',
     },
-    { field: "source", headerName: "Source", flex: 200, minWidth: 130 },
+    { field: 'source', headerName: 'Source', flex: 200, minWidth: 130 },
     {
-      field: "destinationIP",
-      headerName: "Destination IP",
+      field: 'destinationIP',
+      headerName: 'Destination IP',
       flex: 200,
       minWidth: 130,
     },
-    { field: "type", headerName: "Type", flex: 160, minWidth: 100 },
+    { field: 'type', headerName: 'Type', flex: 160, minWidth: 100 },
   ];
 
   const connRows = useMemo(() => {
     return connections.map((each) => {
       const { metadata, rulePayload } = each;
-      const chains = [...each.chains].reverse().join(" / ");
+      const chains = [...each.chains].reverse().join(' / ');
       const rule = rulePayload ? `${each.rule}(${rulePayload})` : each.rule;
 
       return {
@@ -78,10 +78,10 @@ export const ConnectionTable = (props: Props) => {
         host: metadata.host
           ? `${metadata.host}:${metadata.destinationPort}`
           : `${metadata.destinationIP}:${metadata.destinationPort}`,
-        download: parseTraffic(each.download).join(" "),
-        upload: parseTraffic(each.upload).join(" "),
-        dlSpeed: parseTraffic(each.curDownload).join(" ") + "/s",
-        ulSpeed: parseTraffic(each.curUpload).join(" ") + "/s",
+        download: parseTraffic(each.download).join(' '),
+        upload: parseTraffic(each.upload).join(' '),
+        dlSpeed: parseTraffic(each.curDownload).join(' ') + '/s',
+        ulSpeed: parseTraffic(each.curUpload).join(' ') + '/s',
         chains,
         rule,
         process: truncateStr(metadata.process || metadata.processPath),
@@ -102,7 +102,7 @@ export const ConnectionTable = (props: Props) => {
       columns={columns}
       onRowClick={(e) => onShowDetail(e.row.connectionData)}
       density="compact"
-      sx={{ border: "none", "div:focus": { outline: "none !important" } }}
+      sx={{ border: 'none', 'div:focus': { outline: 'none !important' } }}
       columnVisibilityModel={columnVisible}
       onColumnVisibilityModelChange={(e) => setColumnVisible(e)}
     />

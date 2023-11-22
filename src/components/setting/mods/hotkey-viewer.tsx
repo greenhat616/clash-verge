@@ -1,12 +1,12 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useLockFn } from "ahooks";
-import { styled, Typography } from "@mui/material";
-import { useVerge } from "@/hooks/use-verge";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
-import { HotkeyInput } from "./hotkey-input";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useVerge } from '@/hooks/use-verge';
+import { Typography, styled } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { HotkeyInput } from './hotkey-input';
 
-const ItemWrapper = styled("div")`
+const ItemWrapper = styled('div')`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,17 +14,17 @@ const ItemWrapper = styled("div")`
 `;
 
 const HOTKEY_FUNC = [
-  "open_dashboard",
-  "clash_mode_rule",
-  "clash_mode_global",
-  "clash_mode_direct",
-  "clash_mode_script",
-  "toggle_system_proxy",
-  "enable_system_proxy",
-  "disable_system_proxy",
-  "toggle_tun_mode",
-  "enable_tun_mode",
-  "disable_tun_mode",
+  'open_dashboard',
+  'clash_mode_rule',
+  'clash_mode_global',
+  'clash_mode_direct',
+  'clash_mode_script',
+  'toggle_system_proxy',
+  'enable_system_proxy',
+  'disable_system_proxy',
+  'toggle_tun_mode',
+  'enable_tun_mode',
+  'disable_tun_mode',
 ];
 
 export const HotkeyViewer = forwardRef<DialogRef>((props, ref) => {
@@ -42,14 +42,14 @@ export const HotkeyViewer = forwardRef<DialogRef>((props, ref) => {
       const map = {} as typeof hotkeyMap;
 
       verge?.hotkeys?.forEach((text) => {
-        const [func, key] = text.split(",").map((e) => e.trim());
+        const [func, key] = text.split(',').map((e) => e.trim());
 
         if (!func || !key) return;
 
         map[func] = key
-          .split("+")
+          .split('+')
           .map((e) => e.trim())
-          .map((k) => (k === "PLUS" ? "+" : k));
+          .map((k) => (k === 'PLUS' ? '+' : k));
       });
 
       setHotkeyMap(map);
@@ -60,15 +60,15 @@ export const HotkeyViewer = forwardRef<DialogRef>((props, ref) => {
   const onSave = useLockFn(async () => {
     const hotkeys = Object.entries(hotkeyMap)
       .map(([func, keys]) => {
-        if (!func || !keys?.length) return "";
+        if (!func || !keys?.length) return '';
 
         const key = keys
           .map((k) => k.trim())
           .filter(Boolean)
-          .map((k) => (k === "+" ? "PLUS" : k))
-          .join("+");
+          .map((k) => (k === '+' ? 'PLUS' : k))
+          .join('+');
 
-        if (!key) return "";
+        if (!key) return '';
         return `${func},${key}`;
       })
       .filter(Boolean);
@@ -84,10 +84,10 @@ export const HotkeyViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Hotkey Viewer")}
+      title={t('Hotkey Viewer')}
       contentSx={{ width: 450, maxHeight: 330 }}
-      okBtn={t("Save")}
-      cancelBtn={t("Cancel")}
+      okBtn={t('Save')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onSave}
@@ -104,3 +104,5 @@ export const HotkeyViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+HotkeyViewer.displayName = 'HotkeyViewer';

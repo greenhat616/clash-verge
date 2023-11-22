@@ -1,5 +1,5 @@
-import { cloneElement, isValidElement, ReactNode, useRef } from "react";
-import noop from "@/utils/noop";
+import { cloneElement, isValidElement, ReactNode, useRef } from 'react';
+import noop from '@/utils/noop';
 
 interface Props<Value> {
   value?: Value;
@@ -17,8 +17,8 @@ export function GuardState<T>(props: Props<T>) {
   const {
     value,
     children,
-    valueProps = "value",
-    onChangeProps = "onChange",
+    valueProps = 'value',
+    onChangeProps = 'onChange',
     waitTime = 0, // debounce wait time default 0
     onGuard = noop,
     onCatch = noop,

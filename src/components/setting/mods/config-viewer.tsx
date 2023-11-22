@@ -1,21 +1,21 @@
+import { BaseDialog, DialogRef } from '@/components/base';
+import { getRuntimeYaml } from '@/services/cmds';
+import { atomThemeMode } from '@/services/states';
+import { Chip } from '@mui/material';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import {
   forwardRef,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-} from "react";
-import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { Chip } from "@mui/material";
-import { atomThemeMode } from "@/services/states";
-import { getRuntimeYaml } from "@/services/cmds";
-import { BaseDialog, DialogRef } from "@/components/base";
-import { editor } from "monaco-editor/esm/vs/editor/editor.api";
+} from 'react';
+import { useTranslation } from 'react-i18next';
+import { useRecoilValue } from 'recoil';
 
-import "monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution.js";
-import "monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js";
-import "monaco-editor/esm/vs/editor/contrib/folding/browser/folding.js";
+import 'monaco-editor/esm/vs/basic-languages/javascript/javascript.contribution.js';
+import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution.js';
+import 'monaco-editor/esm/vs/editor/contrib/folding/browser/folding.js';
 
 export const ConfigViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -45,9 +45,9 @@ export const ConfigViewer = forwardRef<DialogRef>((props, ref) => {
         if (instanceRef.current) instanceRef.current.dispose();
 
         instanceRef.current = editor.create(editorRef.current, {
-          value: data ?? "# Error\n",
-          language: "yaml",
-          theme: themeMode === "light" ? "vs" : "vs-dark",
+          value: data ?? '# Error\n',
+          language: 'yaml',
+          theme: themeMode === 'light' ? 'vs' : 'vs-dark',
           minimap: { enabled: false },
           readOnly: true,
         });
@@ -61,16 +61,18 @@ export const ConfigViewer = forwardRef<DialogRef>((props, ref) => {
       open={open}
       title={
         <>
-          {t("Runtime Config")} <Chip label={t("ReadOnly")} size="small" />
+          {t('Runtime Config')} <Chip label={t('ReadOnly')} size="small" />
         </>
       }
-      contentSx={{ width: 520, pb: 1, userSelect: "text" }}
-      cancelBtn={t("Back")}
+      contentSx={{ width: 520, pb: 1, userSelect: 'text' }}
+      cancelBtn={t('Back')}
       disableOk
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
     >
-      <div style={{ width: "100%", height: "420px" }} ref={editorRef} />
+      <div style={{ width: '100%', height: '420px' }} ref={editorRef} />
     </BaseDialog>
   );
 });
+
+ConfigViewer.displayName = 'ConfigViewer';

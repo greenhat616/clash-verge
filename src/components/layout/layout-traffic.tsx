@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import {
   ArrowDownward,
   ArrowUpward,
   MemoryOutlined,
-} from "@mui/icons-material";
-import { useClashInfo } from "@/hooks/use-clash";
-import { useVerge } from "@/hooks/use-verge";
-import { TrafficGraph, type TrafficRef } from "./traffic-graph";
-import { useLogSetup } from "./use-log-setup";
-import { useVisibility } from "@/hooks/use-visibility";
-import { useWebsocket } from "@/hooks/use-websocket";
-import parseTraffic from "@/utils/parse-traffic";
+} from '@mui/icons-material';
+import { useClashInfo } from '@/hooks/use-clash';
+import { useVerge } from '@/hooks/use-verge';
+import { TrafficGraph, type TrafficRef } from './traffic-graph';
+import { useLogSetup } from './use-log-setup';
+import { useVisibility } from '@/hooks/use-visibility';
+import { useWebsocket } from '@/hooks/use-websocket';
+import parseTraffic from '@/utils/parse-traffic';
 
 // setup the traffic
 export const LayoutTraffic = () => {
@@ -38,7 +38,7 @@ export const LayoutTraffic = () => {
   useEffect(() => {
     if (!clashInfo || !pageVisible) return;
 
-    const { server = "", secret = "" } = clashInfo;
+    const { server = '', secret = '' } = clashInfo;
     connect(`ws://${server}/traffic?token=${encodeURIComponent(secret)}`);
 
     return () => {
@@ -47,21 +47,21 @@ export const LayoutTraffic = () => {
   }, [clashInfo, pageVisible]);
 
   /* --------- meta memory information --------- */
-  const isMetaCore = verge?.clash_core === "clash-meta";
+  const isMetaCore = verge?.clash_core === 'clash-meta';
   const displayMemory = isMetaCore && (verge?.enable_memory_usage ?? true);
 
   const memoryWs = useWebsocket(
     (event) => {
       setMemory(JSON.parse(event.data));
     },
-    { onError: () => setMemory({ inuse: 0 }) }
+    { onError: () => setMemory({ inuse: 0 }) },
   );
 
   useEffect(() => {
     if (!clashInfo || !pageVisible || !displayMemory) return;
-    const { server = "", secret = "" } = clashInfo;
+    const { server = '', secret = '' } = clashInfo;
     memoryWs.connect(
-      `ws://${server}/memory?token=${encodeURIComponent(secret)}`
+      `ws://${server}/memory?token=${encodeURIComponent(secret)}`,
     );
     return () => memoryWs.disconnect();
   }, [clashInfo, pageVisible, displayMemory]);
@@ -71,20 +71,20 @@ export const LayoutTraffic = () => {
   const [inuse, inuseUnit] = parseTraffic(memory.inuse);
 
   const iconStyle: any = {
-    sx: { mr: "8px", fontSize: 16 },
+    sx: { mr: '8px', fontSize: 16 },
   };
   const valStyle: any = {
-    component: "span",
-    color: "primary",
-    textAlign: "center",
-    sx: { flex: "1 1 56px", userSelect: "none" },
+    component: 'span',
+    color: 'primary',
+    textAlign: 'center',
+    sx: { flex: '1 1 56px', userSelect: 'none' },
   };
   const unitStyle: any = {
-    component: "span",
-    color: "grey.500",
-    fontSize: "12px",
-    textAlign: "right",
-    sx: { flex: "0 1 27px", userSelect: "none" },
+    component: 'span',
+    color: 'grey.500',
+    fontSize: '12px',
+    textAlign: 'right',
+    sx: { flex: '0 1 27px', userSelect: 'none' },
   };
 
   return (
@@ -94,7 +94,7 @@ export const LayoutTraffic = () => {
       onClick={trafficRef.current?.toggleStyle}
     >
       {trafficGraph && pageVisible && (
-        <div style={{ width: "100%", height: 60, marginBottom: 6 }}>
+        <div style={{ width: '100%', height: 60, marginBottom: 6 }}>
           <TrafficGraph ref={trafficRef} />
         </div>
       )}
@@ -103,7 +103,7 @@ export const LayoutTraffic = () => {
         <Box display="flex" alignItems="center" whiteSpace="nowrap">
           <ArrowUpward
             {...iconStyle}
-            color={+up > 0 ? "primary" : "disabled"}
+            color={+up > 0 ? 'primary' : 'disabled'}
           />
           <Typography {...valStyle}>{up}</Typography>
           <Typography {...unitStyle}>{upUnit}/s</Typography>
@@ -112,7 +112,7 @@ export const LayoutTraffic = () => {
         <Box display="flex" alignItems="center" whiteSpace="nowrap">
           <ArrowDownward
             {...iconStyle}
-            color={+down > 0 ? "primary" : "disabled"}
+            color={+down > 0 ? 'primary' : 'disabled'}
           />
           <Typography {...valStyle}>{down}</Typography>
           <Typography {...unitStyle}>{downUnit}/s</Typography>

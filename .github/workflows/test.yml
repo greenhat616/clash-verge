@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       os:
-        description: "Runs on OS"
+        description: 'Runs on OS'
         required: true
         default: windows-latest
         type: choice
@@ -43,13 +43,13 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: src-tauri
+          workspaces: backend
 
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: "16"
-          cache: "yarn"
+          node-version: '16'
+          cache: 'yarn'
 
       - name: Install Dependencies (ubuntu only)
         if: startsWith(github.event.inputs.os, 'ubuntu-')
@@ -70,7 +70,7 @@ jobs:
           TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           tagName: alpha
-          releaseName: "Clash Verge Alpha"
-          releaseBody: "Alpha Version (include debug)"
+          releaseName: 'Clash Verge Alpha'
+          releaseBody: 'Alpha Version (include debug)'
           releaseDraft: false
           includeUpdaterJson: false

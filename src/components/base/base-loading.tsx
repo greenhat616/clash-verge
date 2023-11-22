@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
+import { styled } from '@mui/material';
 
-const Loading = styled("div")`
+const Loading = styled('div')`
   position: relative;
   display: flex;
   height: 100%;
@@ -33,7 +33,7 @@ const Loading = styled("div")`
   }
 `;
 
-const LoadingItem = styled("div")(({ theme }) => ({
+const LoadingItem = styled('div')(({ theme }) => ({
   background: theme.palette.text.secondary,
 }));
 

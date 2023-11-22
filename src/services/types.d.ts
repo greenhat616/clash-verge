@@ -1,15 +1,15 @@
 type Platform =
-  | "aix"
-  | "android"
-  | "darwin"
-  | "freebsd"
-  | "haiku"
-  | "linux"
-  | "openbsd"
-  | "sunos"
-  | "win32"
-  | "cygwin"
-  | "netbsd";
+  | 'aix'
+  | 'android'
+  | 'darwin'
+  | 'freebsd'
+  | 'haiku'
+  | 'linux'
+  | 'openbsd'
+  | 'sunos'
+  | 'win32'
+  | 'cygwin'
+  | 'netbsd';
 
 /**
  * defines in `vite.config.ts`
@@ -24,14 +24,14 @@ interface IConfigData {
   port: number;
   mode: string;
   ipv6: boolean;
-  "socket-port": number;
-  "allow-lan": boolean;
-  "log-level": string;
-  "mixed-port": number;
-  "redir-port": number;
-  "socks-port": number;
-  "tproxy-port": number;
-  "external-controller": string;
+  'socket-port': number;
+  'allow-lan': boolean;
+  'log-level': string;
+  'mixed-port': number;
+  'redir-port': number;
+  'socks-port': number;
+  'tproxy-port': number;
+  'external-controller': string;
   secret: string;
 }
 
@@ -54,7 +54,7 @@ interface IProxyItem {
   provider?: string; // 记录是否来自provider
 }
 
-type IProxyGroupItem = Omit<IProxyItem, "all"> & {
+type IProxyGroupItem = Omit<IProxyItem, 'all'> & {
   all: IProxyItem[];
 };
 
@@ -119,7 +119,7 @@ interface IClashInfo {
 
 interface IProfileItem {
   uid: string;
-  type?: "local" | "remote" | "merge" | "script";
+  type?: 'local' | 'remote' | 'merge' | 'script';
   name?: string;
   desc?: string;
   file?: string;
@@ -153,10 +153,10 @@ interface IProfilesConfig {
 }
 
 interface IVergeConfig {
-  app_log_level?: "trace" | "debug" | "info" | "warn" | "error" | string;
+  app_log_level?: 'trace' | 'debug' | 'info' | 'warn' | 'error' | string;
   language?: string;
   clash_core?: string;
-  theme_mode?: "light" | "dark" | "system";
+  theme_mode?: 'light' | 'dark' | 'system';
   theme_blur?: boolean;
   traffic_graph?: boolean;
   enable_memory_usage?: boolean;
@@ -196,9 +196,9 @@ interface IProfileMerge {
   // clash config fields (default supports)
   rules?: IClashConfigValue;
   proxies?: IClashConfigValue;
-  "proxy-groups"?: IClashConfigValue;
-  "proxy-providers"?: IClashConfigValue;
-  "rule-providers"?: IClashConfigValue;
+  'proxy-groups'?: IClashConfigValue;
+  'proxy-providers'?: IClashConfigValue;
+  'rule-providers'?: IClashConfigValue;
   // clash config fields (use flag)
   tun?: IClashConfigValue;
   dns?: IClashConfigValue;
@@ -206,39 +206,39 @@ interface IProfileMerge {
   script?: IClashConfigValue;
   profile?: IClashConfigValue;
   payload?: IClashConfigValue;
-  "interface-name"?: IClashConfigValue;
-  "routing-mark"?: IClashConfigValue;
+  'interface-name'?: IClashConfigValue;
+  'routing-mark'?: IClashConfigValue;
   // functional fields
   use?: string[];
-  "prepend-rules"?: any[];
-  "append-rules"?: any[];
-  "prepend-proxies"?: any[];
-  "append-proxies"?: any[];
-  "prepend-proxy-groups"?: any[];
-  "append-proxy-groups"?: any[];
+  'prepend-rules'?: any[];
+  'append-rules'?: any[];
+  'prepend-proxies'?: any[];
+  'append-proxies'?: any[];
+  'prepend-proxy-groups'?: any[];
+  'append-proxy-groups'?: any[];
   // fix
   ebpf?: any;
   experimental?: any;
   iptables?: any;
   sniffer?: any;
   authentication?: any;
-  "bind-address"?: any;
-  "external-ui"?: any;
-  "auto-redir"?: any;
-  "socks-port"?: any;
-  "redir-port"?: any;
-  "tproxy-port"?: any;
-  "geodata-mode"?: any;
-  "tcp-concurrent"?: any;
+  'bind-address'?: any;
+  'external-ui'?: any;
+  'auto-redir'?: any;
+  'socks-port'?: any;
+  'redir-port'?: any;
+  'tproxy-port'?: any;
+  'geodata-mode'?: any;
+  'tcp-concurrent'?: any;
 }
 
 // partial of the clash config
 type IProfileData = Partial<{
   rules: any[];
   proxies: any[];
-  "proxy-groups": any[];
-  "proxy-providers": any[];
-  "rule-providers": any[];
+  'proxy-groups': any[];
+  'proxy-providers': any[];
+  'rule-providers': any[];
 
   [k: string]: any;
 }>;

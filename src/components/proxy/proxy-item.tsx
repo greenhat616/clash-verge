@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useLockFn } from "ahooks";
-import { CheckCircleOutlineRounded } from "@mui/icons-material";
+import { useEffect, useState } from 'react';
+import { useLockFn } from 'ahooks';
+import { CheckCircleOutlineRounded } from '@mui/icons-material';
 import {
   alpha,
   Box,
@@ -11,9 +11,9 @@ import {
   styled,
   SxProps,
   Theme,
-} from "@mui/material";
-import { BaseLoading } from "@/components/base";
-import delayManager from "@/services/delay";
+} from '@mui/material';
+import { BaseLoading } from '@/components/base';
+import delayManager from '@/services/delay';
 
 interface Props {
   groupName: string;
@@ -25,20 +25,20 @@ interface Props {
 }
 
 const Widget = styled(Box)(() => ({
-  padding: "3px 6px",
+  padding: '3px 6px',
   fontSize: 14,
-  borderRadius: "4px",
+  borderRadius: '4px',
 }));
 
 const TypeBox = styled(Box)(({ theme }) => ({
-  display: "inline-block",
-  border: "1px solid #ccc",
+  display: 'inline-block',
+  border: '1px solid #ccc',
   borderColor: alpha(theme.palette.text.secondary, 0.36),
   color: alpha(theme.palette.text.secondary, 0.42),
   borderRadius: 4,
   fontSize: 10,
-  marginRight: "4px",
-  padding: "0 2px",
+  marginRight: '4px',
+  padding: '0 2px',
   lineHeight: 1.25,
 }));
 
@@ -77,18 +77,18 @@ export const ProxyItem = (props: Props) => {
           { borderRadius: 1 },
           ({ palette: { mode, primary } }) => {
             const bgcolor =
-              mode === "light"
+              mode === 'light'
                 ? alpha(primary.main, 0.15)
                 : alpha(primary.main, 0.35);
-            const color = mode === "light" ? primary.main : primary.light;
+            const color = mode === 'light' ? primary.main : primary.light;
             const showDelay = delay > 0;
 
             return {
-              "&:hover .the-check": { display: !showDelay ? "block" : "none" },
-              "&:hover .the-delay": { display: showDelay ? "block" : "none" },
-              "&:hover .the-icon": { display: "none" },
-              "&.Mui-selected": { bgcolor },
-              "&.Mui-selected .MuiListItemText-secondary": { color },
+              '&:hover .the-check': { display: !showDelay ? 'block' : 'none' },
+              '&:hover .the-delay': { display: showDelay ? 'block' : 'none' },
+              '&:hover .the-icon': { display: 'none' },
+              '&.Mui-selected': { bgcolor },
+              '&.Mui-selected .MuiListItemText-secondary': { color },
             };
           },
         ]}
@@ -109,7 +109,7 @@ export const ProxyItem = (props: Props) => {
         />
 
         <ListItemIcon
-          sx={{ justifyContent: "flex-end", color: "primary.main" }}
+          sx={{ justifyContent: 'flex-end', color: 'primary.main' }}
         >
           {delay === -2 && (
             <Widget>
@@ -127,8 +127,8 @@ export const ProxyItem = (props: Props) => {
                 onDelay();
               }}
               sx={({ palette }) => ({
-                display: "none", // hover才显示
-                ":hover": { bgcolor: alpha(palette.primary.main, 0.15) },
+                display: 'none', // hover才显示
+                ':hover': { bgcolor: alpha(palette.primary.main, 0.15) },
               })}
             >
               Check
@@ -148,7 +148,7 @@ export const ProxyItem = (props: Props) => {
               color={delayManager.formatDelayColor(delay)}
               sx={({ palette }) =>
                 !proxy.provider
-                  ? { ":hover": { bgcolor: alpha(palette.primary.main, 0.15) } }
+                  ? { ':hover': { bgcolor: alpha(palette.primary.main, 0.15) } }
                   : {}
               }
             >

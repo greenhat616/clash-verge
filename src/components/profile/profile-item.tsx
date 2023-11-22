@@ -1,9 +1,9 @@
-import dayjs from "dayjs";
-import { mutate } from "swr";
-import { useEffect, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useRecoilState } from "recoil";
-import { useTranslation } from "react-i18next";
+import dayjs from 'dayjs';
+import { mutate } from 'swr';
+import { useEffect, useState } from 'react';
+import { useLockFn } from 'ahooks';
+import { useRecoilState } from 'recoil';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Typography,
@@ -13,14 +13,14 @@ import {
   MenuItem,
   Menu,
   CircularProgress,
-} from "@mui/material";
-import { RefreshRounded } from "@mui/icons-material";
-import { atomLoadingCache } from "@/services/states";
-import { updateProfile, deleteProfile, viewProfile } from "@/services/cmds";
-import { Notice } from "@/components/base";
-import { EditorViewer } from "./editor-viewer";
-import { ProfileBox } from "./profile-box";
-import parseTraffic from "@/utils/parse-traffic";
+} from '@mui/material';
+import { RefreshRounded } from '@mui/icons-material';
+import { atomLoadingCache } from '@/services/states';
+import { updateProfile, deleteProfile, viewProfile } from '@/services/cmds';
+import { Notice } from '@/components/base';
+import { EditorViewer } from './editor-viewer';
+import { ProfileBox } from './profile-box';
+import parseTraffic from '@/utils/parse-traffic';
 
 const round = keyframes`
   from { transform: rotate(0deg); }
@@ -43,7 +43,7 @@ export const ProfileItem = (props: Props) => {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [loadingCache, setLoadingCache] = useRecoilState(atomLoadingCache);
 
-  const { uid, name = "Profile", extra, updated = 0 } = itemData;
+  const { uid, name = 'Profile', extra, updated = 0 } = itemData;
 
   // local file mode
   // remote file mode
@@ -137,11 +137,11 @@ export const ProfileItem = (props: Props) => {
 
     try {
       await updateProfile(itemData.uid, option);
-      mutate("getProfiles");
+      mutate('getProfiles');
     } catch (err: any) {
       const errmsg = err?.message || err.toString();
       Notice.error(
-        errmsg.replace(/error sending request for url (\S+?): /, "")
+        errmsg.replace(/error sending request for url (\S+?): /, ''),
       );
     } finally {
       setLoadingCache((cache) => ({ ...cache, [itemData.uid]: false }));
@@ -152,34 +152,34 @@ export const ProfileItem = (props: Props) => {
     setAnchorEl(null);
     try {
       await deleteProfile(itemData.uid);
-      mutate("getProfiles");
+      mutate('getProfiles');
     } catch (err: any) {
       Notice.error(err?.message || err.toString());
     }
   });
 
   const urlModeMenu = [
-    { label: "Select", handler: onForceSelect },
-    { label: "Edit Info", handler: onEditInfo },
-    { label: "Edit File", handler: onEditFile },
-    { label: "Open File", handler: onOpenFile },
-    { label: "Update", handler: () => onUpdate(0) },
-    { label: "Update(Proxy)", handler: () => onUpdate(2) },
-    { label: "Delete", handler: onDelete },
+    { label: 'Select', handler: onForceSelect },
+    { label: 'Edit Info', handler: onEditInfo },
+    { label: 'Edit File', handler: onEditFile },
+    { label: 'Open File', handler: onOpenFile },
+    { label: 'Update', handler: () => onUpdate(0) },
+    { label: 'Update(Proxy)', handler: () => onUpdate(2) },
+    { label: 'Delete', handler: onDelete },
   ];
   const fileModeMenu = [
-    { label: "Select", handler: onForceSelect },
-    { label: "Edit Info", handler: onEditInfo },
-    { label: "Edit File", handler: onEditFile },
-    { label: "Open File", handler: onOpenFile },
-    { label: "Delete", handler: onDelete },
+    { label: 'Select', handler: onForceSelect },
+    { label: 'Edit Info', handler: onEditInfo },
+    { label: 'Edit File', handler: onEditFile },
+    { label: 'Open File', handler: onOpenFile },
+    { label: 'Delete', handler: onDelete },
   ];
 
   const boxStyle = {
     height: 26,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   };
 
   return (
@@ -197,16 +197,16 @@ export const ProfileItem = (props: Props) => {
         {activating && (
           <Box
             sx={{
-              position: "absolute",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              position: 'absolute',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
               top: 10,
               left: 10,
               right: 10,
               bottom: 2,
               zIndex: 10,
-              backdropFilter: "blur(2px)",
+              backdropFilter: 'blur(2px)',
             }}
           >
             <CircularProgress size={20} />
@@ -228,11 +228,11 @@ export const ProfileItem = (props: Props) => {
           {hasUrl && (
             <IconButton
               sx={{
-                position: "absolute",
-                p: "3px",
+                position: 'absolute',
+                p: '3px',
                 top: -1,
                 right: -5,
-                animation: loading ? `1s linear infinite ${round}` : "none",
+                animation: loading ? `1s linear infinite ${round}` : 'none',
               }}
               size="small"
               color="inherit"
@@ -262,7 +262,7 @@ export const ProfileItem = (props: Props) => {
                 textAlign="right"
                 title={`Updated Time: ${parseExpire(updated)}`}
               >
-                {updated > 0 ? dayjs(updated * 1000).fromNow() : ""}
+                {updated > 0 ? dayjs(updated * 1000).fromNow() : ''}
               </Typography>
             </>
           ) : (
@@ -281,7 +281,7 @@ export const ProfileItem = (props: Props) => {
             <span title="Expire Time">{expire}</span>
           </Box>
         ) : (
-          <Box sx={{ ...boxStyle, fontSize: 14, justifyContent: "flex-end" }}>
+          <Box sx={{ ...boxStyle, fontSize: 14, justifyContent: 'flex-end' }}>
             <span title="Updated Time">{parseExpire(updated)}</span>
           </Box>
         )}
@@ -329,13 +329,13 @@ export const ProfileItem = (props: Props) => {
 };
 
 function parseUrl(url?: string) {
-  if (!url) return "";
+  if (!url) return '';
   const regex = /https?:\/\/(.+?)\//;
   const result = url.match(regex);
-  return result ? result[1] : "local file";
+  return result ? result[1] : 'local file';
 }
 
 function parseExpire(expire?: number) {
-  if (!expire) return "-";
-  return dayjs(expire * 1000).format("YYYY-MM-DD");
+  if (!expire) return '-';
+  return dayjs(expire * 1000).format('YYYY-MM-DD');
 }

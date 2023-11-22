@@ -1,22 +1,22 @@
-import dayjs from "dayjs";
-import useSWR, { mutate } from "swr";
-import { useState } from "react";
+import dayjs from 'dayjs';
+import useSWR, { mutate } from 'swr';
+import { useState } from 'react';
 import {
   Button,
   IconButton,
   List,
   ListItem,
   ListItemText,
-} from "@mui/material";
-import { RefreshRounded } from "@mui/icons-material";
-import { useTranslation } from "react-i18next";
-import { useLockFn } from "ahooks";
-import { getProviders, providerUpdate } from "@/services/api";
-import { BaseDialog } from "../base";
+} from '@mui/material';
+import { RefreshRounded } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
+import { useLockFn } from 'ahooks';
+import { getProviders, providerUpdate } from '@/services/api';
+import { BaseDialog } from '../base';
 
 export const ProviderButton = () => {
   const { t } = useTranslation();
-  const { data } = useSWR("getProviders", getProviders);
+  const { data } = useSWR('getProviders', getProviders);
 
   const [open, setOpen] = useState(false);
 
@@ -24,8 +24,8 @@ export const ProviderButton = () => {
 
   const handleUpdate = useLockFn(async (key: string) => {
     await providerUpdate(key);
-    await mutate("getProxies");
-    await mutate("getProviders");
+    await mutate('getProxies');
+    await mutate('getProviders');
   });
 
   if (!hasProvider) return null;
@@ -35,18 +35,18 @@ export const ProviderButton = () => {
       <Button
         size="small"
         variant="outlined"
-        sx={{ textTransform: "capitalize" }}
+        sx={{ textTransform: 'capitalize' }}
         onClick={() => setOpen(true)}
       >
-        {t("Provider")}
+        {t('Provider')}
       </Button>
 
       <BaseDialog
         open={open}
-        title={t("Proxy Provider")}
+        title={t('Proxy Provider')}
         contentSx={{ width: 400 }}
         disableOk
-        cancelBtn={t("Cancel")}
+        cancelBtn={t('Cancel')}
         onClose={() => setOpen(false)}
         onCancel={() => setOpen(false)}
       >
@@ -59,10 +59,10 @@ export const ProviderButton = () => {
                   primary={key}
                   secondary={
                     <>
-                      <span style={{ marginRight: "4em" }}>
+                      <span style={{ marginRight: '4em' }}>
                         Type: {item.vehicleType}
                       </span>
-                      <span title={time.format("YYYY-MM-DD HH:mm:ss")}>
+                      <span title={time.format('YYYY-MM-DD HH:mm:ss')}>
                         Updated: {time.fromNow()}
                       </span>
                     </>

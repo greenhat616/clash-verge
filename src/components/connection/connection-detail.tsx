@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useLockFn } from "ahooks";
-import { Box, Button, Snackbar } from "@mui/material";
-import { deleteConnection } from "@/services/api";
-import { truncateStr } from "@/utils/truncate-str";
-import parseTraffic from "@/utils/parse-traffic";
+import { deleteConnection } from '@/services/api';
+import parseTraffic from '@/utils/parse-traffic';
+import { truncateStr } from '@/utils/truncate-str';
+import { Box, Button, Snackbar } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import dayjs from 'dayjs';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 
 export interface ConnectionDetailRef {
   open: (detail: IConnectionsItem) => void;
@@ -27,7 +27,7 @@ export const ConnectionDetail = forwardRef<ConnectionDetailRef>(
 
     return (
       <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={open}
         onClose={onClose}
         message={
@@ -37,8 +37,10 @@ export const ConnectionDetail = forwardRef<ConnectionDetailRef>(
         }
       />
     );
-  }
+  },
 );
+
+ConnectionDetail.displayName = 'ConnectionDetail';
 
 interface InnerProps {
   data: IConnectionsItem;
@@ -47,47 +49,47 @@ interface InnerProps {
 
 const InnerConnectionDetail = ({ data, onClose }: InnerProps) => {
   const { metadata, rulePayload } = data;
-  const chains = [...data.chains].reverse().join(" / ");
+  const chains = [...data.chains].reverse().join(' / ');
   const rule = rulePayload ? `${data.rule}(${rulePayload})` : data.rule;
   const host = metadata.host
     ? `${metadata.host}:${metadata.destinationPort}`
     : `${metadata.destinationIP}:${metadata.destinationPort}`;
 
   const information = [
-    { label: "Host", value: host },
-    { label: "Download", value: parseTraffic(data.download).join(" ") },
-    { label: "Upload", value: parseTraffic(data.upload).join(" ") },
+    { label: 'Host', value: host },
+    { label: 'Download', value: parseTraffic(data.download).join(' ') },
+    { label: 'Upload', value: parseTraffic(data.upload).join(' ') },
     {
-      label: "DL Speed",
-      value: parseTraffic(data.curDownload ?? -1).join(" ") + "/s",
+      label: 'DL Speed',
+      value: parseTraffic(data.curDownload ?? -1).join(' ') + '/s',
     },
     {
-      label: "UL Speed",
-      value: parseTraffic(data.curUpload ?? -1).join(" ") + "/s",
+      label: 'UL Speed',
+      value: parseTraffic(data.curUpload ?? -1).join(' ') + '/s',
     },
-    { label: "Chains", value: chains },
-    { label: "Rule", value: rule },
+    { label: 'Chains', value: chains },
+    { label: 'Rule', value: rule },
     {
-      label: "Process",
+      label: 'Process',
       value: truncateStr(metadata.process || metadata.processPath),
     },
-    { label: "Time", value: dayjs(data.start).fromNow() },
-    { label: "Source", value: `${metadata.sourceIP}:${metadata.sourcePort}` },
-    { label: "Destination IP", value: metadata.destinationIP },
-    { label: "Type", value: `${metadata.type}(${metadata.network})` },
+    { label: 'Time', value: dayjs(data.start).fromNow() },
+    { label: 'Source', value: `${metadata.sourceIP}:${metadata.sourcePort}` },
+    { label: 'Destination IP', value: metadata.destinationIP },
+    { label: 'Type', value: `${metadata.type}(${metadata.network})` },
   ];
 
   const onDelete = useLockFn(async () => deleteConnection(data.id));
 
   return (
-    <Box sx={{ userSelect: "text" }}>
+    <Box sx={{ userSelect: 'text' }}>
       {information.map((each) => (
         <div key={each.label}>
           <b>{each.label}</b>: <span>{each.value}</span>
         </div>
       ))}
 
-      <Box sx={{ textAlign: "right" }}>
+      <Box sx={{ textAlign: 'right' }}>
         <Button
           variant="contained"
           title="Close Connection"

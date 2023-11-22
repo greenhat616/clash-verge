@@ -1,12 +1,12 @@
-import { IconButton, Paper } from "@mui/material";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
-import { BasePage, Notice } from "@/components/base";
-import { GitHub } from "@mui/icons-material";
-import { openWebUrl } from "@/services/cmds";
-import SettingVerge from "@/components/setting/setting-verge";
-import SettingClash from "@/components/setting/setting-clash";
-import SettingSystem from "@/components/setting/setting-system";
+import { IconButton, Paper } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { useTranslation } from 'react-i18next';
+import { BasePage, Notice } from '@/components/base';
+import { GitHub } from '@mui/icons-material';
+import { openWebUrl } from '@/services/cmds';
+import SettingVerge from '@/components/setting/setting-verge';
+import SettingClash from '@/components/setting/setting-clash';
+import SettingSystem from '@/components/setting/setting-system';
 
 const SettingPage = () => {
   const { t } = useTranslation();
@@ -16,12 +16,12 @@ const SettingPage = () => {
   };
 
   const toGithubRepo = useLockFn(() => {
-    return openWebUrl("https://github.com/zzzgydi/clash-verge");
+    return openWebUrl('https://github.com/zzzgydi/clash-verge');
   });
 
   return (
     <BasePage
-      title={t("Settings")}
+      title={t('Settings')}
       header={
         <IconButton
           size="small"

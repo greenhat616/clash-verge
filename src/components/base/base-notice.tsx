@@ -1,7 +1,7 @@
-import { createRoot } from "react-dom/client";
-import { ReactNode, useState } from "react";
-import { Box, IconButton, Slide, Snackbar, Typography } from "@mui/material";
-import { Close, CheckCircleRounded, ErrorRounded } from "@mui/icons-material";
+import { CheckCircleRounded, Close, ErrorRounded } from '@mui/icons-material';
+import { Box, IconButton, Slide, Snackbar, Typography } from '@mui/material';
+import { ReactNode, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 
 interface InnerProps {
   type: string;
@@ -19,20 +19,20 @@ const NoticeInner = (props: InnerProps) => {
     onClose();
   };
   const onAutoClose = (_e: any, reason: string) => {
-    if (reason !== "clickaway") onBtnClose();
+    if (reason !== 'clickaway') onBtnClose();
   };
 
   const msgElement =
-    type === "info" ? (
+    type === 'info' ? (
       message
     ) : (
-      <Box sx={{ width: 328, display: "flex", alignItems: "center" }}>
-        {type === "error" && <ErrorRounded color="error" />}
-        {type === "success" && <CheckCircleRounded color="success" />}
+      <Box sx={{ width: 328, display: 'flex', alignItems: 'center' }}>
+        {type === 'error' && <ErrorRounded color="error" />}
+        {type === 'success' && <CheckCircleRounded color="success" />}
 
         <Typography
           component="span"
-          sx={{ ml: 1, wordWrap: "break-word", width: "calc(100% - 35px)" }}
+          sx={{ ml: 1, wordWrap: 'break-word', width: 'calc(100% - 35px)' }}
         >
           {message}
         </Typography>
@@ -42,7 +42,7 @@ const NoticeInner = (props: InnerProps) => {
   return (
     <Snackbar
       open={visible}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       autoHideDuration={duration}
       onClose={onAutoClose}
       message={msgElement}
@@ -59,7 +59,7 @@ const NoticeInner = (props: InnerProps) => {
 };
 
 interface NoticeInstance {
-  (props: Omit<InnerProps, "onClose">): void;
+  (props: Omit<InnerProps, 'onClose'>): void;
 
   info(message: ReactNode, duration?: number): void;
   error(message: ReactNode, duration?: number): void;
@@ -68,14 +68,15 @@ interface NoticeInstance {
 
 let parent: HTMLDivElement = null!;
 
-// @ts-ignore
+// TODO: explain why this is needed
+// @ts-expect-error missing info, error, success
 export const Notice: NoticeInstance = (props) => {
   if (!parent) {
-    parent = document.createElement("div");
+    parent = document.createElement('div');
     document.body.appendChild(parent);
   }
 
-  const container = document.createElement("div");
+  const container = document.createElement('div');
   parent.appendChild(container);
   const root = createRoot(container);
 
@@ -87,7 +88,7 @@ export const Notice: NoticeInstance = (props) => {
   root.render(<NoticeInner {...props} onClose={onUnmount} />);
 };
 
-(["info", "error", "success"] as const).forEach((type) => {
+(['info', 'error', 'success'] as const).forEach((type) => {
   Notice[type] = (message, duration) => {
     setTimeout(() => Notice({ type, message, duration }), 0);
   };

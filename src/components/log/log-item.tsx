@@ -1,23 +1,23 @@
-import { styled, Box } from "@mui/material";
+import { styled, Box } from '@mui/material';
 
 const Item = styled(Box)(({ theme: { palette, typography } }) => ({
-  padding: "8px 0",
-  margin: "0 12px",
+  padding: '8px 0',
+  margin: '0 12px',
   lineHeight: 1.35,
   borderBottom: `1px solid ${palette.divider}`,
-  fontSize: "0.875rem",
+  fontSize: '0.875rem',
   fontFamily: typography.fontFamily,
-  userSelect: "text",
-  "& .time": {
+  userSelect: 'text',
+  '& .time': {
     color: palette.text.secondary,
   },
-  "& .type": {
-    display: "inline-block",
+  '& .type': {
+    display: 'inline-block',
     marginLeft: 8,
-    textAlign: "center",
+    textAlign: 'center',
     borderRadius: 2,
-    textTransform: "uppercase",
-    fontWeight: "600",
+    textTransform: 'uppercase',
+    fontWeight: '600',
   },
   '& .type[data-type="error"], & .type[data-type="err"]': {
     color: palette.error.main,
@@ -28,7 +28,7 @@ const Item = styled(Box)(({ theme: { palette, typography } }) => ({
   '& .type[data-type="info"], & .type[data-type="inf"]': {
     color: palette.info.main,
   },
-  "& .data": {
+  '& .data': {
     color: palette.text.primary,
   },
 }));

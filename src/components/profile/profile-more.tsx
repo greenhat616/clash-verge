@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useLockFn } from "ahooks";
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLockFn } from 'ahooks';
 import {
   Box,
   Badge,
@@ -10,13 +10,13 @@ import {
   MenuItem,
   Menu,
   IconButton,
-} from "@mui/material";
-import { FeaturedPlayListRounded } from "@mui/icons-material";
-import { viewProfile } from "@/services/cmds";
-import { Notice } from "@/components/base";
-import { EditorViewer } from "./editor-viewer";
-import { ProfileBox } from "./profile-box";
-import { LogViewer } from "./log-viewer";
+} from '@mui/material';
+import { FeaturedPlayListRounded } from '@mui/icons-material';
+import { viewProfile } from '@/services/cmds';
+import { Notice } from '@/components/base';
+import { EditorViewer } from './editor-viewer';
+import { ProfileBox } from './profile-box';
+import { LogViewer } from './log-viewer';
 
 interface Props {
   selected: boolean;
@@ -77,32 +77,32 @@ export const ProfileMore = (props: Props) => {
     return fn();
   };
 
-  const hasError = !!logInfo.find((e) => e[0] === "exception");
+  const hasError = !!logInfo.find((e) => e[0] === 'exception');
   const showMove = enableNum > 1 && !hasError;
 
   const enableMenu = [
-    { label: "Disable", handler: fnWrapper(onDisable) },
-    { label: "Edit Info", handler: onEditInfo },
-    { label: "Edit File", handler: onEditFile },
-    { label: "Open File", handler: onOpenFile },
-    { label: "To Top", show: showMove, handler: fnWrapper(onMoveTop) },
-    { label: "To End", show: showMove, handler: fnWrapper(onMoveEnd) },
-    { label: "Delete", handler: fnWrapper(onDelete) },
+    { label: 'Disable', handler: fnWrapper(onDisable) },
+    { label: 'Edit Info', handler: onEditInfo },
+    { label: 'Edit File', handler: onEditFile },
+    { label: 'Open File', handler: onOpenFile },
+    { label: 'To Top', show: showMove, handler: fnWrapper(onMoveTop) },
+    { label: 'To End', show: showMove, handler: fnWrapper(onMoveEnd) },
+    { label: 'Delete', handler: fnWrapper(onDelete) },
   ];
 
   const disableMenu = [
-    { label: "Enable", handler: fnWrapper(onEnable) },
-    { label: "Edit Info", handler: onEditInfo },
-    { label: "Edit File", handler: onEditFile },
-    { label: "Open File", handler: onOpenFile },
-    { label: "Delete", handler: fnWrapper(onDelete) },
+    { label: 'Enable', handler: fnWrapper(onEnable) },
+    { label: 'Edit Info', handler: onEditInfo },
+    { label: 'Edit File', handler: onEditFile },
+    { label: 'Open File', handler: onOpenFile },
+    { label: 'Delete', handler: fnWrapper(onDelete) },
   ];
 
   const boxStyle = {
     height: 26,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     lineHeight: 1,
   };
 
@@ -140,12 +140,12 @@ export const ProfileMore = (props: Props) => {
             color="primary"
             size="small"
             variant="outlined"
-            sx={{ height: 20, textTransform: "capitalize" }}
+            sx={{ height: 20, textTransform: 'capitalize' }}
           />
         </Box>
 
         <Box sx={boxStyle}>
-          {selected && type === "script" ? (
+          {selected && type === 'script' ? (
             hasError ? (
               <Badge color="error" variant="dot" overlap="circular">
                 <IconButton
@@ -173,7 +173,7 @@ export const ProfileMore = (props: Props) => {
             <Typography
               noWrap
               title={itemData.desc}
-              sx={i18n.language === "zh" ? { width: "calc(100% - 75px)" } : {}}
+              sx={i18n.language === 'zh' ? { width: 'calc(100% - 75px)' } : {}}
             >
               {itemData.desc}
             </Typography>
@@ -187,7 +187,7 @@ export const ProfileMore = (props: Props) => {
           >
             {!!itemData.updated
               ? dayjs(itemData.updated! * 1000).fromNow()
-              : ""}
+              : ''}
           </Typography>
         </Box>
       </ProfileBox>
@@ -222,7 +222,7 @@ export const ProfileMore = (props: Props) => {
       <EditorViewer
         uid={uid}
         open={fileOpen}
-        mode={type === "merge" ? "yaml" : "javascript"}
+        mode={type === 'merge' ? 'yaml' : 'javascript'}
         onClose={() => setFileOpen(false)}
       />
 
@@ -238,6 +238,6 @@ export const ProfileMore = (props: Props) => {
 };
 
 function parseExpire(expire?: number) {
-  if (!expire) return "-";
-  return dayjs(expire * 1000).format("YYYY-MM-DD");
+  if (!expire) return '-';
+  return dayjs(expire * 1000).format('YYYY-MM-DD');
 }

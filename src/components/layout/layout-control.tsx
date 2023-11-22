@@ -1,10 +1,10 @@
-import { Button } from "@mui/material";
-import { appWindow } from "@tauri-apps/api/window";
+import { Button } from '@mui/material';
+import { appWindow } from '@tauri-apps/api/window';
 import {
   CloseRounded,
   CropSquareRounded,
   HorizontalRuleRounded,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 
 export const LayoutControl = () => {
   const minWidth = 40;
@@ -13,7 +13,7 @@ export const LayoutControl = () => {
     <>
       <Button
         size="small"
-        sx={{ minWidth, svg: { transform: "scale(0.9)" } }}
+        sx={{ minWidth, svg: { transform: 'scale(0.9)' } }}
         onClick={() => appWindow.minimize()}
       >
         <HorizontalRuleRounded fontSize="small" />
@@ -21,7 +21,7 @@ export const LayoutControl = () => {
 
       <Button
         size="small"
-        sx={{ minWidth, svg: { transform: "scale(0.9)" } }}
+        sx={{ minWidth, svg: { transform: 'scale(0.9)' } }}
         onClick={() => appWindow.toggleMaximize()}
       >
         <CropSquareRounded fontSize="small" />
@@ -29,7 +29,7 @@ export const LayoutControl = () => {
 
       <Button
         size="small"
-        sx={{ minWidth, svg: { transform: "scale(1.05)" } }}
+        sx={{ minWidth, svg: { transform: 'scale(1.05)' } }}
         onClick={() => appWindow.close()}
       >
         <CloseRounded fontSize="small" />

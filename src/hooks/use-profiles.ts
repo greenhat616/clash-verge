@@ -1,15 +1,15 @@
-import useSWR, { mutate } from "swr";
+import useSWR, { mutate } from 'swr';
 import {
   getProfiles,
   patchProfile,
   patchProfilesConfig,
-} from "@/services/cmds";
-import { getProxies, updateProxy } from "@/services/api";
+} from '@/services/cmds';
+import { getProxies, updateProxy } from '@/services/api';
 
 export const useProfiles = () => {
   const { data: profiles, mutate: mutateProfiles } = useSWR(
-    "getProfiles",
-    getProfiles
+    'getProfiles',
+    getProfiles,
   );
 
   const patchProfiles = async (value: Partial<IProfilesConfig>) => {
@@ -32,7 +32,7 @@ export const useProfiles = () => {
     if (!profileData || !proxiesData) return;
 
     const current = profileData.items?.find(
-      (e) => e && e.uid === profileData.current
+      (e) => e && e.uid === profileData.current,
     );
 
     if (!current) return;
@@ -40,7 +40,7 @@ export const useProfiles = () => {
     // init selected array
     const { selected = [] } = current;
     const selectedMap = Object.fromEntries(
-      selected.map((each) => [each.name!, each.now!])
+      selected.map((each) => [each.name!, each.now!]),
     );
 
     let hasChange = false;
@@ -49,7 +49,7 @@ export const useProfiles = () => {
     const { global, groups } = proxiesData;
 
     [global, ...groups].forEach(({ type, name, now }) => {
-      if (!now || type !== "Selector") return;
+      if (!now || type !== 'Selector') return;
       if (selectedMap[name] != null && selectedMap[name] !== now) {
         hasChange = true;
         updateProxy(name, selectedMap[name]);
@@ -59,7 +59,7 @@ export const useProfiles = () => {
 
     if (hasChange) {
       patchProfile(profileData.current!, { selected: newSelected });
-      mutate("getProxies", getProxies());
+      mutate('getProxies', getProxies());
     }
   };
 

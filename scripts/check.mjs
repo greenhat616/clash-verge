@@ -1,43 +1,43 @@
-import fs from "fs-extra";
-import zlib from "zlib";
-import path from "path";
-import AdmZip from "adm-zip";
-import fetch from "node-fetch";
-import proxyAgent from "https-proxy-agent";
-import { execSync } from "child_process";
+import AdmZip from 'adm-zip';
+import { execSync } from 'child_process';
+import fs from 'fs-extra';
+import proxyAgent from 'https-proxy-agent';
+import fetch from 'node-fetch';
+import path from 'path';
+import zlib from 'zlib';
 
 const cwd = process.cwd();
-const TEMP_DIR = path.join(cwd, "node_modules/.verge");
-const FORCE = process.argv.includes("--force");
+const TEMP_DIR = path.join(cwd, 'node_modules/.verge');
+const FORCE = process.argv.includes('--force');
 
-const SIDECAR_HOST = execSync("rustc -vV")
+const SIDECAR_HOST = execSync('rustc -vV')
   .toString()
   .match(/(?<=host: ).+(?=\s*)/g)[0];
 
 /* ======= clash ======= */
-const CLASH_STORAGE_PREFIX = "https://release.dreamacro.workers.dev/";
+const CLASH_STORAGE_PREFIX = 'https://release.dreamacro.workers.dev/';
 const CLASH_URL_PREFIX =
-  "https://github.com/Dreamacro/clash/releases/download/premium/";
-const CLASH_LATEST_DATE = "latest";
+  'https://github.com/Dreamacro/clash/releases/download/premium/';
+const CLASH_LATEST_DATE = 'latest';
 
 const CLASH_MAP = {
-  "win32-x64": "clash-windows-amd64",
-  "darwin-x64": "clash-darwin-amd64",
-  "darwin-arm64": "clash-darwin-arm64",
-  "linux-x64": "clash-linux-amd64",
-  "linux-arm64": "clash-linux-arm64",
+  'win32-x64': 'clash-windows-amd64',
+  'darwin-x64': 'clash-darwin-amd64',
+  'darwin-arm64': 'clash-darwin-arm64',
+  'linux-x64': 'clash-linux-amd64',
+  'linux-arm64': 'clash-linux-arm64',
 };
 
 /* ======= clash meta ======= */
 const META_URL_PREFIX = `https://github.com/MetaCubeX/Clash.Meta/releases/download/`;
-const META_VERSION = "v1.16.0";
+const META_VERSION = 'v1.16.0';
 
 const META_MAP = {
-  "win32-x64": "clash.meta-windows-amd64-compatible",
-  "darwin-x64": "clash.meta-darwin-amd64",
-  "darwin-arm64": "clash.meta-darwin-arm64",
-  "linux-x64": "clash.meta-linux-amd64-compatible",
-  "linux-arm64": "clash.meta-linux-arm64",
+  'win32-x64': 'clash.meta-windows-amd64-compatible',
+  'darwin-x64': 'clash.meta-darwin-amd64',
+  'darwin-arm64': 'clash.meta-darwin-arm64',
+  'linux-x64': 'clash.meta-linux-amd64-compatible',
+  'linux-arm64': 'clash.meta-linux-arm64',
 };
 
 /**
@@ -55,15 +55,15 @@ if (!META_MAP[`${platform}-${arch}`]) {
 function clash() {
   const name = CLASH_MAP[`${platform}-${arch}`];
 
-  const isWin = platform === "win32";
-  const urlExt = isWin ? "zip" : "gz";
+  const isWin = platform === 'win32';
+  const urlExt = isWin ? 'zip' : 'gz';
   const downloadURL = `${CLASH_URL_PREFIX}${name}-${CLASH_LATEST_DATE}.${urlExt}`;
-  const exeFile = `${name}${isWin ? ".exe" : ""}`;
+  const exeFile = `${name}${isWin ? '.exe' : ''}`;
   const zipFile = `${name}.${urlExt}`;
 
   return {
-    name: "clash",
-    targetFile: `clash-${SIDECAR_HOST}${isWin ? ".exe" : ""}`,
+    name: 'clash',
+    targetFile: `clash-${SIDECAR_HOST}${isWin ? '.exe' : ''}`,
     exeFile,
     zipFile,
     downloadURL,
@@ -73,15 +73,15 @@ function clash() {
 function clashS3() {
   const name = CLASH_MAP[`${platform}-${arch}`];
 
-  const isWin = platform === "win32";
-  const urlExt = isWin ? "zip" : "gz";
+  const isWin = platform === 'win32';
+  const urlExt = isWin ? 'zip' : 'gz';
   const downloadURL = `${CLASH_STORAGE_PREFIX}${CLASH_LATEST_DATE}/${name}-${CLASH_LATEST_DATE}.${urlExt}`;
-  const exeFile = `${name}${isWin ? ".exe" : ""}`;
+  const exeFile = `${name}${isWin ? '.exe' : ''}`;
   const zipFile = `${name}.${urlExt}`;
 
   return {
-    name: "clash",
-    targetFile: `clash-${SIDECAR_HOST}${isWin ? ".exe" : ""}`,
+    name: 'clash',
+    targetFile: `clash-${SIDECAR_HOST}${isWin ? '.exe' : ''}`,
     exeFile,
     zipFile,
     downloadURL,
@@ -90,15 +90,15 @@ function clashS3() {
 
 function clashMeta() {
   const name = META_MAP[`${platform}-${arch}`];
-  const isWin = platform === "win32";
-  const urlExt = isWin ? "zip" : "gz";
+  const isWin = platform === 'win32';
+  const urlExt = isWin ? 'zip' : 'gz';
   const downloadURL = `${META_URL_PREFIX}${META_VERSION}/${name}-${META_VERSION}.${urlExt}`;
-  const exeFile = `${name}${isWin ? ".exe" : ""}`;
+  const exeFile = `${name}${isWin ? '.exe' : ''}`;
   const zipFile = `${name}-${META_VERSION}.${urlExt}`;
 
   return {
-    name: "clash-meta",
-    targetFile: `clash-meta-${SIDECAR_HOST}${isWin ? ".exe" : ""}`,
+    name: 'clash-meta',
+    targetFile: `clash-meta-${SIDECAR_HOST}${isWin ? '.exe' : ''}`,
     exeFile,
     zipFile,
     downloadURL,
@@ -111,7 +111,7 @@ function clashMeta() {
 async function resolveSidecar(binInfo) {
   const { name, targetFile, zipFile, exeFile, downloadURL } = binInfo;
 
-  const sidecarDir = path.join(cwd, "src-tauri", "sidecar");
+  const sidecarDir = path.join(cwd, 'backend', 'sidecar');
   const sidecarPath = path.join(sidecarDir, targetFile);
 
   await fs.mkdirp(sidecarDir);
@@ -127,7 +127,7 @@ async function resolveSidecar(binInfo) {
       await downloadFile(downloadURL, tempZip);
     }
 
-    if (zipFile.endsWith(".zip")) {
+    if (zipFile.endsWith('.zip')) {
       const zip = new AdmZip(tempZip);
       zip.getEntries().forEach((entry) => {
         console.log(`[DEBUG]: "${name}" entry name`, entry.entryName);
@@ -145,15 +145,15 @@ async function resolveSidecar(binInfo) {
           reject(error);
         };
         readStream
-          .pipe(zlib.createGunzip().on("error", onError))
+          .pipe(zlib.createGunzip().on('error', onError))
           .pipe(writeStream)
-          .on("finish", () => {
+          .on('finish', () => {
             console.log(`[INFO]: "${name}" gunzip finished`);
             execSync(`chmod 755 ${sidecarPath}`);
             console.log(`[INFO]: "${name}" chmod binary finished`);
             resolve();
           })
-          .on("error", onError);
+          .on('error', onError);
       });
     }
   } catch (err) {
@@ -186,15 +186,15 @@ async function resolveClash() {
 async function resolveWintun() {
   const { platform } = process;
 
-  if (platform !== "win32") return;
+  if (platform !== 'win32') return;
 
-  const url = "https://www.wintun.net/builds/wintun-0.14.1.zip";
+  const url = 'https://www.wintun.net/builds/wintun-0.14.1.zip';
 
-  const tempDir = path.join(TEMP_DIR, "wintun");
-  const tempZip = path.join(tempDir, "wintun.zip");
+  const tempDir = path.join(TEMP_DIR, 'wintun');
+  const tempZip = path.join(tempDir, 'wintun.zip');
 
-  const wintunPath = path.join(tempDir, "wintun/bin/amd64/wintun.dll");
-  const targetPath = path.join(cwd, "src-tauri/resources", "wintun.dll");
+  const wintunPath = path.join(tempDir, 'wintun/bin/amd64/wintun.dll');
+  const targetPath = path.join(cwd, 'backend/resources', 'wintun.dll');
 
   if (!FORCE && (await fs.pathExists(targetPath))) return;
 
@@ -224,7 +224,7 @@ async function resolveWintun() {
 async function resolveResource(binInfo) {
   const { file, downloadURL } = binInfo;
 
-  const resDir = path.join(cwd, "src-tauri/resources");
+  const resDir = path.join(cwd, 'backend/resources');
   const targetPath = path.join(resDir, file);
 
   if (!FORCE && (await fs.pathExists(targetPath))) return;
@@ -253,8 +253,8 @@ async function downloadFile(url, path) {
 
   const response = await fetch(url, {
     ...options,
-    method: "GET",
-    headers: { "Content-Type": "application/octet-stream" },
+    method: 'GET',
+    headers: { 'Content-Type': 'application/octet-stream' },
   });
   const buffer = await response.arrayBuffer();
   await fs.writeFile(path, new Uint8Array(buffer));
@@ -266,55 +266,55 @@ async function downloadFile(url, path) {
  * main
  */
 const SERVICE_URL =
-  "https://github.com/zzzgydi/clash-verge-service/releases/download/latest";
+  'https://github.com/zzzgydi/clash-verge-service/releases/download/latest';
 
 const resolveService = () =>
   resolveResource({
-    file: "clash-verge-service.exe",
+    file: 'clash-verge-service.exe',
     downloadURL: `${SERVICE_URL}/clash-verge-service.exe`,
   });
 const resolveInstall = () =>
   resolveResource({
-    file: "install-service.exe",
+    file: 'install-service.exe',
     downloadURL: `${SERVICE_URL}/install-service.exe`,
   });
 const resolveUninstall = () =>
   resolveResource({
-    file: "uninstall-service.exe",
+    file: 'uninstall-service.exe',
     downloadURL: `${SERVICE_URL}/uninstall-service.exe`,
   });
 const resolveMmdb = () =>
   resolveResource({
-    file: "Country.mmdb",
+    file: 'Country.mmdb',
     downloadURL: `https://github.com/Dreamacro/maxmind-geoip/releases/download/20230812/Country.mmdb`,
   });
 const resolveGeosite = () =>
   resolveResource({
-    file: "geosite.dat",
+    file: 'geosite.dat',
     downloadURL: `https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat`,
   });
 const resolveGeoIP = () =>
   resolveResource({
-    file: "geoip.dat",
+    file: 'geoip.dat',
     downloadURL: `https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat`,
   });
 
 const tasks = [
-  { name: "clash", func: () => resolveSidecar(clashS3()), retry: 5 },
-  { name: "clash-meta", func: () => resolveSidecar(clashMeta()), retry: 5 },
-  { name: "wintun", func: resolveWintun, retry: 5, winOnly: true },
-  { name: "service", func: resolveService, retry: 5, winOnly: true },
-  { name: "install", func: resolveInstall, retry: 5, winOnly: true },
-  { name: "uninstall", func: resolveUninstall, retry: 5, winOnly: true },
-  { name: "mmdb", func: resolveMmdb, retry: 5 },
-  { name: "geosite", func: resolveGeosite, retry: 5 },
-  { name: "geoip", func: resolveGeoIP, retry: 5 },
+  { name: 'clash', func: () => resolveSidecar(clashS3()), retry: 5 },
+  { name: 'clash-meta', func: () => resolveSidecar(clashMeta()), retry: 5 },
+  { name: 'wintun', func: resolveWintun, retry: 5, winOnly: true },
+  { name: 'service', func: resolveService, retry: 5, winOnly: true },
+  { name: 'install', func: resolveInstall, retry: 5, winOnly: true },
+  { name: 'uninstall', func: resolveUninstall, retry: 5, winOnly: true },
+  { name: 'mmdb', func: resolveMmdb, retry: 5 },
+  { name: 'geosite', func: resolveGeosite, retry: 5 },
+  { name: 'geoip', func: resolveGeoIP, retry: 5 },
 ];
 
 async function runTask() {
   const task = tasks.shift();
   if (!task) return;
-  if (task.winOnly && process.platform !== "win32") return runTask();
+  if (task.winOnly && process.platform !== 'win32') return runTask();
 
   for (let i = 0; i < task.retry; i++) {
     try {

@@ -1,22 +1,22 @@
-import useSWR from "swr";
-import { useRef } from "react";
-import { useTranslation } from "react-i18next";
-import { IconButton, Switch } from "@mui/material";
-import { ArrowForward, PrivacyTipRounded, Settings } from "@mui/icons-material";
-import { checkService } from "@/services/cmds";
-import { useVerge } from "@/hooks/use-verge";
-import { DialogRef } from "@/components/base";
-import { SettingList, SettingItem } from "./mods/setting-comp";
-import { GuardState } from "./mods/guard-state";
-import { ServiceViewer } from "./mods/service-viewer";
-import { SysproxyViewer } from "./mods/sysproxy-viewer";
-import getSystem from "@/utils/get-system";
+import useSWR from 'swr';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IconButton, Switch } from '@mui/material';
+import { ArrowForward, PrivacyTipRounded, Settings } from '@mui/icons-material';
+import { checkService } from '@/services/cmds';
+import { useVerge } from '@/hooks/use-verge';
+import { DialogRef } from '@/components/base';
+import { SettingList, SettingItem } from './mods/setting-comp';
+import { GuardState } from './mods/guard-state';
+import { ServiceViewer } from './mods/service-viewer';
+import { SysproxyViewer } from './mods/sysproxy-viewer';
+import getSystem from '@/utils/get-system';
 
 interface Props {
   onError?: (err: Error) => void;
 }
 
-const isWIN = getSystem() === "windows";
+const isWIN = getSystem() === 'windows';
 
 const SettingSystem = ({ onError }: Props) => {
   const { t } = useTranslation();
@@ -25,13 +25,13 @@ const SettingSystem = ({ onError }: Props) => {
 
   // service mode
   const { data: serviceStatus } = useSWR(
-    isWIN ? "checkService" : null,
+    isWIN ? 'checkService' : null,
     checkService,
     {
       revalidateIfStale: false,
       shouldRetryOnError: false,
       focusThrottleInterval: 36e5, // 1 hour
-    }
+    },
   );
 
   const serviceRef = useRef<DialogRef>(null);
@@ -51,13 +51,13 @@ const SettingSystem = ({ onError }: Props) => {
   };
 
   return (
-    <SettingList title={t("System Setting")}>
+    <SettingList title={t('System Setting')}>
       <SysproxyViewer ref={sysproxyRef} />
       {isWIN && (
         <ServiceViewer ref={serviceRef} enable={!!enable_service_mode} />
       )}
 
-      <SettingItem label={t("Tun Mode")}>
+      <SettingItem label={t('Tun Mode')}>
         <GuardState
           value={enable_tun_mode ?? false}
           valueProps="checked"
@@ -72,7 +72,7 @@ const SettingSystem = ({ onError }: Props) => {
 
       {isWIN && (
         <SettingItem
-          label={t("Service Mode")}
+          label={t('Service Mode')}
           extra={
             <IconButton
               color="inherit"
@@ -81,7 +81,7 @@ const SettingSystem = ({ onError }: Props) => {
             >
               <PrivacyTipRounded
                 fontSize="inherit"
-                style={{ cursor: "pointer", opacity: 0.75 }}
+                style={{ cursor: 'pointer', opacity: 0.75 }}
               />
             </IconButton>
           }
@@ -97,7 +97,7 @@ const SettingSystem = ({ onError }: Props) => {
             <Switch
               edge="end"
               disabled={
-                serviceStatus !== "active" && serviceStatus !== "installed"
+                serviceStatus !== 'active' && serviceStatus !== 'installed'
               }
             />
           </GuardState>
@@ -105,7 +105,7 @@ const SettingSystem = ({ onError }: Props) => {
       )}
 
       <SettingItem
-        label={t("System Proxy")}
+        label={t('System Proxy')}
         extra={
           <IconButton
             color="inherit"
@@ -114,7 +114,7 @@ const SettingSystem = ({ onError }: Props) => {
           >
             <Settings
               fontSize="inherit"
-              style={{ cursor: "pointer", opacity: 0.75 }}
+              style={{ cursor: 'pointer', opacity: 0.75 }}
             />
           </IconButton>
         }
@@ -131,7 +131,7 @@ const SettingSystem = ({ onError }: Props) => {
         </GuardState>
       </SettingItem>
 
-      <SettingItem label={t("Auto Launch")}>
+      <SettingItem label={t('Auto Launch')}>
         <GuardState
           value={enable_auto_launch ?? false}
           valueProps="checked"
@@ -144,7 +144,7 @@ const SettingSystem = ({ onError }: Props) => {
         </GuardState>
       </SettingItem>
 
-      <SettingItem label={t("Silent Start")}>
+      <SettingItem label={t('Silent Start')}>
         <GuardState
           value={enable_silent_start ?? false}
           valueProps="checked"

@@ -1,15 +1,15 @@
-import useSWR from "swr";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
-import { Button, Stack, Typography } from "@mui/material";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
 import {
   checkService,
   installService,
-  uninstallService,
   patchVergeConfig,
-} from "@/services/cmds";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
+  uninstallService,
+} from '@/services/cmds';
+import { Button, Stack, Typography } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import useSWR from 'swr';
 
 interface Props {
   enable: boolean;
@@ -22,13 +22,13 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
   const [open, setOpen] = useState(false);
 
   const { data: status, mutate: mutateCheck } = useSWR(
-    "checkService",
+    'checkService',
     checkService,
     {
       revalidateIfStale: false,
       shouldRetryOnError: false,
       focusThrottleInterval: 36e5, // 1 hour
-    }
+    },
   );
 
   useImperativeHandle(ref, () => ({
@@ -36,14 +36,14 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
     close: () => setOpen(false),
   }));
 
-  const state = status != null ? status : "pending";
+  const state = status != null ? status : 'pending';
 
   const onInstall = useLockFn(async () => {
     try {
       await installService();
       mutateCheck();
       setOpen(false);
-      Notice.success("Service installed successfully");
+      Notice.success('Service installed successfully');
     } catch (err: any) {
       mutateCheck();
       Notice.error(err.message || err.toString());
@@ -59,7 +59,7 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
       await uninstallService();
       mutateCheck();
       setOpen(false);
-      Notice.success("Service uninstalled successfully");
+      Notice.success('Service uninstalled successfully');
     } catch (err: any) {
       mutateCheck();
       Notice.error(err.message || err.toString());
@@ -81,14 +81,14 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Service Mode")}
-      contentSx={{ width: 360, userSelect: "text" }}
+      title={t('Service Mode')}
+      contentSx={{ width: 360, userSelect: 'text' }}
       disableFooter
       onClose={() => setOpen(false)}
     >
       <Typography>Current State: {state}</Typography>
 
-      {(state === "unknown" || state === "uninstall") && (
+      {(state === 'unknown' || state === 'uninstall') && (
         <Typography>
           Information: Please make sure that the Clash Verge Service is
           installed and enabled
@@ -98,21 +98,21 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
       <Stack
         direction="row"
         spacing={1}
-        sx={{ mt: 4, justifyContent: "flex-end" }}
+        sx={{ mt: 4, justifyContent: 'flex-end' }}
       >
-        {state === "uninstall" && enable && (
+        {state === 'uninstall' && enable && (
           <Button variant="contained" onClick={onDisable}>
             Disable Service Mode
           </Button>
         )}
 
-        {state === "uninstall" && (
+        {state === 'uninstall' && (
           <Button variant="contained" onClick={onInstall}>
             Install
           </Button>
         )}
 
-        {(state === "active" || state === "installed") && (
+        {(state === 'active' || state === 'installed') && (
           <Button variant="outlined" onClick={onUninstall}>
             Uninstall
           </Button>
@@ -121,3 +121,5 @@ export const ServiceViewer = forwardRef<DialogRef, Props>((props, ref) => {
     </BaseDialog>
   );
 });
+
+ServiceViewer.displayName = 'ServiceViewer';

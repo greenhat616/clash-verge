@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import delayManager from "@/services/delay";
+import { useEffect, useMemo, useState } from 'react';
+import delayManager from '@/services/delay';
 
 // default | delay | alphabet
 export type ProxySortType = 0 | 1 | 2;
@@ -8,7 +8,7 @@ export default function useFilterSort(
   proxies: IProxyItem[],
   groupName: string,
   filterText: string,
-  sortType: ProxySortType
+  sortType: ProxySortType,
 ) {
   const [refresh, setRefresh] = useState({});
 
@@ -40,7 +40,7 @@ export function filterSort(
   proxies: IProxyItem[],
   groupName: string,
   filterText: string,
-  sortType: ProxySortType
+  sortType: ProxySortType,
 ) {
   const fp = filterProxies(proxies, groupName, filterText);
   const sp = sortProxies(fp, groupName, sortType);
@@ -60,7 +60,7 @@ const regex2 = /type=(.*)/i;
 function filterProxies(
   proxies: IProxyItem[],
   groupName: string,
-  filterText: string
+  filterText: string,
 ) {
   if (!filterText) return proxies;
 
@@ -69,18 +69,18 @@ function filterProxies(
     const symbol = res1[1];
     const symbol2 = res1[2].toLowerCase();
     const value =
-      symbol2 === "error" ? 1e5 : symbol2 === "timeout" ? 3000 : +symbol2;
+      symbol2 === 'error' ? 1e5 : symbol2 === 'timeout' ? 3000 : +symbol2;
 
     return proxies.filter((p) => {
       const delay = delayManager.getDelayFix(p, groupName);
 
       if (delay < 0) return false;
-      if (symbol === "=" && symbol2 === "error") return delay >= 1e5;
-      if (symbol === "=" && symbol2 === "timeout")
+      if (symbol === '=' && symbol2 === 'error') return delay >= 1e5;
+      if (symbol === '=' && symbol2 === 'timeout')
         return delay < 1e5 && delay >= 3000;
-      if (symbol === "=") return delay == value;
-      if (symbol === "<") return delay <= value;
-      if (symbol === ">") return delay >= value;
+      if (symbol === '=') return delay == value;
+      if (symbol === '<') return delay <= value;
+      if (symbol === '>') return delay >= value;
       return false;
     });
   }
@@ -100,7 +100,7 @@ function filterProxies(
 function sortProxies(
   proxies: IProxyItem[],
   groupName: string,
-  sortType: ProxySortType
+  sortType: ProxySortType,
 ) {
   if (!proxies) return [];
   if (sortType === 0) return proxies;

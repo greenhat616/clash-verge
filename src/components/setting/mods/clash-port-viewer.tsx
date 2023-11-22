@@ -1,9 +1,9 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useLockFn } from "ahooks";
-import { List, ListItem, ListItemText, TextField } from "@mui/material";
-import { useClashInfo } from "@/hooks/use-clash";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useClashInfo } from '@/hooks/use-clash';
+import { List, ListItem, ListItemText, TextField } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -27,9 +27,9 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
       return;
     }
     try {
-      await patchInfo({ "mixed-port": port });
+      await patchInfo({ 'mixed-port': port });
       setOpen(false);
-      Notice.success("Change Clash port successfully!", 1000);
+      Notice.success('Change Clash port successfully!', 1000);
     } catch (err: any) {
       Notice.error(err.message || err.toString(), 4000);
     }
@@ -38,16 +38,16 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Clash Port")}
+      title={t('Clash Port')}
       contentSx={{ width: 300 }}
-      okBtn={t("Save")}
-      cancelBtn={t("Cancel")}
+      okBtn={t('Save')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: '5px 2px' }}>
           <ListItemText primary="Mixed Port" />
           <TextField
             size="small"
@@ -55,7 +55,7 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
             sx={{ width: 135 }}
             value={port}
             onChange={(e) =>
-              setPort(+e.target.value?.replace(/\D+/, "").slice(0, 5))
+              setPort(+e.target.value?.replace(/\D+/, '').slice(0, 5))
             }
           />
         </ListItem>
@@ -63,3 +63,5 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+ClashPortViewer.displayName = 'ClashPortViewer';

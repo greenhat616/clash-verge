@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useLockFn } from "ahooks";
-import { CheckCircleOutlineRounded } from "@mui/icons-material";
-import { alpha, Box, ListItemButton, styled, Typography } from "@mui/material";
-import { BaseLoading } from "@/components/base";
-import delayManager from "@/services/delay";
+import { useEffect, useState } from 'react';
+import { useLockFn } from 'ahooks';
+import { CheckCircleOutlineRounded } from '@mui/icons-material';
+import { alpha, Box, ListItemButton, styled, Typography } from '@mui/material';
+import { BaseLoading } from '@/components/base';
+import delayManager from '@/services/delay';
 
 interface Props {
   groupName: string;
@@ -50,49 +50,49 @@ export const ProxyItemMini = (props: Props) => {
           borderRadius: 1,
           pl: 1.5,
           pr: 1,
-          justifyContent: "space-between",
-          alignItems: "center",
+          justifyContent: 'space-between',
+          alignItems: 'center',
         },
         ({ palette: { mode, primary } }) => {
           const bgcolor =
-            mode === "light"
+            mode === 'light'
               ? alpha(primary.main, 0.15)
               : alpha(primary.main, 0.35);
-          const color = mode === "light" ? primary.main : primary.light;
+          const color = mode === 'light' ? primary.main : primary.light;
           const showDelay = delay > 0;
 
           const shadowColor =
-            mode === "light" ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.08)";
+            mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.08)';
 
           return {
-            "&:hover .the-check": { display: !showDelay ? "block" : "none" },
-            "&:hover .the-delay": { display: showDelay ? "block" : "none" },
-            "&:hover .the-icon": { display: "none" },
-            "&.Mui-selected": { bgcolor, boxShadow: `0 0 0 1px ${bgcolor}` },
-            "&.Mui-selected .MuiListItemText-secondary": { color },
+            '&:hover .the-check': { display: !showDelay ? 'block' : 'none' },
+            '&:hover .the-delay': { display: showDelay ? 'block' : 'none' },
+            '&:hover .the-icon': { display: 'none' },
+            '&.Mui-selected': { bgcolor, boxShadow: `0 0 0 1px ${bgcolor}` },
+            '&.Mui-selected .MuiListItemText-secondary': { color },
             boxShadow: `0 0 0 1px ${shadowColor}`,
           };
         },
       ]}
     >
-      <Box title={proxy.name} sx={{ overflow: "hidden" }}>
+      <Box title={proxy.name} sx={{ overflow: 'hidden' }}>
         <Typography
           variant="body2"
           component="div"
           color="text.secondary"
           sx={{
-            display: "block",
-            textOverflow: "ellipsis",
-            wordBreak: "break-all",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
+            display: 'block',
+            textOverflow: 'ellipsis',
+            wordBreak: 'break-all',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
           }}
         >
           {proxy.name}
         </Typography>
 
         {showType && (
-          <Box sx={{ display: "flex", flexWrap: "nowrap", flex: "none" }}>
+          <Box sx={{ display: 'flex', flexWrap: 'nowrap', flex: 'none' }}>
             {!!proxy.provider && (
               <TypeBox component="span">{proxy.provider}</TypeBox>
             )}
@@ -102,7 +102,7 @@ export const ProxyItemMini = (props: Props) => {
         )}
       </Box>
 
-      <Box sx={{ ml: 0.5, color: "primary.main" }}>
+      <Box sx={{ ml: 0.5, color: 'primary.main' }}>
         {delay === -2 && (
           <Widget>
             <BaseLoading />
@@ -119,8 +119,8 @@ export const ProxyItemMini = (props: Props) => {
               onDelay();
             }}
             sx={({ palette }) => ({
-              display: "none", // hover才显示
-              ":hover": { bgcolor: alpha(palette.primary.main, 0.15) },
+              display: 'none', // hover才显示
+              ':hover': { bgcolor: alpha(palette.primary.main, 0.15) },
             })}
           >
             Check
@@ -140,7 +140,7 @@ export const ProxyItemMini = (props: Props) => {
             color={delayManager.formatDelayColor(delay)}
             sx={({ palette }) =>
               !proxy.provider
-                ? { ":hover": { bgcolor: alpha(palette.primary.main, 0.15) } }
+                ? { ':hover': { bgcolor: alpha(palette.primary.main, 0.15) } }
                 : {}
             }
           >
@@ -152,7 +152,7 @@ export const ProxyItemMini = (props: Props) => {
           // 展示已选择的icon
           <CheckCircleOutlineRounded
             className="the-icon"
-            sx={{ fontSize: 16, mr: 0.5, display: "block" }}
+            sx={{ fontSize: 16, mr: 0.5, display: 'block' }}
           />
         )}
       </Box>
@@ -161,21 +161,21 @@ export const ProxyItemMini = (props: Props) => {
 };
 
 const Widget = styled(Box)(({ theme: { typography } }) => ({
-  padding: "3px 6px",
+  padding: '3px 6px',
   fontSize: 14,
   fontFamily: typography.fontFamily,
-  borderRadius: "4px",
+  borderRadius: '4px',
 }));
 
 const TypeBox = styled(Box)(({ theme: { palette, typography } }) => ({
-  display: "inline-block",
-  border: "1px solid #ccc",
+  display: 'inline-block',
+  border: '1px solid #ccc',
   borderColor: alpha(palette.text.secondary, 0.36),
   color: alpha(palette.text.secondary, 0.42),
   borderRadius: 4,
   fontSize: 10,
   fontFamily: typography.fontFamily,
-  marginRight: "4px",
-  padding: "0 2px",
+  marginRight: '4px',
+  padding: '0 2px',
   lineHeight: 1.25,
 }));

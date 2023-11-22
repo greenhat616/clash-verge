@@ -1,14 +1,13 @@
+@import './layout.scss';
+@import './page.scss';
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
@@ -28,23 +27,18 @@ body {
   height: 6px;
   background: transparent;
 }
-*::-webkit-scrollbar-thumb {
-  border-radius: 6px;
-  background-color: var(--scroller-color);
-}
 
-@import "./layout.scss";
-@import "./page.scss";
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scroller-color);
+  border-radius: 6px;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
-    background-color: rgba(18, 18, 18, 1);
+    background-color: rgb(18 18 18 / 100%);
   }
 }
 
 .user-none {
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }

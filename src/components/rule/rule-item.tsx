@@ -1,17 +1,17 @@
-import { styled, Box, Typography } from "@mui/material";
+import { styled, Box, Typography } from '@mui/material';
 
 const Item = styled(Box)(({ theme }) => ({
-  display: "flex",
-  padding: "4px 16px",
+  display: 'flex',
+  padding: '4px 16px',
   color: theme.palette.text.primary,
 }));
 
 const COLOR = [
-  "primary",
-  "secondary",
-  "info.main",
-  "warning.main",
-  "success.main",
+  'primary',
+  'secondary',
+  'info.main',
+  'warning.main',
+  'success.main',
 ];
 
 interface Props {
@@ -20,8 +20,8 @@ interface Props {
 }
 
 const parseColor = (text: string) => {
-  if (text === "REJECT") return "error.main";
-  if (text === "DIRECT") return "text.primary";
+  if (text === 'REJECT') return 'error.main';
+  if (text === 'DIRECT') return 'text.primary';
 
   let sum = 0;
   for (let i = 0; i < text.length; i++) {
@@ -38,21 +38,21 @@ const RuleItem = (props: Props) => {
       <Typography
         color="text.secondary"
         variant="body2"
-        sx={{ lineHeight: 2, minWidth: 30, mr: 2.25, textAlign: "center" }}
+        sx={{ lineHeight: 2, minWidth: 30, mr: 2.25, textAlign: 'center' }}
       >
         {index}
       </Typography>
 
-      <Box sx={{ userSelect: "text" }}>
+      <Box sx={{ userSelect: 'text' }}>
         <Typography component="h6" variant="subtitle1" color="text.primary">
-          {value.payload || "-"}
+          {value.payload || '-'}
         </Typography>
 
         <Typography
           component="span"
           variant="body2"
           color="text.secondary"
-          sx={{ mr: 3, minWidth: 120, display: "inline-block" }}
+          sx={{ mr: 3, minWidth: 120, display: 'inline-block' }}
         >
           {value.type}
         </Typography>

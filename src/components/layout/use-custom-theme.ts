@@ -1,10 +1,10 @@
-import { useEffect, useMemo } from "react";
-import { useRecoilState } from "recoil";
-import { createTheme, Theme } from "@mui/material";
-import { appWindow } from "@tauri-apps/api/window";
-import { atomThemeMode } from "@/services/states";
-import { defaultTheme, defaultDarkTheme } from "@/pages/_theme";
-import { useVerge } from "@/hooks/use-verge";
+import { useEffect, useMemo } from 'react';
+import { useRecoilState } from 'recoil';
+import { createTheme, Theme } from '@mui/material';
+import { appWindow } from '@tauri-apps/api/window';
+import { atomThemeMode } from '@/services/states';
+import { defaultTheme, defaultDarkTheme } from '@/pages/_theme';
+import { useVerge } from '@/hooks/use-verge';
 
 /**
  * custom theme
@@ -15,11 +15,11 @@ export const useCustomTheme = () => {
   const [mode, setMode] = useRecoilState(atomThemeMode);
 
   useEffect(() => {
-    const themeMode = ["light", "dark", "system"].includes(theme_mode!)
+    const themeMode = ['light', 'dark', 'system'].includes(theme_mode!)
       ? theme_mode!
-      : "light";
+      : 'light';
 
-    if (themeMode !== "system") {
+    if (themeMode !== 'system') {
       setMode(themeMode);
       return;
     }
@@ -34,7 +34,7 @@ export const useCustomTheme = () => {
 
   const theme = useMemo(() => {
     const setting = theme_setting || {};
-    const dt = mode === "light" ? defaultTheme : defaultDarkTheme;
+    const dt = mode === 'light' ? defaultTheme : defaultDarkTheme;
 
     let theme: Theme;
 
@@ -84,30 +84,30 @@ export const useCustomTheme = () => {
     }
 
     // css
-    const selectColor = mode === "light" ? "#f5f5f5" : "#d5d5d5";
-    const scrollColor = mode === "light" ? "#90939980" : "#54545480";
+    const selectColor = mode === 'light' ? '#f5f5f5' : '#d5d5d5';
+    const scrollColor = mode === 'light' ? '#90939980' : '#54545480';
 
     const rootEle = document.documentElement;
-    rootEle.style.setProperty("--selection-color", selectColor);
-    rootEle.style.setProperty("--scroller-color", scrollColor);
-    rootEle.style.setProperty("--primary-main", theme.palette.primary.main);
+    rootEle.style.setProperty('--selection-color', selectColor);
+    rootEle.style.setProperty('--scroller-color', scrollColor);
+    rootEle.style.setProperty('--primary-main', theme.palette.primary.main);
 
     // inject css
-    let style = document.querySelector("style#verge-theme");
+    let style = document.querySelector('style#verge-theme');
     if (!style) {
-      style = document.createElement("style");
-      style.id = "verge-theme";
+      style = document.createElement('style');
+      style.id = 'verge-theme';
       document.head.appendChild(style!);
     }
     if (style) {
-      style.innerHTML = setting.css_injection || "";
+      style.innerHTML = setting.css_injection || '';
     }
 
     // update svg icon
     const { palette } = theme;
 
     setTimeout(() => {
-      const dom = document.querySelector("#Gradient2");
+      const dom = document.querySelector('#Gradient2');
       if (dom) {
         dom.innerHTML = `
         <stop offset="0%" stop-color="${palette.primary.main}" />

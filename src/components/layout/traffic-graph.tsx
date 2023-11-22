@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
-import { useTheme } from "@mui/material";
+import { useTheme } from '@mui/material';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 const maxPoint = 30;
 
@@ -72,14 +72,14 @@ export const TrafficGraph = forwardRef<TrafficRef>((props, ref) => {
 
     if (!canvas) return;
 
-    const context = canvas.getContext("2d")!;
+    const context = canvas.getContext('2d')!;
 
     if (!context) return;
 
     const { primary, secondary, divider } = palette;
-    const refLineColor = divider || "rgba(0, 0, 0, 0.12)";
-    const upLineColor = secondary.main || "#9c27b0";
-    const downLineColor = primary.main || "#5b5c9d";
+    const refLineColor = divider || 'rgba(0, 0, 0, 0.12)';
+    const upLineColor = secondary.main || '#9c27b0';
+    const downLineColor = primary.main || '#5b5c9d';
 
     const width = canvas.width;
     const height = canvas.height;
@@ -191,5 +191,7 @@ export const TrafficGraph = forwardRef<TrafficRef>((props, ref) => {
     };
   }, [palette]);
 
-  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%" }} />;
+  return <canvas ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
 });
+
+TrafficGraph.displayName = 'TrafficGraph';

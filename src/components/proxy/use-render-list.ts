@@ -1,14 +1,14 @@
-import useSWR from "swr";
-import { useEffect, useMemo } from "react";
-import { getProxies } from "@/services/api";
-import { useVerge } from "@/hooks/use-verge";
-import { filterSort } from "./use-filter-sort";
-import { useWindowWidth } from "./use-window-width";
+import useSWR from 'swr';
+import { useEffect, useMemo } from 'react';
+import { getProxies } from '@/services/api';
+import { useVerge } from '@/hooks/use-verge';
+import { filterSort } from './use-filter-sort';
+import { useWindowWidth } from './use-window-width';
 import {
   useHeadStateNew,
   DEFAULT_STATE,
   type HeadState,
-} from "./use-head-state";
+} from './use-head-state';
 
 export interface IRenderItem {
   // 组 ｜ head ｜ item ｜ empty | item col
@@ -23,9 +23,9 @@ export interface IRenderItem {
 
 export const useRenderList = (mode: string) => {
   const { data: proxiesData, mutate: mutateProxies } = useSWR(
-    "getProxies",
+    'getProxies',
     getProxies,
-    { refreshInterval: 45000 }
+    { refreshInterval: 45000 },
   );
 
   const { verge } = useVerge();
@@ -50,8 +50,8 @@ export const useRenderList = (mode: string) => {
     const { groups, proxies } = proxiesData;
 
     if (
-      (mode === "rule" && !groups.length) ||
-      (mode === "global" && proxies.length < 2)
+      (mode === 'rule' && !groups.length) ||
+      (mode === 'global' && proxies.length < 2)
     ) {
       setTimeout(() => mutateProxies(), 500);
     }
@@ -61,7 +61,7 @@ export const useRenderList = (mode: string) => {
     if (!proxiesData) return [];
 
     // global 和 direct 使用展开的样式
-    const useRule = mode === "rule" || mode === "script";
+    const useRule = mode === 'rule' || mode === 'script';
     const renderGroups =
       (useRule && proxiesData.groups.length
         ? proxiesData.groups
@@ -78,7 +78,7 @@ export const useRenderList = (mode: string) => {
           group.all,
           group.name,
           headState.filterText,
-          headState.sortType
+          headState.sortType,
         );
 
         ret.push({ type: 1, key: `head-${group.name}`, group, headState });
@@ -97,7 +97,7 @@ export const useRenderList = (mode: string) => {
               headState,
               col,
               proxyCol,
-            }))
+            })),
           );
         }
 
@@ -108,7 +108,7 @@ export const useRenderList = (mode: string) => {
             group,
             proxy,
             headState,
-          }))
+          })),
         );
       }
       return ret;

@@ -1,20 +1,20 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useVerge } from '@/hooks/use-verge';
+import { getSystemProxy } from '@/services/cmds';
 import {
   Box,
   InputAdornment,
   List,
   ListItem,
   ListItemText,
-  styled,
   Switch,
   TextField,
   Typography,
-} from "@mui/material";
-import { useVerge } from "@/hooks/use-verge";
-import { getSystemProxy } from "@/services/cmds";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
+  styled,
+} from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -54,7 +54,7 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
 
   const onSave = useLockFn(async () => {
     if (value.duration < 1) {
-      Notice.error("Proxy guard duration at least 1 seconds");
+      Notice.error('Proxy guard duration at least 1 seconds');
       return;
     }
 
@@ -81,17 +81,17 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("System Proxy Setting")}
+      title={t('System Proxy Setting')}
       contentSx={{ width: 450, maxHeight: 300 }}
-      okBtn={t("Save")}
-      cancelBtn={t("Cancel")}
+      okBtn={t('Save')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Proxy Guard")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Proxy Guard')} />
           <Switch
             edge="end"
             disabled={!enabled}
@@ -100,8 +100,8 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
-          <ListItemText primary={t("Guard Duration")} />
+        <ListItem sx={{ padding: '5px 2px' }}>
+          <ListItemText primary={t('Guard Duration')} />
           <TextField
             disabled={!enabled}
             size="small"
@@ -113,14 +113,14 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
             onChange={(e) => {
               setValue((v) => ({
                 ...v,
-                duration: +e.target.value.replace(/\D/, ""),
+                duration: +e.target.value.replace(/\D/, ''),
               }));
             }}
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px", alignItems: "start" }}>
-          <ListItemText primary={t("Proxy Bypass")} sx={{ padding: "3px 0" }} />
+        <ListItem sx={{ padding: '5px 2px', alignItems: 'start' }}>
+          <ListItemText primary={t('Proxy Bypass')} sx={{ padding: '3px 0' }} />
           <TextField
             disabled={!enabled}
             size="small"
@@ -137,8 +137,8 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
       </List>
 
       <Box sx={{ mt: 2.5 }}>
-        <Typography variant="body1" sx={{ fontSize: "18px", mb: 1 }}>
-          {t("Current System Proxy")}
+        <Typography variant="body1" sx={{ fontSize: '18px', mb: 1 }}>
+          {t('Current System Proxy')}
         </Typography>
 
         <FlexBox>
@@ -150,19 +150,21 @@ export const SysproxyViewer = forwardRef<DialogRef>((props, ref) => {
 
         <FlexBox>
           <Typography className="label">Server:</Typography>
-          <Typography className="value">{sysproxy?.server || "-"}</Typography>
+          <Typography className="value">{sysproxy?.server || '-'}</Typography>
         </FlexBox>
 
         <FlexBox>
           <Typography className="label">Bypass:</Typography>
-          <Typography className="value">{sysproxy?.bypass || "-"}</Typography>
+          <Typography className="value">{sysproxy?.bypass || '-'}</Typography>
         </FlexBox>
       </Box>
     </BaseDialog>
   );
 });
 
-const FlexBox = styled("div")`
+SysproxyViewer.displayName = 'SysproxyViewer';
+
+const FlexBox = styled('div')`
   display: flex;
   margin-top: 4px;
 

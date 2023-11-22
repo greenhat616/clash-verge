@@ -1,9 +1,9 @@
-import useSWR from "swr";
-import { useRef } from "react";
-import { Button } from "@mui/material";
-import { checkUpdate } from "@tauri-apps/api/updater";
-import { UpdateViewer } from "../setting/mods/update-viewer";
-import { DialogRef } from "../base";
+import useSWR from 'swr';
+import { useRef } from 'react';
+import { Button } from '@mui/material';
+import { checkUpdate } from '@tauri-apps/api/updater';
+import { UpdateViewer } from '../setting/mods/update-viewer';
+import { DialogRef } from '../base';
 
 interface Props {
   className?: string;
@@ -14,7 +14,7 @@ export const UpdateButton = (props: Props) => {
 
   const viewerRef = useRef<DialogRef>(null);
 
-  const { data: updateInfo } = useSWR("checkUpdate", checkUpdate, {
+  const { data: updateInfo } = useSWR('checkUpdate', checkUpdate, {
     errorRetryCount: 2,
     revalidateIfStale: false,
     focusThrottleInterval: 36e5, // 1 hour

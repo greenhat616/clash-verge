@@ -1,9 +1,9 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { useLockFn } from "ahooks";
-import { useTranslation } from "react-i18next";
-import { List, ListItem, ListItemText, TextField } from "@mui/material";
-import { useClashInfo } from "@/hooks/use-clash";
-import { BaseDialog, DialogRef, Notice } from "@/components/base";
+import { BaseDialog, DialogRef, Notice } from '@/components/base';
+import { useClashInfo } from '@/hooks/use-clash';
+import { List, ListItem, ListItemText, TextField } from '@mui/material';
+import { useLockFn } from 'ahooks';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
@@ -11,22 +11,22 @@ export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
 
   const { clashInfo, patchInfo } = useClashInfo();
 
-  const [controller, setController] = useState(clashInfo?.server || "");
-  const [secret, setSecret] = useState(clashInfo?.secret || "");
+  const [controller, setController] = useState(clashInfo?.server || '');
+  const [secret, setSecret] = useState(clashInfo?.secret || '');
 
   useImperativeHandle(ref, () => ({
     open: () => {
       setOpen(true);
-      setController(clashInfo?.server || "");
-      setSecret(clashInfo?.secret || "");
+      setController(clashInfo?.server || '');
+      setSecret(clashInfo?.secret || '');
     },
     close: () => setOpen(false),
   }));
 
   const onSave = useLockFn(async () => {
     try {
-      await patchInfo({ "external-controller": controller, secret });
-      Notice.success("Change Clash Config successfully!", 1000);
+      await patchInfo({ 'external-controller': controller, secret });
+      Notice.success('Change Clash Config successfully!', 1000);
       setOpen(false);
     } catch (err: any) {
       Notice.error(err.message || err.toString(), 4000);
@@ -36,16 +36,16 @@ export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
   return (
     <BaseDialog
       open={open}
-      title={t("Clash Port")}
+      title={t('Clash Port')}
       contentSx={{ width: 400 }}
-      okBtn={t("Save")}
-      cancelBtn={t("Cancel")}
+      okBtn={t('Save')}
+      cancelBtn={t('Cancel')}
       onClose={() => setOpen(false)}
       onCancel={() => setOpen(false)}
       onOk={onSave}
     >
       <List>
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: '5px 2px' }}>
           <ListItemText primary="External Controller" />
           <TextField
             size="small"
@@ -57,7 +57,7 @@ export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
           />
         </ListItem>
 
-        <ListItem sx={{ padding: "5px 2px" }}>
+        <ListItem sx={{ padding: '5px 2px' }}>
           <ListItemText primary="Core Secret" />
           <TextField
             size="small"
@@ -72,3 +72,5 @@ export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
     </BaseDialog>
   );
 });
+
+ControllerViewer.displayName = 'ControllerViewer';

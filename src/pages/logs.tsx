@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useMemo, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import {
   Box,
   Button,
@@ -8,40 +8,40 @@ import {
   Paper,
   Select,
   TextField,
-} from "@mui/material";
-import { Virtuoso } from "react-virtuoso";
-import { useTranslation } from "react-i18next";
+} from '@mui/material';
+import { Virtuoso } from 'react-virtuoso';
+import { useTranslation } from 'react-i18next';
 import {
   PlayCircleOutlineRounded,
   PauseCircleOutlineRounded,
-} from "@mui/icons-material";
-import { atomEnableLog, atomLogData } from "@/services/states";
-import { BaseEmpty, BasePage } from "@/components/base";
-import LogItem from "@/components/log/log-item";
+} from '@mui/icons-material';
+import { atomEnableLog, atomLogData } from '@/services/states';
+import { BaseEmpty, BasePage } from '@/components/base';
+import LogItem from '@/components/log/log-item';
 
 const LogPage = () => {
   const { t } = useTranslation();
   const [logData, setLogData] = useRecoilState(atomLogData);
   const [enableLog, setEnableLog] = useRecoilState(atomEnableLog);
 
-  const [logState, setLogState] = useState("all");
-  const [filterText, setFilterText] = useState("");
+  const [logState, setLogState] = useState('all');
+  const [filterText, setFilterText] = useState('');
 
   const filterLogs = useMemo(() => {
     return logData.filter((data) => {
       return (
         data.payload.includes(filterText) &&
-        (logState === "all" ? true : data.type.includes(logState))
+        (logState === 'all' ? true : data.type.includes(logState))
       );
     });
   }, [logData, logState, filterText]);
 
   return (
     <BasePage
-      title={t("Logs")}
-      contentStyle={{ height: "100%" }}
+      title={t('Logs')}
+      contentStyle={{ height: '100%' }}
       header={
-        <Box sx={{ mt: 1, display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
           <IconButton
             size="small"
             color="inherit"
@@ -59,27 +59,27 @@ const LogPage = () => {
             variant="contained"
             onClick={() => setLogData([])}
           >
-            {t("Clear")}
+            {t('Clear')}
           </Button>
         </Box>
       }
     >
       <Paper
         sx={{
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
           boxShadow: 2,
-          height: "100%",
-          userSelect: "text",
+          height: '100%',
+          userSelect: 'text',
         }}
       >
         <Box
           sx={{
             pt: 1,
             mb: 0.5,
-            mx: "12px",
-            height: "36px",
-            display: "flex",
-            alignItems: "center",
+            mx: '12px',
+            height: '36px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           <Select
@@ -102,7 +102,7 @@ const LogPage = () => {
             autoComplete="off"
             spellCheck="false"
             variant="outlined"
-            placeholder={t("Filter conditions")}
+            placeholder={t('Filter conditions')}
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
             sx={{ input: { py: 0.65, px: 1.25 } }}
@@ -115,7 +115,7 @@ const LogPage = () => {
               initialTopMostItemIndex={999}
               data={filterLogs}
               itemContent={(index, item) => <LogItem value={item} />}
-              followOutput={"smooth"}
+              followOutput={'smooth'}
             />
           ) : (
             <BaseEmpty text="No Logs" />
