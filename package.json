@@ -21,7 +21,8 @@
     "check": "node scripts/check.mjs",
     "updater": "node scripts/updater.mjs",
     "publish": "node scripts/publish.mjs",
-    "portable": "node scripts/portable.mjs"
+    "portable": "node scripts/portable.mjs",
+    "postinstall": "simple-git-hooks"
   },
   "dependencies": {
     "@emotion/react": "11.11.1",
