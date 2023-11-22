@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Rust nightly
-        run: rustup toolchain install nightly --profile minimal
+        run: rustup toolchain install nightly --profile minimal && rustup default nightly
       - name: Tauri dependencies
         run: >-
           sudo apt-get update &&
