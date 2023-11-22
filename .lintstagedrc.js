@@ -1,5 +1,5 @@
 export default {
-  '*.{js,jsx}': ['prettier --write', 'eslint --cache --fix'],
+  '*.{js,cjs,.mjs,jsx}': ['prettier --write', 'eslint --cache --fix'],
   '*.{ts,tsx}': [
     'prettier --write',
     'eslint --cache --fix',

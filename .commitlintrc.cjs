@@ -15,10 +15,10 @@ const Configuration = {
         'refactor',
         'revert',
         'style',
-        'test'
-      ]
-    ]
-  }
-}
+        'test',
+      ],
+    ],
+  },
+};
 
-module.exports = Configuration
+module.exports = Configuration;
