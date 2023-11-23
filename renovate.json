@@ -24,20 +24,7 @@
     {
       "groupName": "Rust workspace packages",
       "matchManagers": ["cargo"],
-      "matchFileNames": ["backend/Cargo.toml"],
       "rangeStrategy": "range"
-    },
-    {
-      "groupName": "Rust modified crates packages",
-      "matchManagers": ["cargo"],
-      "matchFileNames": ["backend/delay_timer/Cargo.toml"],
-      "rangeStrategy": "range"
-    },
-    {
-      "groupName": "Rust tauri packages",
-      "matchManagers": ["cargo"],
-      "matchFileNames": ["backend/tauri/Cargo.toml"],
-      "rangeStrategy": "pin"
     },
     {
       "groupName": "TypeScript",
