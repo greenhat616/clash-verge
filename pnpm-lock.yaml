@@ -21,8 +21,8 @@ dependencies:
     specifier: 5.14.18
     version: 5.14.18(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
   '@mui/x-data-grid':
-    specifier: 6.18.1
-    version: 6.18.1(@mui/material@5.14.18)(@mui/system@5.14.18)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 6.18.2
+    version: 6.18.2(@mui/material@5.14.18)(@mui/system@5.14.18)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0)
   '@tauri-apps/api':
     specifier: 1.5.1
     version: 1.5.1
@@ -224,8 +224,8 @@ devDependencies:
     specifier: 5.3.1
     version: 5.3.1(stylelint@15.11.0)
   tsx:
-    specifier: 4.3.0
-    version: 4.3.0
+    specifier: 4.4.0
+    version: 4.4.0
   typescript:
     specifier: 5.3.2
     version: 5.3.2
@@ -1499,8 +1499,8 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@mui/x-data-grid@6.18.1(@mui/material@5.14.18)(@mui/system@5.14.18)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-ibsrWwzM2lRRWB1xs/eop63kaxlXH/qar1S1rQx3fycJiYvK6fsM72jsScBNRlRZQQwRVSGI0ZPBsOZ+/tg7Qw==}
+  /@mui/x-data-grid@6.18.2(@mui/material@5.14.18)(@mui/system@5.14.18)(@types/react@18.2.38)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-XsVX8OCcYRbSoDVfjoX6gi+KfBitTkUvlMZnI/YkWOyms+pEValJQousvwjhGN1coWp15Yoz9YTGmSGCBxo2HA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@mui/material': ^5.4.1
@@ -6274,8 +6274,8 @@ packages:
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  /tsx@4.3.0:
-    resolution: {integrity: sha512-zalfbBdr7tvYok5sSbnsv4uL+DhT1wRZwbWwuOXjhH8YtJxN2bpl6lpXMxuPThMAKzZ2qgrhuf5ckq/uSsm3CA==}
+  /tsx@4.4.0:
+    resolution: {integrity: sha512-4fwcEjRUxW20ciSaMB8zkpGwCPxuRGnadDuj/pBk5S9uT29zvWz15PK36GrKJo45mSJomDxVejZ73c6lr3811Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
