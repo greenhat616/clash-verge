@@ -14,10 +14,10 @@ tauri-build = { version = "1", features = [] }
 
 [dependencies]
 warp = "0.3"
-which = "4.2.2"
+which = "5.0.0"
 anyhow = { workspace = true }
 dirs = "5.0.0"
-open = "4.0.1"
+open = "5.0.0"
 log = { workspace = true }
 ctrlc = "3.2.3"
 dunce = "1.0.4"
