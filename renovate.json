@@ -24,6 +24,19 @@
     {
       "groupName": "Rust workspace packages",
       "matchManagers": ["cargo"],
+      "matchFileNames": ["backend/Cargo.toml"],
+      "rangeStrategy": "range"
+    },
+    {
+      "groupName": "Rust crates packages",
+      "matchFileNames": ["backend/delay_timer/Cargo.toml"],
+      "matchManagers": ["cargo"],
+      "rangeStrategy": "range"
+    },
+    {
+      "groupName": "Rust tauri packages",
+      "matchFileNames": ["backend/tauri/Cargo.toml"],
+      "matchManagers": ["cargo"],
       "rangeStrategy": "range"
     },
     {
