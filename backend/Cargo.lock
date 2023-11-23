@@ -733,7 +733,7 @@ dependencies = [
  "log4rs",
  "nanoid",
  "once_cell",
- "open 4.2.0",
+ "open 5.0.1",
  "parking_lot",
  "port_scanner",
  "reqwest",
@@ -748,7 +748,7 @@ dependencies = [
  "tauri-build",
  "tokio",
  "warp",
- "which",
+ "which 5.0.0",
  "window-shadows",
  "window-vibrancy",
  "windows-sys 0.48.0",
@@ -3450,9 +3450,9 @@ dependencies = [
 
 [[package]]
 name = "open"
-version = "4.2.0"
+version = "5.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a083c0c7e5e4a8ec4176346cf61f67ac674e8bfb059d9226e1c54a96b377c12"
+checksum = "90878fb664448b54c4e592455ad02831e23a3f7e157374a8b95654731aac7349"
 dependencies = [
  "is-wsl",
  "libc",
@@ -4389,7 +4389,7 @@ checksum = "49535b7c73aec5596ae2c44a6d8a7a8f8592e5744564c327fd4846750413d921"
 dependencies = [
  "libc",
  "security-framework-sys",
- "which",
+ "which 4.4.2",
  "windows-sys 0.48.0",
 ]
 
@@ -6527,6 +6527,19 @@ dependencies = [
  "home",
  "once_cell",
  "rustix 0.38.25",
+]
+
+[[package]]
+name = "which"
+version = "5.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9bf3ea8596f3a0dd5980b46430f2058dfe2c36a27ccfbb1845d6fbfcd9ba6e14"
+dependencies = [
+ "either",
+ "home",
+ "once_cell",
+ "rustix 0.38.25",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
