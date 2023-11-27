@@ -136,6 +136,7 @@ macro_rules! wrap_err {
         match $stat {
             Ok(a) => Ok(a),
             Err(err) => {
+                println!("err: {}", err.to_string());
                 log::error!(target: "app", "{}", err.to_string());
                 Err(format!("{}", err.to_string()))
             }

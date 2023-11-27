@@ -264,17 +264,17 @@ impl CoreManager {
         }
 
         log::debug!(target: "app", "change core to `{clash_core}`");
-
+        println!("change core to `{clash_core}`");
         Config::verge().draft().clash_core = Some(clash_core);
 
         // 更新配置
         Config::generate()?;
-
+        print!("1");
         self.check_config()?;
-
+        print!("2");
         // 清掉旧日志
         Logger::global().clear_log();
-
+        print!("3");
         match self.run_core().await {
             Ok(_) => {
                 Config::verge().apply();
@@ -283,6 +283,7 @@ impl CoreManager {
                 Ok(())
             }
             Err(err) => {
+                print!("4");
                 Config::verge().discard();
                 Config::runtime().discard();
                 Err(err)

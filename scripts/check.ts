@@ -44,7 +44,7 @@ const CLASH_MAP = {
 
 /* ======= clash-rs ======= */
 const RS_URL_PREFIX = `https://github.com/Watfaq/clash-rs/releases/download/`;
-const RS_VERSION = 'v0.1.7';
+const RS_VERSION = 'v0.1.8';
 const RS_MAP = {
   'win32-x64': 'clash-x86_64-pc-windows-msvc',
   'darwin-x64': 'clash-x86_64-apple-darwin',
@@ -178,7 +178,6 @@ async function resolveSidecar(binInfo: BinInfo) {
       await downloadFile(downloadURL, tempFile);
     }
     if (tmpFile.endsWith('.zip')) {
-      // @ts-expect-error adm-zip typing is wrong
       const zip = new AdmZip(tempFile);
       zip.getEntries().forEach((entry) => {
         console.log(
@@ -278,7 +277,6 @@ async function resolveWintun() {
   }
 
   // unzip
-  // @ts-expect-error adm-zip typing is wrong
   const zip = new AdmZip(tempZip);
   zip.extractAllTo(tempDir, true);
 
